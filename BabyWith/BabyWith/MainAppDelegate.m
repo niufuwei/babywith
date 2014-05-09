@@ -278,14 +278,23 @@ int HudIsBecome = 0;
 	[hud removeFromSuperview];
 }
 
-- (void) AlarmProtocolResult:(NSString *)szDID motion_armed:(int)motion_armed motion_sensitivity:(int)motion_sensitivity input_armed:(int)input_armed ioin_level:(int)ioin_level alarmpresetsit:(int)alarmpresetsit iolinkage:(int)iolinkage ioout_level:(int)ioout_level mail:(int)mail snapshot:(int)snapshot upload_interval:(int)upload_interval record:(int)record{
+- (void) AlarmProtocolResult:(NSString *)szDID motion_armed:(int)motion_armed motion_sensitivity:(int)motion_sensitivity input_armed:(int)input_armed ioin_level:(int)ioin_level alarmpresetsit:(int)alarmpresetsit iolinkage:(int)iolinkage ioout_level:(int)ioout_level mail:(int)mail snapshot:(int)snapshot upload_interval:(int)upload_interval record:(int)record
+{
     
-    NSLog(@"AlarmProtocolResult===");
+    NSLog(@"=========================================================");
 //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[_deviceConnectManager getDeviceInfo:szDID]];
 //    [dic setObject:[NSString stringWithFormat:@"看护器“%@”发生移动侦测。", [dic objectForKey:@"name"]] forKey:@"text"];
 //    [dic setObject:@"1" forKey:@"status"];
 //    [appDelegate.messageArray insertObject:dic atIndex:0];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageCount" object:@"1"];
+    
+    
+    
+    
+    NSLog(@"看护器%@移动了",szDID);
+    
+    
+    
     
 }
 

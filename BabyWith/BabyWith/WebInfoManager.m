@@ -16,64 +16,24 @@
 
 -(void)SetPersonalInfo:(NSDictionary *)dictionary{
     
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"family_id"] forKey:@"Family_id"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"name"] forKey:@"Name_self"];
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"id_member"] forKey:@"Member_id_self"];
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"realname"] forKey:@"Realname_self"];
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"appel"] forKey:@"Appel_self"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"sex"] integerValue] forKey:@"Sex_self"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"birthday"] forKey:@"Birthday_self"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"create_user_time"] forKey:@"Create_time_self"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"join_family_time"] forKey:@"Join_time_self"];
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"phone_bind"] forKey:@"Phone_bind_self"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"email_bind"] forKey:@"Email_bind_self"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"email_type"] integerValue] forKey:@"Email_type_self"];
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"mac_bind"] forKey:@"Mac_bind_self"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"avatar"] forKey:@"Avatar_self"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"avatar_type"] integerValue] forKey:@"Avatar_type_self"];
 }
 
 -(void)ClearInfo{
-    //家庭信息
-    [appDelegate.appDefault setObject:@"" forKey:@"Family_id"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Family_name"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Family_status"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Family_create_time"];
+   
     
     //个人信息
     [appDelegate.appDefault setObject:@"" forKey:@"Member_id_self"];
     [appDelegate.appDefault setObject:@"" forKey:@"Realname_self"];
     [appDelegate.appDefault setObject:@"" forKey:@"Appel_self"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Sex_self"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Birthday_self"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Create_time_self"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Join_time_self"];
     [appDelegate.appDefault setObject:@"" forKey:@"Phone_bind_self"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Email_bind_self"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Email_type_self"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Mac_bind_self"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Avatar_self"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Avatar_type_self"];
+        [appDelegate.appDefault setObject:@"" forKey:@"Mac_bind_self"];
     
-    //伴侣信息
-    [appDelegate.appDefault setObject:@"" forKey:@"Member_id_partner"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Realname_partner"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Appel_partner"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Sex_partner"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Birthday_partner"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Avatar_partner"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Avatar_type_partner"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Relative_state_partner"];
-    
-    //宝宝信息
-    [appDelegate.appDefault setObject:@"" forKey:@"Member_id_baby"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Name_baby"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Realname_baby"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Sex_baby"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Birthday_baby"];
-    [appDelegate.appDefault setObject:@"" forKey:@"Avatar_baby"];
-    [appDelegate.appDefault setInteger:-1 forKey:@"Avatar_type_baby"];
-    [appDelegate.appDefault setInteger:0 forKey:@"Baby_count"];
+   
     
     //设备信息
     [appDelegate.deviceConnectManager removeDeviceList];
@@ -85,32 +45,10 @@
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"id_member"] forKey:@"Member_id_partner"];
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"realname"] forKey:@"Realname_partner"];
     [appDelegate.appDefault setObject:[dictionary objectForKey:@"appellation"] forKey:@"Appel_partner"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"sex"] integerValue]forKey:@"Sex_partner"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"birthday"] forKey:@"Birthday_partner"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"avatar"] forKey:@"Avatar_partner"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"avatar_type"] integerValue] forKey:@"Avatar_type_partner"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"guest_account_state"] integerValue]forKey:@"Relative_state_partner"];
     
-    NSLog(@"SetPartnerInfo = [%@][%@][%@]", [appDelegate.appDefault objectForKey:@"Appel_partner"],[appDelegate.appDefault objectForKey:@"Realname_partner"],[appDelegate.appDefault objectForKey:@"Birthday_partner"]);
 }
 
 
--(void)SetBabyInfo:(NSDictionary *)dictionary{
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"id"] forKey:@"Member_id_baby"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"name"] forKey:@"Name_baby"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"realname"] forKey:@"Realname_baby"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"sex"] integerValue] forKey:@"Sex_baby"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"birthday"] forKey:@"Birthday_baby"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"avatar"] forKey:@"Avatar_baby"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"avatar_type"] integerValue] forKey:@"Avatar_type_baby"];
-}
-
--(void)SetFamilyInfo:(NSDictionary *)dictionary{
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"id"] forKey:@"Family_id"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"name"] forKey:@"Family_name"];
-    [appDelegate.appDefault setObject:[dictionary objectForKey:@"time_create"] forKey:@"Family_create_time"];
-    [appDelegate.appDefault setInteger:[[dictionary objectForKey:@"is_complete"] integerValue] forKey:@"Family_status"];
-}
 
 -(BOOL)UserGetGateAddressUsingAppVersion:(NSString *)aAppVersion ClientType:(NSString *)aClientType TestFlag:(NSString *)aTestFlag{
     WebInfoBinding *binding = [[WebInfoBinding alloc] initWithAddress:babywith_gate_address];
@@ -199,16 +137,13 @@
         [appDelegate.appDefault setObject:aPassword forKey:@"Password"];
         [appDelegate.appDefault setObject:[[response objectForKey:@"value"] objectForKey:@"token"] forKey:@"Token"];
         
-        NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[[response objectForKey:@"value"] objectForKey:@"info"]];
-        [self SetPersonalInfo:dic];
+       
         
         [appDelegate.deviceConnectManager removeDeviceList];
         [appDelegate.deviceConnectManager putDeviceInfo:[[response objectForKey:@"value"] objectForKey:@"device_info"]];
         
-        [appDelegate.appDefault setInteger:0  forKey:@"Relative_login_flag"];
         [appDelegate.appDefault setObject:@"" forKey:@"Phone_bind_new"];
         [appDelegate.appDefault setObject:@"" forKey:@"Phone_checkcode"];
-        [appDelegate.appDefault setObject:@"" forKey:@"Email_checkcode"];
         [appDelegate.appDefault setInteger:0 forKey:@"Relative_get_flag"];
         [appDelegate.appDefault setObject:@"" forKey:@"Last_device_id"];
         [appDelegate.appDefault setObject:nil forKey:@"Device_selected"];

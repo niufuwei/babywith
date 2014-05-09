@@ -510,7 +510,7 @@
             NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:[appDelegate.appDefault objectForKey:[_deviceDictionary objectForKey:@"device_id"]]];
             [param setObject:[NSString stringWithFormat:@"%d", 2-cell.tag] forKey:@"sense"];
             [appDelegate.appDefault setObject:param forKey:[_deviceDictionary objectForKey:@"device_id"]];
-            NSLog(@"sense dic = [%@]", [appDelegate.appDefault objectForKey:[_deviceDictionary objectForKey:@"device_id"]]);
+            NSLog(@"sense is = [%@]", [[appDelegate.appDefault objectForKey:[_deviceDictionary objectForKey:@"device_id"]] objectForKey:@"sense"]);
             
             if ([self CheckOnline] == 2)
             {

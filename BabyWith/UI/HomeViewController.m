@@ -62,6 +62,7 @@
     NSLog(@"view will appear");
     //获取设备列表，并且刷新数据
     self.deviceArray = [appDelegate.deviceConnectManager getDeviceInfoList];
+    NSLog(@"self.device is %@",self.deviceArray);
     [_homeTableView1 reloadData];
 }
 
@@ -183,6 +184,9 @@
     }
     else if (indexPath.section == 2)
     {
+        
+        NSLog(@"self.array is %@",self.deviceArray);
+        
         
         [appDelegate.appDefault setObject:[self.deviceArray objectAtIndex:indexPath.row] forKey:@"Device_selected"];
         NSLog(@"存入的设备是%@",[appDelegate.appDefault objectForKey:@"Device_selected"]);

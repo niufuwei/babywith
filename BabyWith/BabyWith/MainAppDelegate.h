@@ -21,7 +21,7 @@
 @class LoginViewController;
 
 
-@interface MainAppDelegate : UIResponder <UIApplicationDelegate,MBProgressHUDDelegate, AlarmProtocol>{
+@interface MainAppDelegate : UIResponder <UIApplicationDelegate,MBProgressHUDDelegate,AlarmProtocol>{
     
     UIWindow *_window;
     NSUserDefaults *_appDefault;                       //UserDefault

@@ -2131,8 +2131,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/BabyWith/ZBarSDK\"",
 					"\"$(SRCROOT)/BabyWith/ffmpeg/i386\"",
-					"\"$(SRCROOT)/BabyWith/UMSocial_Sdk_2.2.1/frameworks/Wechat\"",
-					"\"$(SRCROOT)/BabyWith/UMSocial_Sdk_2.2.1\"",
 					"\"$(SRCROOT)/BabyWith\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2169,8 +2167,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/BabyWith/ZBarSDK\"",
 					"\"$(SRCROOT)/BabyWith/ffmpeg/i386\"",
-					"\"$(SRCROOT)/BabyWith/UMSocial_Sdk_2.2.1/frameworks/Wechat\"",
-					"\"$(SRCROOT)/BabyWith/UMSocial_Sdk_2.2.1\"",
 					"\"$(SRCROOT)/BabyWith\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;

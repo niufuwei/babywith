@@ -266,9 +266,11 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becameActive:) name:@"becameActive" object:nil];
     
     
-    [_currentDeviceDic addEntriesFromDictionary:[appDelegate.appDefault objectForKey:@"Device_selected"]];
+    //[_currentDeviceDic addEntriesFromDictionary:[appDelegate.appDefault objectForKey:@"Device_selected"]];
+    _currentDeviceDic  = [appDelegate.appDefault objectForKey:@"Device_selected"];
     NSLog(@"current dic is %@",_currentDeviceDic);
-    [appDelegate.appDefault setObject:@"0" forKey:[[_currentDeviceDic objectForKey:@"device_id"] objectForKey:@"invert"]];
+    
+    //[appDelegate.appDefault setObject:@"0" forKey:[[_currentDeviceDic objectForKey:@"device_id"] objectForKey:@"invert"]];
     
     
     
@@ -1271,8 +1273,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     appDelegate.m_PPPPChannelMgt->CameraControl( (char *)[_cameraID UTF8String],13, [[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"quality"] integerValue]);
                     
                     //设置移动侦测
-                    appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[_cameraID UTF8String],1, 1, 1, 0, 0, 1, 0, 0, 0, 0);
+                    appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[_cameraID UTF8String],[[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue], 1, 1, 0, 0, 1, 0, 0, 0, 0);
 
+                    NSLog(@"移动侦测的参数是%d",[[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue]);
                     //[self performSelectorOnMainThread:@selector(Finish:) withObject:@"1" waitUntilDone:NO];
                 }
             }
@@ -1565,6 +1568,15 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         }
 
         
+    }
+    if ([[[appDelegate.appDefault objectForKey:[ _currentDeviceDic objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue])
+    {
+        int alerm =[[[appDelegate.appDefault objectForKey:[ _currentDeviceDic objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue];
+        if (alerm == 1)
+        {
+            AudioServicesPlaySystemSound(1007);
+            
+        }
     }
     NSLog(@"视图出现");
     
