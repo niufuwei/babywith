@@ -9,8 +9,14 @@
 #import "ShareDeviceViewController.h"
 #import "WebInfoManager.h"
 #import "MainAppDelegate.h"
+#import "Activity.h"
 @interface ShareDeviceViewController ()
+{
 
+
+    Activity *activity;
+
+}
 @end
 
 @implementation ShareDeviceViewController
@@ -36,6 +42,9 @@
     [_submit.layer setCornerRadius:5.0];
     [_submit addTarget:self action:@selector(submitBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_submit];
+    
+    
+    activity = [[Activity alloc] initWithActivity:self.view];
 
 }
 
@@ -80,11 +89,11 @@
     }
     
     
-
+    [activity start];
     BOOL result = [appDelegate.webInfoManger UserShareDeviceUsingDeviceID:deviceID Phone:_phoneNumber.text Token:[appDelegate.appDefault objectForKey:@"Token"] PhoneType:@"2"];
      if (result)
     {
-        
+        [activity stop];
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
         indicator.labelText = @"分享成功";
@@ -146,7 +155,8 @@
         
     }
     else
-    {
+    {        [activity stop];
+
         _submit.enabled = YES;
 
         [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];

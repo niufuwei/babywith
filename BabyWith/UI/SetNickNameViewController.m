@@ -10,8 +10,13 @@
 #import "ShareDeviceViewController.h"
 #import "MainAppDelegate.h"
 #import "WebInfoManager.h"
+#import "Activity.h"
 @interface SetNickNameViewController ()
+{
 
+    Activity *activity;
+
+}
 @end
 
 @implementation SetNickNameViewController
@@ -40,6 +45,8 @@
     [self.view addSubview:_nextBtn];
     
     
+    activity = [[Activity alloc] initWithActivity:self.view];
+    
 
 }
 
@@ -65,11 +72,11 @@
     }
     else
     {
-        
+        [activity start];
         BOOL result = [appDelegate.webInfoManger UserModifyAppelUsingAppel:_nickNameField.text Toekn:[appDelegate.appDefault objectForKey:@"Token"]];
         if (result)
         {
-            
+            [activity stop];
             UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
             indicator.labelText = @"修改成功";
@@ -84,7 +91,8 @@
             }];
         }
         else
-        {
+        {            [activity stop];
+
             [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
         }
         

@@ -13,7 +13,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
 @property (weak, nonatomic) IBOutlet UITextField *confirmTF;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
-
 - (IBAction)skipRegistration:(UIButton *)sender;
 - (IBAction)startRegister:(UIButton *)sender;
 

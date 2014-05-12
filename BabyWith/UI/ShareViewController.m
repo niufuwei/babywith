@@ -37,6 +37,7 @@
     _shareListTable.dataSource = self;
     _shareListTable.scrollEnabled = NO;
     _shareListTable.backgroundColor = [UIColor clearColor];
+    _shareListTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
     
     
@@ -181,15 +182,17 @@
 {
 
     static NSString *identifier = @"ShareListIdentifier";
-    UITableViewCell * cell = [_shareListTable dequeueReusableCellWithIdentifier:identifier];
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
     
     NSInteger row = [indexPath row];
     cell.textLabel.text = [[appDelegate.deviceConnectManager getDeviceInfoAtRow:row] objectForKey:@"name"];
+    cell.imageView.frame = CGRectMake(10, 23, 20, 20);
     cell.imageView.image = [UIImage imageNamed:@"多选未选中.png"];
     NSLog(@"hdxuwihdwiubgwibdg");
     return cell;

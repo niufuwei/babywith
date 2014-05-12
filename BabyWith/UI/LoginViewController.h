@@ -12,6 +12,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
+
+
+
+
+
 - (IBAction)login:(UIButton *)sender;
 - (IBAction)accountRegister:(UIButton *)sender;
 - (IBAction)forgotPassword:(UIButton *)sender;

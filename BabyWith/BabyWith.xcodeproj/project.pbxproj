@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		710AEDD5190795C000B19A58 /* NewMessageCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 710AEDD3190794B700B19A58 /* NewMessageCell1.xib */; };
 		710AEDD81907AA1B00B19A58 /* SharedPersonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 710AEDD71907AA1B00B19A58 /* SharedPersonsViewController.m */; };
+		71121D36191D2E9F007B6937 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 71121D35191D2E9F007B6937 /* Activity.m */; };
 		716C830918D94403006CB5C3 /* SetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 716C830718D94403006CB5C3 /* SetPasswordViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		716C830A18D94403006CB5C3 /* SetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 716C830818D94403006CB5C3 /* SetPasswordViewController.xib */; };
 		7195029618D43E85006FCB7F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7195029418D43E85006FCB7F /* LoginViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -311,6 +312,8 @@
 		710AEDD3190794B700B19A58 /* NewMessageCell1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewMessageCell1.xib; sourceTree = "<group>"; };
 		710AEDD61907AA1B00B19A58 /* SharedPersonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedPersonsViewController.h; sourceTree = "<group>"; };
 		710AEDD71907AA1B00B19A58 /* SharedPersonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedPersonsViewController.m; sourceTree = "<group>"; };
+		71121D34191D2E9F007B6937 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = ../Activity.h; sourceTree = "<group>"; };
+		71121D35191D2E9F007B6937 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = ../Activity.m; sourceTree = "<group>"; };
 		716C830618D94403006CB5C3 /* SetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPasswordViewController.h; sourceTree = "<group>"; };
 		716C830718D94403006CB5C3 /* SetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPasswordViewController.m; sourceTree = "<group>"; };
 		716C830818D94403006CB5C3 /* SetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetPasswordViewController.xib; sourceTree = "<group>"; };
@@ -1277,6 +1280,8 @@
 				EFF53F8D1779CA3000C4AEB4 /* Configuration.h */,
 				EF423A3918D3E50100925BBE /* ULog.h */,
 				EF1D3C6D18D2C6AF0079C358 /* AppGlobal.h */,
+				71121D34191D2E9F007B6937 /* Activity.h */,
+				71121D35191D2E9F007B6937 /* Activity.m */,
 				EFE79544177BE26C00D15A32 /* Camera */,
 				7198D5C318D6D6C70011EA28 /* image */,
 				EF1D3C1E18D2B2D90079C358 /* UI */,
@@ -1972,6 +1977,7 @@
 				EFF7B932178885730035FB82 /* CameraAddingViewController.m in Sources */,
 				71A876B51906384B002DAA33 /* NewMessageViewController.m in Sources */,
 				EFF7B934178885730035FB82 /* WifiListViewController.m in Sources */,
+				71121D36191D2E9F007B6937 /* Activity.m in Sources */,
 				EFF7B9FE1788862B0035FB82 /* Adpcm.mm in Sources */,
 				EFF7B9FF1788862B0035FB82 /* APICommon.mm in Sources */,
 				EFF7BA001788862B0035FB82 /* CameraDBUtils.mm in Sources */,
@@ -2071,7 +2077,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
+				PROVISIONING_PROFILE = "3D285B61-17C8-4CF6-958F-B3EEC7C72BB2";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 arm64 armv7s";
@@ -2098,7 +2104,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
+				PROVISIONING_PROFILE = "3D285B61-17C8-4CF6-958F-B3EEC7C72BB2";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2113,7 +2119,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lingjuan chen (WF7976Z973)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: lingjuan chen (WF7976Z973)";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
@@ -2134,7 +2140,7 @@
 					"\"$(SRCROOT)/BabyWith\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
+				PROVISIONING_PROFILE = "83D4DF50-4E60-48E0-B592-BC118D0ECE48";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/BabyWith/ffmpeg\" \"$(SRCROOT)/BabyWith/ffmpeg/i386\" \"$(SRCROOT)/BabyWith/Classes\"";
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -2149,8 +2155,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lingjuan chen (WF7976Z973)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: com.shanchen.babywith";
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2171,7 +2177,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
+				PROVISIONING_PROFILE = "83D4DF50-4E60-48E0-B592-BC118D0ECE48";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/BabyWith/ffmpeg\" \"$(SRCROOT)/BabyWith/ffmpeg/i386\" \"$(SRCROOT)/BabyWith/Classes\"";

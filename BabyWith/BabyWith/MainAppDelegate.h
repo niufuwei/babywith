@@ -15,6 +15,8 @@
 #import "MBProgressHUD.h"
 #import "Reachability.h"
 #include<stdlib.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 @class WebInfoManager;
 @class SQLiteManager;
 @class DeviceConnectManager;

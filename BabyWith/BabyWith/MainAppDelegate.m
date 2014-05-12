@@ -278,7 +278,7 @@ int HudIsBecome = 0;
 	[hud removeFromSuperview];
 }
 
-- (void) AlarmProtocolResult:(NSString *)szDID motion_armed:(int)motion_armed motion_sensitivity:(int)motion_sensitivity input_armed:(int)input_armed ioin_level:(int)ioin_level alarmpresetsit:(int)alarmpresetsit iolinkage:(int)iolinkage ioout_level:(int)ioout_level mail:(int)mail snapshot:(int)snapshot upload_interval:(int)upload_interval record:(int)record
+- (void)AlarmProtocolResult:(NSString *)szDID motion_armed:(int)motion_armed motion_sensitivity:(int)motion_sensitivity input_armed:(int)input_armed ioin_level:(int)ioin_level alarmpresetsit:(int)alarmpresetsit iolinkage:(int)iolinkage ioout_level:(int)ioout_level mail:(int)mail snapshot:(int)snapshot upload_interval:(int)upload_interval record:(int)record
 {
     
     NSLog(@"=========================================================");
@@ -289,9 +289,9 @@ int HudIsBecome = 0;
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageCount" object:@"1"];
     
     
+     AudioServicesPlaySystemSound(1007);
     
-    
-    NSLog(@"看护器%@移动了",szDID);
+    NSLog(@"看护器移动了%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,",motion_armed,motion_sensitivity,input_armed,ioin_level,alarmpresetsit,iolinkage,ioout_level,mail,snapshot,upload_interval,record);
     
     
     
@@ -432,6 +432,15 @@ int HudIsBecome = 0;
 //然后，如果接收到推送信息，就是这个了，因为测试有限，我们就在应用程序的图标上面显示一个红色背景的消息数量吧：
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        AudioServicesPlaySystemSound(1007);
+    }
+    
+    NSLog(@"jieshoudaodexinxi shi  %@",userInfo);
+    
+    
     NSArray *array = [[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] componentsSeparatedByString:@","];
     NSDate *date = [NSDate date];
     NSTimeInterval time = [date timeIntervalSince1970];
@@ -443,7 +452,7 @@ int HudIsBecome = 0;
     [self.messageArray addObject:messageArray1];
     [self.systemMessageArray addObject:messageArray1];
     
-    NSLog(@"jieshoudaodexinxi shi  %@",userInfo);
+   
     
     
     

@@ -11,9 +11,13 @@
 #import <AdSupport/ASIdentifierManager.h>
 #import "HomeViewController.h"
 #import "LoginRegisterViewController.h"
-
+#import "Activity.h"
 @interface LoginRegisterViewController ()
+{
 
+    Activity *activity;
+
+}
 @property (nonatomic) BOOL keyboardShowed;
 @property (nonatomic,assign) BOOL agreeOrNot;
 
@@ -43,6 +47,10 @@
     buttonImage.image = [UIImage imageNamed:@"notAgree.png"];
     buttonImage.tag = 2;
     [_agreeMentBtn addSubview:buttonImage];
+    
+    
+    
+    activity = [[Activity alloc] initWithActivity:self.view];
 }
 
 - (void)didReceiveMemoryWarning
@@ -117,10 +125,12 @@
     [appDelegate.appDefault setObject:babywith_gate_address forKey:@"BabyWith_address_api"];
     [self macAddressGet];
     
+            [activity start];
     BOOL result = [appDelegate.webInfoManger UserRegisterUsingUser:phoneStr Vesting:@"86" RefistType:@"1" Password:@"" Mac:[appDelegate.appDefault objectForKey:@"Mac_self"]];
     
     if (result)
     {
+        
         
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
@@ -137,6 +147,8 @@
             
             if (result)
             {
+                [activity stop];
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"MoveToMain" object:nil];
 
             }
@@ -146,6 +158,7 @@
     }
     else
     {
+        [activity stop];
         [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
     }
         }

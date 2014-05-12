@@ -9,8 +9,14 @@
 #import "SetPasswordViewController.h"
 #import "MainAppDelegate.h"
 #import "WebInfoManager.h"
+#import "Activity.h"
 @interface SetPasswordViewController ()
+{
 
+    Activity *activity;
+
+
+}
 @end
 
 @implementation SetPasswordViewController
@@ -31,6 +37,8 @@
     _passwordField.secureTextEntry = YES;
     [self configurationForGreenButton:_hidePass];
     [self configurationForGreenButton:_submit];
+    
+    activity = [[Activity alloc] initWithActivity:self.view];
 
 }
 
@@ -78,8 +86,12 @@
         return;
     }
     
+    
+    [activity start];
     BOOL result = [appDelegate.webInfoManger UserModifyPasswordUsingToken:[appDelegate.appDefault objectForKey:@"Token"] Password:@"" NewPassword:_passwordField.text];
     if (result){
+        
+        [activity stop];
         
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
@@ -97,6 +109,8 @@
         
     }else{
         
+        [activity stop];
+
         [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
     }
     

@@ -293,6 +293,11 @@
     }
 }
 //代理方法，这里面不需要写什么
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    
+    
+    
+    
 }
 @end

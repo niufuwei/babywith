@@ -26,7 +26,6 @@
 #define ITEM_WIDTH  (64)
 #define ITEM_HEIGTH (36)
 #define kArchivingDataKey @"record_image"
-
 AVAudioPlayer *photoSound;           //播放拍照时候的声音
 
 
@@ -266,11 +265,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becameActive:) name:@"becameActive" object:nil];
     
     
-    //[_currentDeviceDic addEntriesFromDictionary:[appDelegate.appDefault objectForKey:@"Device_selected"]];
     _currentDeviceDic  = [appDelegate.appDefault objectForKey:@"Device_selected"];
     NSLog(@"current dic is %@",_currentDeviceDic);
     
-    //[appDelegate.appDefault setObject:@"0" forKey:[[_currentDeviceDic objectForKey:@"device_id"] objectForKey:@"invert"]];
     
     
     
@@ -853,6 +850,12 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     //ULog(@"H264Data is %d",length);
     
     
+    NSLog(@"视频数据、、、、、、、、、、、、、、、");
+    
+    
+    
+    
+
 }
 
 -(void)ShowMainList:(id *)sender
@@ -1118,7 +1121,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 }
 
 -(void)startPPPP:(NSDictionary *)device{
-//    appDelegate.m_PPPPChannelMgt->Start([[device objectForKey:@"device_id"] UTF8String], [[device objectForKey:@"user"] UTF8String],[[device objectForKey:@"pass"] UTF8String]);
     appDelegate.m_PPPPChannelMgt->Start([[device objectForKey:@"device_id"] UTF8String], (char *)[DeviceInitUser UTF8String],[[device objectForKey:@"pass"] UTF8String]);
 }
 
@@ -1273,9 +1275,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     appDelegate.m_PPPPChannelMgt->CameraControl( (char *)[_cameraID UTF8String],13, [[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"quality"] integerValue]);
                     
                     //设置移动侦测
-                    appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[_cameraID UTF8String],[[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue], 1, 1, 0, 0, 1, 0, 0, 0, 0);
+                int  i =    appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[_cameraID UTF8String],[[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue], 1, 1, 0, 0, 1, 0, 0, 0, 0);
 
-                    NSLog(@"移动侦测的参数是%d",[[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue]);
+                    NSLog(@"移动侦测的参数是%d",i);
                     //[self performSelectorOnMainThread:@selector(Finish:) withObject:@"1" waitUntilDone:NO];
                 }
             }
@@ -1335,31 +1337,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     
     [self ActionForStopVideo:0 RemindFlag:0];
     
-//    [self stopVideo];
-//    _switchFlag = 0;
-//    if (_listenFlag == 1) {
-//        appDelegate.m_PPPPChannelMgt->StopPPPPAudio([_cameraID UTF8String]);
-//        _listenFlag = 0;
-//    }else if(_talkFlag == 1){
-//        appDelegate.m_PPPPChannelMgt->StopPPPPTalk([_cameraID UTF8String]);
-//        _talkFlag = 0;
-//    }
-//    
 
-//    
-//    //竖屏工具栏
-//    ((UIButton *)[self.view viewWithTag:1]).enabled = NO;
-//    ((UIButton *)[self.view viewWithTag:2]).enabled = NO;
-//    [(UIButton *)[self.view viewWithTag:2] setImage:[UIImage imageNamed:@"headphoneButton.png"] forState:UIControlStateNormal];
-//    ((UIButton *)[self.view viewWithTag:3]).enabled = NO;
-//    
-//    //横屏工具栏
-//    ((UIButton *)[self.view viewWithTag:2001]).enabled = NO;
-//    [(UIButton *)[self.view viewWithTag:2001] setImage:[UIImage imageNamed:@"vertical_headphoneButton.png"] forState:UIControlStateNormal];
-//    ((UIButton *)[self.view viewWithTag:3001]).enabled = NO;
-//    
-//    [_imageArray removeAllObjects];
-//    _photoCount = 0;
 
     
     [self makeAlert:@"看护器连接断开，请确认。"];
@@ -1569,15 +1547,15 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 
         
     }
-    if ([[[appDelegate.appDefault objectForKey:[ _currentDeviceDic objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue])
-    {
-        int alerm =[[[appDelegate.appDefault objectForKey:[ _currentDeviceDic objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue];
-        if (alerm == 1)
-        {
-            AudioServicesPlaySystemSound(1007);
-            
-        }
-    }
+//    if ([[[appDelegate.appDefault objectForKey:[ _currentDeviceDic objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue])
+//    {
+//        int alerm =[[[appDelegate.appDefault objectForKey:[ _currentDeviceDic objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue];
+//        if (alerm == 1)
+//        {
+//            AudioServicesPlaySystemSound(1007);
+//            
+//        }
+//    }
     NSLog(@"视图出现");
     
     
@@ -1604,11 +1582,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     
     if (_listenFlag == 1) {
         appDelegate.m_PPPPChannelMgt->StopPPPPAudio([_cameraID UTF8String]);
-        [(UIButton *)[self.view viewWithTag:2] setImage:[UIImage imageNamed:@"headphoneButton.png"] forState:UIControlStateNormal];
         _listenFlag = 0;
     }else if(_talkFlag == 1){
         appDelegate.m_PPPPChannelMgt->StopPPPPTalk([_cameraID UTF8String]);
-        [(UIButton *)[self.view viewWithTag:3] setImage:[UIImage imageNamed:@"callButton.png"] forState:UIControlStateNormal];
         _talkFlag = 0;
     }
 }
@@ -1677,13 +1653,11 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     //竖屏工具条
     ((UIButton *)[self.view viewWithTag:1]).enabled = NO;
     ((UIButton *)[self.view viewWithTag:2]).enabled = NO;
-    [(UIButton *)[self.view viewWithTag:2] setImage:[UIImage imageNamed:@"headphoneButton.png"] forState:UIControlStateNormal];
     ((UIButton *)[self.view viewWithTag:3]).enabled = NO;
     [(UIButton *)[self.view viewWithTag:3] setImage:[UIImage imageNamed:@"callButton.png"] forState:UIControlStateNormal];
     
     //横屏工具条
     ((UIButton *)[self.view viewWithTag:2001]).enabled = NO;
-    [(UIButton *)[self.view viewWithTag:2001] setImage:[UIImage imageNamed:@"vertical_headphoneButton.png"] forState:UIControlStateNormal];
     ((UIButton *)[self.view viewWithTag:3001]).enabled = NO;
     [(UIButton *)[self.view viewWithTag:3001] setImage:[UIImage imageNamed:@"vertical_callButton.png"] forState:UIControlStateNormal];
     [(UIButton *)[self.view viewWithTag:3001] setImage:[UIImage imageNamed:@"vertical_callButton_highlighted.png"] forState:UIControlStateHighlighted];
@@ -1706,11 +1680,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     } completionBlock:^{
         [indicator removeFromSuperview];
         
-//        NSLog(@"视频开启.........");
-//        //移动侦测回调接收
-//        appDelegate.m_PPPPChannelMgt->SetAlarmDelegate((char *)[_cameraID UTF8String],appDelegate);
-//        //设置移动侦测
-//        appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[_cameraID UTF8String], [[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue], 7, 0, 0, 0, 0, 0, 0, 0, 0);
+
         
         UIImageView *imageView = (UIImageView *)[self.navigationItem.titleView viewWithTag:20];
         [imageView setImage:[UIImage imageNamed:@"switch_on.png"]];
@@ -1763,12 +1733,10 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         //竖屏工具栏
         ((UIButton *)[self.view viewWithTag:1]).enabled = NO;
         ((UIButton *)[self.view viewWithTag:2]).enabled = NO;
-        //[(UIButton *)[self.view viewWithTag:2] setImage:[UIImage imageNamed:@"headphoneButton.png"] forState:UIControlStateNormal];
         ((UIButton *)[self.view viewWithTag:3]).enabled = NO;
         
         //横屏工具栏
         ((UIButton *)[self.view viewWithTag:2001]).enabled = NO;
-        //[(UIButton *)[self.view viewWithTag:2001] setImage:[UIImage imageNamed:@"vertical_headphoneButton.png"] forState:UIControlStateNormal];
         ((UIButton *)[self.view viewWithTag:3001]).enabled = NO;
         _switchFlag = 0;
         _listenFlag = 0;

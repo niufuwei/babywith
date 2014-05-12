@@ -15,8 +15,14 @@
 #import "LoginRegisterViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "HomeViewController.h"
+#import "Activity.h"
 @interface LoginViewController ()
+{
 
+    Activity *activity;
+
+
+}
 @property (nonatomic) BOOL keyboardShowed;
 
 @end
@@ -44,13 +50,16 @@
     [self configurationForGreenButton:_loginButton];
     [self titleSet:@"登陆"];
     
-
+    activity = [[Activity alloc] initWithActivity:self.view];
+    
     if (!([[appDelegate.appDefault objectForKey:@"Password"] length] == 0) && !([[appDelegate.appDefault objectForKey:@"Username"] length] == 0 ))
     {
         
         [self performSelector:@selector(AutoLogin) withObject:nil afterDelay:0.1];
         
     }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,11 +150,15 @@
     //检查电话号码是否符合规格
     int phone_email_flag = [self checkTel:self.phoneTF.text Type:1];
 
-    if (phone_email_flag < 0 )
+    if (phone_email_flag == 0 )
     {
         return;
     }
 
+    else
+    {
+    [activity start];
+    
 
       //登陆校验，发送消息到服务器
     BOOL result = [appDelegate.webInfoManger UserLoginUsingUsername:self.phoneTF.text Password:self.passwordTF.text Version:ClientVersion Vesting:@"86" ClientType:@"2" DeviceToken:appDelegate.deviceToken];
@@ -153,6 +166,8 @@
     
     if (result) {
        
+        [activity stop];
+        
         //放进数据库，保证下次进来的时候就是最新的用户信息
         [appDelegate.appDefault setObject:self.phoneTF.text forKey:@"Username"];
         [appDelegate.appDefault setObject:self.passwordTF.text forKey:@"Password"];
@@ -162,8 +177,11 @@
     }
     else
     {
+        [activity stop];
+
         //提示框提示错误
         [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
+    }
     }
 
 }

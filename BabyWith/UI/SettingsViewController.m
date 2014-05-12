@@ -19,8 +19,15 @@
 #import "SetPasswordViewController.h"
 
 #import "MessageProcess.h"
-@interface SettingsViewController ()
 
+#import "Activity.h"
+@interface SettingsViewController ()
+{
+
+
+    Activity *activity;
+
+}
 @end
 
 @implementation SettingsViewController
@@ -56,7 +63,7 @@
     _tableList.scrollEnabled = NO;
     [self.view addSubview:_tableList];
     _tableList.frame = CGRectMake(0, 90, 320, [self tableView:_tableList numberOfRowsInSection:0]*[self tableView:_tableList heightForRowAtIndexPath:0]);
-    
+    activity = [[Activity alloc] initWithActivity:self.view];
     
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshMessageCount:) name:@"RefreshMessageCount" object:nil] ;
@@ -96,9 +103,13 @@
     //修改昵称和系统消息的cell稍有不同
     if ([indexPath row] == 0) {
         
-        if (![[appDelegate.appDefault objectForKey:@"Appel_self"]  isEqual: @""]) {
+        
+        
+        NSLog(@"昵称////////////////////%@",[appDelegate.appDefault objectForKey:@"Appel_self"]);
+        if (![[appDelegate.appDefault objectForKey:@"Appel_self"]  isEqual: @""])
+        {
             NSLog(@"昵称是%@",[appDelegate.appDefault objectForKey:@"Appel_self"]);
-            cell.statusLabel.text = @"";
+            cell.statusLabel.text = [NSString stringWithFormat:@"%@",[appDelegate.appDefault objectForKey:@"Appel_self"]];
 
         }
         else
@@ -175,10 +186,13 @@
 {
     
     
+    [activity start];
    BOOL result = [appDelegate.webInfoManger UserLogoutUsingToken:[appDelegate.appDefault objectForKey:@"Token"]];
     if(result)
     {
     
+        [activity stop];
+        
         if (![[appDelegate.appDefault objectForKey:@"Password"] isEqualToString:@""])
         {
             [appDelegate.appDefault setObject:@"" forKey:@"Username"];
@@ -197,6 +211,8 @@
     else
     {
     
+        [activity stop];
+
     [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
     
     }

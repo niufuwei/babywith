@@ -318,7 +318,6 @@
             
             //设置移动侦测
             appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], [[[appDelegate.appDefault objectForKey:[_deviceDictionary objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue], 7, 0, 0, 0, 0, 0, 0, 0, 0);
-            
             //获取WIFI设置信息
             appDelegate.m_PPPPChannelMgt->PPPPSetSystemParams((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], MSG_TYPE_GET_PARAMS, nil, 0);
             
@@ -514,7 +513,7 @@
             
             if ([self CheckOnline] == 2)
             {
-                appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], 2-cell.tag, 7, 0, 0, 0, 0, 0, 0, 0, 0);
+                appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], 2-cell.tag, 1, 1, 0, 0, 1, 0, 0, 0, 0);
                 MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView: self.view];
                 indicator.labelText = @"移动侦测设置成功";
                 indicator.mode = MBProgressHUDModeText;

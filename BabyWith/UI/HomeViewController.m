@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    _homeTableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 200) style:UITableViewStyleGrouped];
+    _homeTableView1 = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 44 - 50) style:UITableViewStyleGrouped];
     _homeTableView1.delegate = self;
     _homeTableView1.dataSource = self;
     _homeTableView1.backgroundView = nil;
@@ -98,7 +98,8 @@
     }
     else if (section == 2)
     {
-        return self.deviceArray.count;
+        NSLog(@"第三个section是%d",[self.deviceArray count]);
+        return [self.deviceArray count];
     }
     return 0;
 }
@@ -155,7 +156,7 @@
     }
     else if (indexPath.section == 2)
     {
-        cell3.textLabel.text = [[self.deviceArray objectAtIndex: indexPath.row]objectForKey:@"name"];
+        cell3.textLabel.text = [[self.deviceArray  objectAtIndex: indexPath.row ]objectForKey:@"name"];
         cell3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell3.backgroundColor = babywith_background_color;
 

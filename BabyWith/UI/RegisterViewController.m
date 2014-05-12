@@ -14,10 +14,14 @@
 #import <AdSupport/ASIdentifierManager.h>
 #import "CameraAddingViewController.h"
 #import "HaveSharedDeviceViewController.h"
-
+#import "Activity.h"
 
 @interface RegisterViewController ()
+{
 
+    Activity *activity ;
+
+}
 
 @property (nonatomic) BOOL keyboardShowed;
 
@@ -40,6 +44,9 @@
     // Do any additional setup after loading the view from its nib.
     [self titleSet:@"babywith"];
     [self configurationForGreenButton:_registerButton];
+    
+   
+    activity = [[Activity alloc] initWithActivity:self.view];
     
     
     NSLog(@"是否是第一次登陆%@",[USRDEFAULT objectForKey:@"First_use_flag"]);
@@ -118,11 +125,17 @@
     //注册
     [self macAddressGet];
     
+    
+    [activity start];
+    
     BOOL result = [appDelegate.webInfoManger UserRegisterUsingUser:phoneStr Vesting:@"86" RefistType:@"1" Password:@"" Mac:[appDelegate.appDefault objectForKey:@"Mac_self"]];
 
     
     //    BOOL result = [appDelegate.webInfoManger UserRegisterUsingUser:userTextField.text Checkcode:[appDelegate.appDefault objectForKey:@"Phone_checkcode"] Password:passwdTextField.text Mac:[appDelegate.appDefault objectForKey:@"Mac_self"] RegistType:[NSString stringWithFormat:@"%d",phone_email_flag] Vesting:@"86"];
         if (result) {
+            
+            
+            [activity stop];
             
             UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
@@ -156,6 +169,11 @@
                 }
             }];
         }else{
+            
+            
+
+            [activity stop];
+            
             [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
         }
     

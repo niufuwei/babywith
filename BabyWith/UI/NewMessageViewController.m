@@ -36,6 +36,8 @@
     _messageTableView.allowsSelection = NO;
     _label = [[UILabel alloc] init];
     
+    [self setTitle:@"新分享设备"];
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {

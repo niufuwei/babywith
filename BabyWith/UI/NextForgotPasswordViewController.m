@@ -11,8 +11,15 @@
 #import "WebInfoManager.h"
 #import "UIViewController+Alert.h"
 #import "HomeViewController.h"
+#import "Activity.h"
 @interface NextForgotPasswordViewController ()
+{
 
+    
+    Activity *activity;
+
+
+}
 @property (nonatomic) BOOL isShowing;
 
 @end
@@ -41,7 +48,7 @@
     [self configurationForGreenButton:_submitButton];
    // NSLog(@"手机号码是%@",_configPhoneNum);
     
-    
+    activity = [[Activity alloc] initWithActivity:self.view];
 
 }
 
@@ -54,10 +61,14 @@
 
 - (IBAction)getCheckCode:(id)sender {
     
+    [activity start];
     BOOL result = [appDelegate.webInfoManger UserForgetPasswordUsingPhone:_configPhoneNum Vesting:@"86"];
     if (!result) {
+        [activity stop];
         [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
     }else{
+        [activity stop];
+
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
         indicator.labelText = @"验证码已发送。";

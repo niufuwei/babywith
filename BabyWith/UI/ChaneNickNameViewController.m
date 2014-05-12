@@ -10,8 +10,14 @@
 #import "WebInfoManager.h"
 #import "MainAppDelegate.h"
 #import "Configuration.h"
+#import "Activity.h"
 @interface ChaneNickNameViewController ()
+{
 
+    Activity *activity;
+
+
+}
 @end
 
 @implementation ChaneNickNameViewController
@@ -40,6 +46,7 @@
     [self.view addSubview:subMit];
     
     
+    activity = [[Activity alloc] initWithActivity:self.view];
 
 
 }
@@ -67,11 +74,12 @@
     }
     else
     {
-        
+        [activity start];
         BOOL result = [appDelegate.webInfoManger UserModifyAppelUsingAppel:_nickName.text Toekn:[appDelegate.appDefault objectForKey:@"Token"]];
         if (result)
         {
             
+            [activity stop];
             UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
             indicator.labelText = @"修改成功";
@@ -82,11 +90,14 @@
             } completionBlock:^{
                 [indicator removeFromSuperview];
                 [appDelegate.appDefault setObject:_nickName.text forKey:@"Appel_self"];
+                NSLog(@"昵称是+++++++++++++++++%@",[appDelegate.appDefault objectForKey:@"Appel_self"]);
                 [NOTICECENTER postNotificationName:@"MoveToMain" object:nil];
             }];
         }
         else
         {
+            [activity stop];
+
             [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
         }
         

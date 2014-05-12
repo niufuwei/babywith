@@ -34,7 +34,6 @@ public:
     int SetOnlineFlag(const char *szDID ,int flag);
     int SetWifiParamGettingDelegate(char *szDID, id delegate);
     int ChangeStatusDelegate(const char * szDID, id delegate);
-//    int CameraControl(const char *szDID, int param, int value);
 };
 
 #endif

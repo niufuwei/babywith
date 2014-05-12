@@ -10,7 +10,17 @@
 #import "UIViewController+Alert.h"
 #import "MainAppDelegate.h"
 #import "WebInfoManager.h"
+#import "Activity.h"
 @interface ChangePasswordViewController ()
+
+
+{
+
+
+    Activity *activity;
+}
+
+
 @property (nonatomic) BOOL keyboardShowed;
 
 @end
@@ -71,6 +81,10 @@
     _oldPass.secureTextEntry = YES;
     _freshPass.delegate = self;
     _freshPass.secureTextEntry = YES;
+    
+    
+    
+    activity = [[Activity alloc] initWithActivity:self.view];
     
    
 }
@@ -164,10 +178,11 @@
         return;
     }
     
+    [activity start];
     BOOL result = [appDelegate.webInfoManger UserModifyPasswordUsingToken:[appDelegate.appDefault objectForKey:@"Token"] Password:_oldPass.text NewPassword:_freshPass.text];
     if (result)
     {
-        
+        [activity stop];
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
         indicator.labelText = @"密码修改成功";
@@ -184,7 +199,8 @@
         
     }
     else
-    {
+    {        [activity stop];
+
         [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
     }
     
