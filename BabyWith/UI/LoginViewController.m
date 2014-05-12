@@ -150,7 +150,8 @@
     //检查电话号码是否符合规格
     int phone_email_flag = [self checkTel:self.phoneTF.text Type:1];
 
-    if (phone_email_flag == 0 )
+
+    if (phone_email_flag ==  0 )
     {
         return;
     }

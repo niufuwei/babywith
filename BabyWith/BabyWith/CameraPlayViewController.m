@@ -59,16 +59,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     [super viewDidLoad];
 
     NSLog(@"camera play view did load!");
-    
-    
-    
+
     //导航条设置
     {
-        
-        
-        
-        
-        
         UIButton *navButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 35)];
         [navButton setTitle:@"设置" forState:UIControlStateNormal];
         [navButton addTarget:self action:@selector(cameraSettings:) forControlEvents:UIControlEventTouchUpInside];
@@ -78,7 +71,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         _switchFlag = 0;
 
     }
-    
     
     //显示视频的画面
     _playView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320,  180)];
@@ -409,8 +401,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 }
 #pragma mark -点击按钮引发的事件
 -(void)ButtonPressed:(UIButton *)button{
-    
-    
+  
     //截屏
     if (button.tag == 1)
     {
@@ -494,8 +485,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             [self makeAlert:@"保存图片错误!"];
         }
 
-        
-        
+   
         button.enabled = YES;
         [_collectionView reloadData];
     
@@ -531,8 +521,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             
             
         }
-        
-        
+      
         
     }
     else if (button.tag == 3)
@@ -542,8 +531,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         SharedPersonsViewController *sharedPersonVC = [[SharedPersonsViewController alloc] initWithDeviceID:[_currentDeviceDic objectForKey:@"device_id"]];
         [self.navigationController pushViewController:sharedPersonVC animated:YES];
         
-    
-    
+
     }
     else if(button.tag == 13)
     {//开启对讲
@@ -753,8 +741,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             NSDateComponents *nowComp = [myCal components:units fromDate:date];
             //记录ID
             NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
-            
-            
+        
             //视频流相对路径
             NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@.pm4",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
             NSString *vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];

@@ -80,9 +80,6 @@
     
     
     
-    
-    
-    
     int i=0;
     for (NSDictionary *dic in _photoArray)
     {
@@ -162,12 +159,7 @@
             }
             
             
-            
         }];
-        
-        
-
-        
         
         
     });

@@ -124,8 +124,7 @@
     if (!cell3) {
         cell3 = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier3];
     }
-    
-    
+
     
     if (indexPath.section == 0)
       {

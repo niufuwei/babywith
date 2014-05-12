@@ -226,8 +226,6 @@
         NSLog(@"scaleImage = [%f] [%f]", scaleImage.size.width, scaleImage.size.height);
        
         
-        
-        
         UIImage *imageForUse = [UIImage imageWithCGImage:scaleImage.CGImage scale:1 orientation:orientation];//缩图
         UIButton *showButton = (UIButton *)[self.view viewWithTag:10];
         [showButton setBackgroundImage:imageForUse forState:UIControlStateNormal];//左下角的方形的按钮显示拍下来的图片
@@ -245,7 +243,6 @@
             [self makeAlert:@"保存图片出错。"];
         }
         
-        
         //获取快照
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date",  [NSString stringWithFormat:@"%d", width], @"width", [NSString stringWithFormat:@"%d", height], @"height",nil];
         [_imageArray addObject:dic];//添加到数组
@@ -257,6 +254,7 @@
         
         //最多拍五张
         if ([_imageArray count] == 5) {
+            
             UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
             indicator.labelText = @"已拍了5张照片，去处理咯";
