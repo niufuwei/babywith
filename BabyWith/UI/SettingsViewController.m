@@ -187,17 +187,8 @@
 //    alert.delegate=self;
     [alert show];
     
-    
-    [activity start];
-   BOOL result = [appDelegate.webInfoManger UserLogoutUsingToken:[appDelegate.appDefault objectForKey:@"Token"]];
-    if(result)
-    {
-    
-        [activity stop];
-        
-        if (![[appDelegate.appDefault objectForKey:@"Password"] isEqualToString:@""])
-}
-#pragma mark - 
+ }
+#pragma mark -
 #pragma mark - UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
