@@ -384,7 +384,6 @@ int ppre_month=13;
     imageView.frame = CGRectMake(0, 0, 75.5, 75.5);
     
     
-    
     //假如是视频图片，要加一个按钮一样的图片加以区别
     if ([[dic objectForKey:@"is_vedio"] intValue] ==1)
     {

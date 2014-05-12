@@ -197,7 +197,8 @@
         
         if (![[appDelegate.appDefault objectForKey:@"Password"] isEqualToString:@""])
 }
-#pragma mark - 
+}
+#pragma mark -
 #pragma mark - UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
