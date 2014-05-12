@@ -98,7 +98,7 @@
     }
     else if (section == 2)
     {
-        return self.deviceArray.count;
+        return [self.deviceArray count];
     }
     return 0;
 }
@@ -123,8 +123,7 @@
     if (!cell3) {
         cell3 = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier3];
     }
-    
-    
+
     
     if (indexPath.section == 0)
       {

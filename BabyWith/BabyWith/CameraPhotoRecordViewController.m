@@ -39,8 +39,6 @@
     self.view.backgroundColor = [UIColor blackColor];
     //导航条设置
     {
-        
-        
         //右导航--删除按钮
         UIButton *setButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 74, 36)];
         
@@ -112,12 +110,7 @@
             
         }
        
-        
-
         [view addSubview:imageView];
-        
-        
-        
         
         [_photoScrollView addSubview:view];
         
@@ -178,7 +171,6 @@
     //副线程处理数据，在主线程更新完UI之后，在提示加载的同时
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         // 处理耗时操作的代码块...
-        
             NSString *vedioPath = [[_photoArray objectAtIndex:currentPage] objectForKey:@"record_data_path"];
             NSString *vedioPath1 = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:vedioPath]];
             //取得相应的视频数据
@@ -187,8 +179,7 @@
             //数据的总长度
             
             NSLog(@"获取数据完毕");
-            
-            
+        
             int totalLengt = [_vedioData length];
             //有多少个字节流数据，就是有多少张图片
             NSLog(@"totalLength is %d",totalLengt);

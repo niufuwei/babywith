@@ -125,7 +125,6 @@
 		EF233DB11786C3AC0030DB4C /* headIcon_2.png in Resources */ = {isa = PBXBuildFile; fileRef = EF233DAB1786C3AC0030DB4C /* headIcon_2.png */; };
 		EF233DB21786C3AC0030DB4C /* headIcon_3.png in Resources */ = {isa = PBXBuildFile; fileRef = EF233DAC1786C3AC0030DB4C /* headIcon_3.png */; };
 		EF2EEB921799239900CFE7C8 /* recordClock.png in Resources */ = {isa = PBXBuildFile; fileRef = EF2EEB911799239900CFE7C8 /* recordClock.png */; };
-		EF3578BE17AB6122009C6516 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578BD17AB6122009C6516 /* logo.png */; };
 		EF3578C217AB7654009C6516 /* login_register_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578BF17AB7653009C6516 /* login_register_highlight.png */; };
 		EF3578C317AB7654009C6516 /* login_register.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578C017AB7653009C6516 /* login_register.png */; };
 		EF3578C417AB7654009C6516 /* logo_login.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578C117AB7654009C6516 /* logo_login.png */; };
@@ -147,6 +146,7 @@
 		EF57848D1781875200D1C9C4 /* messageBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = EF57848C1781875200D1C9C4 /* messageBorder.png */; };
 		EF5B5CA717B24B04000935DB /* camera_shoot_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5B5CA517B24B04000935DB /* camera_shoot_highlight.png */; };
 		EF5B5CA817B24B04000935DB /* camera_shoot.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5B5CA617B24B04000935DB /* camera_shoot.png */; };
+		EF71ED94191CD08A00A434CB /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = EF71ED93191CD08A00A434CB /* logo.png */; };
 		EF96F12E18D2E110002C1245 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF96F12B18D2E110002C1245 /* Default-568h@2x.png */; };
 		EF96F12F18D2E110002C1245 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = EF96F12C18D2E110002C1245 /* Default.png */; };
 		EF96F13018D2E110002C1245 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF96F12D18D2E110002C1245 /* Default@2x.png */; };
@@ -484,7 +484,6 @@
 		EF233DAB1786C3AC0030DB4C /* headIcon_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headIcon_2.png; sourceTree = "<group>"; };
 		EF233DAC1786C3AC0030DB4C /* headIcon_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headIcon_3.png; sourceTree = "<group>"; };
 		EF2EEB911799239900CFE7C8 /* recordClock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recordClock.png; sourceTree = "<group>"; };
-		EF3578BD17AB6122009C6516 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		EF3578BF17AB7653009C6516 /* login_register_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_register_highlight.png; sourceTree = "<group>"; };
 		EF3578C017AB7653009C6516 /* login_register.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_register.png; sourceTree = "<group>"; };
 		EF3578C117AB7654009C6516 /* logo_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_login.png; sourceTree = "<group>"; };
@@ -508,6 +507,7 @@
 		EF57848C1781875200D1C9C4 /* messageBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageBorder.png; sourceTree = "<group>"; };
 		EF5B5CA517B24B04000935DB /* camera_shoot_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_shoot_highlight.png; sourceTree = "<group>"; };
 		EF5B5CA617B24B04000935DB /* camera_shoot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_shoot.png; sourceTree = "<group>"; };
+		EF71ED93191CD08A00A434CB /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		EF96F12B18D2E110002C1245 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		EF96F12C18D2E110002C1245 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		EF96F12D18D2E110002C1245 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -1316,6 +1316,7 @@
 		EFF53EE31779BB8400C4AEB4 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				EF71ED93191CD08A00A434CB /* logo.png */,
 				EFE4CC2517AEBAA80095B476 /* add.png */,
 				EFD83C4017B0D0D3006CCF05 /* addRecord.png */,
 				EFD83C3F17B0D0D3006CCF05 /* addRecord_highlight.png */,
@@ -1379,7 +1380,6 @@
 				EF3578D117AB8ED0009C6516 /* login_forget_highlight.png */,
 				EF3578C017AB7653009C6516 /* login_register.png */,
 				EF3578BF17AB7653009C6516 /* login_register_highlight.png */,
-				EF3578BD17AB6122009C6516 /* logo.png */,
 				EF3578C117AB7654009C6516 /* logo_login.png */,
 				EF3578C917AB8AC2009C6516 /* menu_background.png */,
 				EFD83C8217B0F740006CCF05 /* message.png */,
@@ -1758,6 +1758,7 @@
 			files = (
 				EFD666421834C0E000DD2A02 /* lock_on.png in Resources */,
 				EFF53E581779B64F00C4AEB4 /* InfoPlist.strings in Resources */,
+				EF71ED94191CD08A00A434CB /* logo.png in Resources */,
 				EFF53F2B1779BB8500C4AEB4 /* cutButton.png in Resources */,
 				EFF53F411779BB8500C4AEB4 /* numMessage.png in Resources */,
 				EFF53F551779BB8500C4AEB4 /* setSelf.png in Resources */,
@@ -1814,7 +1815,6 @@
 				EFFDA5F517A8BCBE0090EFBB /* flashPage_5.png in Resources */,
 				7196B07B18D837C400B8D8BB /* ChaneNickNameViewController.xib in Resources */,
 				EFD666501834CA6500DD2A02 /* vertical_switch_on.png in Resources */,
-				EF3578BE17AB6122009C6516 /* logo.png in Resources */,
 				EF3578C217AB7654009C6516 /* login_register_highlight.png in Resources */,
 				71A86CEB190A04FC004AFA50 /* help.html in Resources */,
 				7198D5E018D6D6C70011EA28 /* 记录-按下.png in Resources */,
@@ -2070,11 +2070,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8684CAAE-50D7-4EAA-A6BD-51495C84D32B";
+				SDKROOT = iphoneos7.1;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -2099,10 +2099,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8684CAAE-50D7-4EAA-A6BD-51495C84D32B";
+				SDKROOT = iphoneos7.1;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -2133,11 +2133,14 @@
 					"\"$(SRCROOT)/BabyWith/ffmpeg/i386\"",
 					"\"$(SRCROOT)/BabyWith\"",
 				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
-				SDKROOT = iphoneos;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8684CAAE-50D7-4EAA-A6BD-51495C84D32B";
+				SDKROOT = iphoneos7.1;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/BabyWith/ffmpeg\" \"$(SRCROOT)/BabyWith/ffmpeg/i386\" \"$(SRCROOT)/BabyWith/Classes\"";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2169,13 +2172,14 @@
 					"\"$(SRCROOT)/BabyWith/ffmpeg/i386\"",
 					"\"$(SRCROOT)/BabyWith\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C5950854-1CE5-4EF7-BCFB-B66F50138C12";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8684CAAE-50D7-4EAA-A6BD-51495C84D32B";
+				SDKROOT = iphoneos7.1;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/BabyWith/ffmpeg\" \"$(SRCROOT)/BabyWith/ffmpeg/i386\" \"$(SRCROOT)/BabyWith/Classes\"";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

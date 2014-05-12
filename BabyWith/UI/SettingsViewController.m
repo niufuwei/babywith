@@ -62,7 +62,6 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshMessageCount:) name:@"RefreshMessageCount" object:nil] ;
    // [self performSelector:@selector(afterViewdidLoad) withObject:nil afterDelay:0];
     
-    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -173,37 +172,45 @@
 }
 - (IBAction)logOut:(id)sender
 {
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出登录吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+//    alert.delegate=self;
+    [alert show];
     
     
-   BOOL result = [appDelegate.webInfoManger UserLogoutUsingToken:[appDelegate.appDefault objectForKey:@"Token"]];
-    if(result)
-    {
-    
-        if (![[appDelegate.appDefault objectForKey:@"Password"] isEqualToString:@""])
+}
+#pragma mark - 
+#pragma mark - UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        BOOL result = [appDelegate.webInfoManger UserLogoutUsingToken:[appDelegate.appDefault objectForKey:@"Token"]];
+        if(result)
         {
-            [appDelegate.appDefault setObject:@"" forKey:@"Username"];
-            [appDelegate.appDefault setObject:@"" forKey:@"Password"];
-            [NOTICECENTER postNotificationName:@"MoveToLogin" object:nil];
+            
+            if (![[appDelegate.appDefault objectForKey:@"Password"] isEqualToString:@""])
+            {
+                [appDelegate.appDefault setObject:@"" forKey:@"Username"];
+                [appDelegate.appDefault setObject:@"" forKey:@"Password"];
+                [NOTICECENTER postNotificationName:@"MoveToLogin" object:nil];
+            }
+            else
+            {
+                
+                SetPasswordViewController *setPass = [[SetPasswordViewController alloc] init];
+                [self.navigationController pushViewController:setPass animated:YES];
+            }
+            
+            
         }
         else
         {
             
-            SetPasswordViewController *setPass = [[SetPasswordViewController alloc] init];
-            [self.navigationController pushViewController:setPass animated:YES];
+            [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
+            
         }
-    
-        
-    }
-    else
-    {
-    
-    [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
-    
-    }
-    
-    
-}
 
+    }
+}
 
 
 

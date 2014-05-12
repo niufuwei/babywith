@@ -35,7 +35,6 @@ int ppre_month=13;
     UIButton *navButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
     [navButton setImage:[UIImage imageNamed:@"拍照.png"] forState:UIControlStateNormal];
     [navButton setImage:[UIImage imageNamed:@"拍照.png"] forState:UIControlStateHighlighted];
-
     [navButton addTarget:self action:@selector(takePic:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView: navButton];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -57,7 +56,7 @@ int ppre_month=13;
     
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    
+    //
     UICollectionViewFlowLayout *fl =[[UICollectionViewFlowLayout alloc] init];
     _imageCollection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, kScreenHeight - 64 - 44) collectionViewLayout:fl];
     _imageCollection.backgroundColor = [UIColor clearColor];
@@ -68,9 +67,6 @@ int ppre_month=13;
     [_imageCollection registerClass:[HeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:REUSEABLE_HEADER];
     
     [self.view addSubview:_imageCollection];
-    
-    
-    
     
     
 }
@@ -139,16 +135,11 @@ int ppre_month=13;
     {
         [appDelegate.sqliteManager getLocalListofDayCountFromMonth:i Year:_year];
         
-        
-       
         [self setDaysListFromMonth:i Year:_year];
     }
     
     [_imageCollection reloadData];
 
-    
-    
-    
     
 }
 #pragma mark MonthList  Set
@@ -191,12 +182,7 @@ int ppre_month=13;
     }
     //全部记录，取得每个月的之后存入到这个年份里面
     [appDelegate.recordLocalYearMonthListDic setObject:_recordLocalMonthListDic forKey:[NSString stringWithFormat:@"%d", year]];
-    
-    
-    
-    
-   
-    
+
     
 }
 -(int)getDaysFromMonth:(int)month Year:(int)year
@@ -244,8 +230,7 @@ int ppre_month=13;
                 i= 28;
             
             }
-        
-        
+ 
         }
             break;
         case 1:
@@ -256,7 +241,6 @@ int ppre_month=13;
     }
 
     return i;
-
 
 
 }
@@ -286,7 +270,6 @@ int ppre_month=13;
         count += num;
     }
 
-
     NSLog(@"数组是%@,section总数是%@",_countForSectionArray,_sectionArray);
 }
 
@@ -294,7 +277,6 @@ int ppre_month=13;
 -(void)takePic:(UIBarButtonItem *)item
 {
 
-    
     _picker = [[ImagePickerController alloc] init];
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
@@ -325,6 +307,10 @@ int ppre_month=13;
         
         //记录ID
         NSString *record_id = [NSString stringWithFormat:@"%@_%@",[dic objectForKey:@"time" ],[appDelegate.appDefault objectForKey:@"Member_id_self"]];
+        
+        
+        //创建一个自动释放池
+
         
         //图片相对路径
         NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
@@ -398,6 +384,7 @@ int ppre_month=13;
     imageView.frame = CGRectMake(0, 0, 75.5, 75.5);
     
     
+    
     //假如是视频图片，要加一个按钮一样的图片加以区别
     if ([[dic objectForKey:@"is_vedio"] intValue] ==1)
     {
@@ -441,7 +428,6 @@ int ppre_month=13;
     
     NSLog(@"section的个数是%d",[_sectionArray count]);
     return [_sectionArray count];
-    
     
 }
 

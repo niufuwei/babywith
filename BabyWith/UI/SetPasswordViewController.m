@@ -31,6 +31,15 @@
     _passwordField.secureTextEntry = YES;
     [self configurationForGreenButton:_hidePass];
     [self configurationForGreenButton:_submit];
+    
+    [self.hidePass setTitle:@"隐藏密码" forState:UIControlStateNormal];
+    [self.hidePass setTintColor:[UIColor whiteColor]];
+    [self.hidePass setBackgroundColor:babywith_green_color];
+    
+    [self.submit setTitle:@"提交" forState:UIControlStateNormal];
+    [self.submit setTintColor:[UIColor whiteColor]];
+    [self.submit setBackgroundColor:babywith_green_color];
+
 
 }
 
