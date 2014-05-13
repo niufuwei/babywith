@@ -384,6 +384,7 @@ int ppre_month=13;
     imageView.frame = CGRectMake(0, 0, 75.5, 75.5);
     
     
+    
     //假如是视频图片，要加一个按钮一样的图片加以区别
     if ([[dic objectForKey:@"is_vedio"] intValue] ==1)
     {
@@ -404,6 +405,7 @@ int ppre_month=13;
     
     
     headerView.headerLabel.text = [_dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"time_record"] doubleValue]/1000]];
+    
     NSLog(@"头部视图是%@",headerView.headerLabel.text);
     
     return headerView;
