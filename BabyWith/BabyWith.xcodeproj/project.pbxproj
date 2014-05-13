@@ -66,8 +66,6 @@
 		71AA5B9418FA21FB0043D208 /* start1.png in Resources */ = {isa = PBXBuildFile; fileRef = 71AA5B9218FA21FB0043D208 /* start1.png */; };
 		71AA5B9518FA21FB0043D208 /* start2.png in Resources */ = {isa = PBXBuildFile; fileRef = 71AA5B9318FA21FB0043D208 /* start2.png */; };
 		71AA855718EA4C030047FFB9 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AA855618EA4C030047FFB9 /* HeaderView.m */; };
-		71AAF66218ED22E100C3B0D8 /* PhotoScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AAF66018ED22E100C3B0D8 /* PhotoScanViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		71AC1C0618E3BCB200842C38 /* ImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AC1C0418E3BCB200842C38 /* ImagePickerController.m */; };
 		71AC1C0C18E3BFA700842C38 /* 保存.png in Resources */ = {isa = PBXBuildFile; fileRef = 71AC1C0818E3BFA700842C38 /* 保存.png */; };
 		71AC1C0D18E3BFA700842C38 /* 返回.png in Resources */ = {isa = PBXBuildFile; fileRef = 71AC1C0918E3BFA700842C38 /* 返回.png */; };
 		71AC1C0E18E3BFA700842C38 /* 拍照1.png in Resources */ = {isa = PBXBuildFile; fileRef = 71AC1C0A18E3BFA700842C38 /* 拍照1.png */; };
@@ -114,7 +112,6 @@
 		EF1D3C5118D2B2D90079C358 /* LoginRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF1D3C3318D2B2D90079C358 /* LoginRegisterViewController.xib */; };
 		EF1D3C5418D2B2D90079C358 /* NextForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1D3C3818D2B2D90079C358 /* NextForgotPasswordViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		EF1D3C5518D2B2D90079C358 /* NextForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF1D3C3918D2B2D90079C358 /* NextForgotPasswordViewController.xib */; };
-		EF1D3C5618D2B2D90079C358 /* RecordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1D3C3B18D2B2D90079C358 /* RecordsViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		EF1D3C5818D2B2D90079C358 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1D3C3E18D2B2D90079C358 /* RegisterViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		EF1D3C5918D2B2D90079C358 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF1D3C3F18D2B2D90079C358 /* RegisterViewController.xib */; };
 		EF1D3C5A18D2B2D90079C358 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1D3C4118D2B2D90079C358 /* SettingsViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -143,6 +140,9 @@
 		EF3578EA17ABB7B0009C6516 /* personSet_548.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578E617ABB7AB009C6516 /* personSet_548.png */; };
 		EF3578EB17ABB7B0009C6516 /* setSure_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578E717ABB7AC009C6516 /* setSure_highlight.png */; };
 		EF3578EC17ABB7B0009C6516 /* setSure.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578E817ABB7AF009C6516 /* setSure.png */; };
+		EF4459CB1921B08600086EB0 /* ImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4459C61921B08600086EB0 /* ImagePickerController.m */; };
+		EF4459CC1921B08600086EB0 /* PhotoScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4459C81921B08600086EB0 /* PhotoScanViewController.m */; };
+		EF4459CD1921B08600086EB0 /* RecordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF4459CA1921B08600086EB0 /* RecordsViewController.m */; };
 		EF517DA91811340100EB5CED /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = EF517DA81811340100EB5CED /* Icon-80.png */; };
 		EF57848D1781875200D1C9C4 /* messageBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = EF57848C1781875200D1C9C4 /* messageBorder.png */; };
 		EF5B5CA717B24B04000935DB /* camera_shoot_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5B5CA517B24B04000935DB /* camera_shoot_highlight.png */; };
@@ -390,10 +390,6 @@
 		71AA5B9318FA21FB0043D208 /* start2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start2.png; sourceTree = "<group>"; };
 		71AA855518EA4C030047FFB9 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderView.h; path = ../UI/HeaderView.h; sourceTree = "<group>"; };
 		71AA855618EA4C030047FFB9 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderView.m; path = ../UI/HeaderView.m; sourceTree = "<group>"; };
-		71AAF65F18ED22E100C3B0D8 /* PhotoScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanViewController.h; sourceTree = "<group>"; };
-		71AAF66018ED22E100C3B0D8 /* PhotoScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoScanViewController.m; sourceTree = "<group>"; };
-		71AC1C0318E3BCB200842C38 /* ImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerController.h; sourceTree = "<group>"; };
-		71AC1C0418E3BCB200842C38 /* ImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerController.m; sourceTree = "<group>"; };
 		71AC1C0818E3BFA700842C38 /* 保存.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "保存.png"; sourceTree = "<group>"; };
 		71AC1C0918E3BFA700842C38 /* 返回.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回.png"; sourceTree = "<group>"; };
 		71AC1C0A18E3BFA700842C38 /* 拍照1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "拍照1.png"; sourceTree = "<group>"; };
@@ -471,8 +467,6 @@
 		EF1D3C3718D2B2D90079C358 /* NextForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextForgotPasswordViewController.h; sourceTree = "<group>"; };
 		EF1D3C3818D2B2D90079C358 /* NextForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextForgotPasswordViewController.m; sourceTree = "<group>"; };
 		EF1D3C3918D2B2D90079C358 /* NextForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NextForgotPasswordViewController.xib; sourceTree = "<group>"; };
-		EF1D3C3A18D2B2D90079C358 /* RecordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordsViewController.h; sourceTree = "<group>"; };
-		EF1D3C3B18D2B2D90079C358 /* RecordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordsViewController.m; sourceTree = "<group>"; };
 		EF1D3C3D18D2B2D90079C358 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		EF1D3C3E18D2B2D90079C358 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		EF1D3C3F18D2B2D90079C358 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -506,6 +500,12 @@
 		EF3578E717ABB7AC009C6516 /* setSure_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setSure_highlight.png; sourceTree = "<group>"; };
 		EF3578E817ABB7AF009C6516 /* setSure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setSure.png; sourceTree = "<group>"; };
 		EF423A3918D3E50100925BBE /* ULog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULog.h; sourceTree = "<group>"; };
+		EF4459C51921B08600086EB0 /* ImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerController.h; sourceTree = "<group>"; };
+		EF4459C61921B08600086EB0 /* ImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerController.m; sourceTree = "<group>"; };
+		EF4459C71921B08600086EB0 /* PhotoScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoScanViewController.h; sourceTree = "<group>"; };
+		EF4459C81921B08600086EB0 /* PhotoScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoScanViewController.m; sourceTree = "<group>"; };
+		EF4459C91921B08600086EB0 /* RecordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordsViewController.h; sourceTree = "<group>"; };
+		EF4459CA1921B08600086EB0 /* RecordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordsViewController.m; sourceTree = "<group>"; };
 		EF517DA81811340100EB5CED /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = "<group>"; };
 		EF57848C1781875200D1C9C4 /* messageBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageBorder.png; sourceTree = "<group>"; };
 		EF5B5CA517B24B04000935DB /* camera_shoot_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_shoot_highlight.png; sourceTree = "<group>"; };
@@ -1081,12 +1081,12 @@
 		EF21C06A18D2D100003D7C5F /* Records */ = {
 			isa = PBXGroup;
 			children = (
-				EF1D3C3A18D2B2D90079C358 /* RecordsViewController.h */,
-				EF1D3C3B18D2B2D90079C358 /* RecordsViewController.m */,
-				71AC1C0318E3BCB200842C38 /* ImagePickerController.h */,
-				71AC1C0418E3BCB200842C38 /* ImagePickerController.m */,
-				71AAF65F18ED22E100C3B0D8 /* PhotoScanViewController.h */,
-				71AAF66018ED22E100C3B0D8 /* PhotoScanViewController.m */,
+				EF4459C91921B08600086EB0 /* RecordsViewController.h */,
+				EF4459CA1921B08600086EB0 /* RecordsViewController.m */,
+				EF4459C51921B08600086EB0 /* ImagePickerController.h */,
+				EF4459C61921B08600086EB0 /* ImagePickerController.m */,
+				EF4459C71921B08600086EB0 /* PhotoScanViewController.h */,
+				EF4459C81921B08600086EB0 /* PhotoScanViewController.m */,
 			);
 			name = Records;
 			sourceTree = "<group>";
@@ -1964,6 +1964,7 @@
 				EFE7954C177BE4C500D15A32 /* SQLiteManager.m in Sources */,
 				710AEDD81907AA1B00B19A58 /* SharedPersonsViewController.m in Sources */,
 				EFE7956D177C19CE00D15A32 /* CameraPlayViewController.m in Sources */,
+				EF4459CC1921B08600086EB0 /* PhotoScanViewController.m in Sources */,
 				EFE7956E177C19CE00D15A32 /* CameraSettingViewController.m in Sources */,
 				EFE79571177C1AC000D15A32 /* CameraPhotoRecordViewController.m in Sources */,
 				EFE79574177C1B6100D15A32 /* SettingCell.m in Sources */,
@@ -1981,10 +1982,8 @@
 				EFF7B9FF1788862B0035FB82 /* APICommon.mm in Sources */,
 				EFF7BA001788862B0035FB82 /* CameraDBUtils.mm in Sources */,
 				EFF7BA011788862B0035FB82 /* CameraListMgt.mm in Sources */,
-				71AAF66218ED22E100C3B0D8 /* PhotoScanViewController.m in Sources */,
 				EFF7BA021788862B0035FB82 /* CgiPacket.cpp in Sources */,
 				71A90A201908DD9D00A0427C /* CommonProblemsGuideViewController.m in Sources */,
-				EF1D3C5618D2B2D90079C358 /* RecordsViewController.m in Sources */,
 				71A876B9190639CA002DAA33 /* NewMessageCell.m in Sources */,
 				EFF7BA031788862B0035FB82 /* CircleBuf.mm in Sources */,
 				EF1D3C5A18D2B2D90079C358 /* SettingsViewController.m in Sources */,
@@ -2011,8 +2010,8 @@
 				EFF7BA131788862B0035FB82 /* SearchListMgt.mm in Sources */,
 				7196B07A18D837C400B8D8BB /* ChaneNickNameViewController.m in Sources */,
 				716C830918D94403006CB5C3 /* SetPasswordViewController.m in Sources */,
+				EF4459CD1921B08600086EB0 /* RecordsViewController.m in Sources */,
 				7196B07F18D837D600B8D8BB /* ChangePasswordViewController.m in Sources */,
-				71AC1C0618E3BCB200842C38 /* ImagePickerController.m in Sources */,
 				EF1D3C4B18D2B2D90079C358 /* BaseViewController.m in Sources */,
 				EF1D3C5418D2B2D90079C358 /* NextForgotPasswordViewController.m in Sources */,
 				EF06235317969886009E4D56 /* MBProgressHUD.m in Sources */,
@@ -2030,7 +2029,7 @@
 				EFE8E6F8179F438B001689F4 /* CameraParamSettingViewController.m in Sources */,
 				EFF866CD17A220D40027570F /* CameraSetNameViewController.m in Sources */,
 				EFF0373617CCA30A00A1DDDA /* BabyWithCameraManagement.mm in Sources */,
-				71A95D071921F3190075CC61 /* MessageCell.m in Sources */,
+
 				EF14B7AC17D32CE0004F47AC /* CameraSetWifiViewController.m in Sources */,
 				EFED9DE517D59385009A62BA /* UncaughtExceptionHandler.m in Sources */,
 			);
@@ -2054,7 +2053,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -2077,7 +2075,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PROVISIONING_PROFILE = "83D4DF50-4E60-48E0-B592-BC118D0ECE48";
+				PROVISIONING_PROFILE = "8684CAAE-50D7-4EAA-A6BD-51495C84D32B";
+				SUPPORTED_PLATFORMS = iphoneos;
 			};
 			name = Debug;
 		};
@@ -2085,7 +2084,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -2102,7 +2100,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "83D4DF50-4E60-48E0-B592-BC118D0ECE48";
+				PROVISIONING_PROFILE = "8684CAAE-50D7-4EAA-A6BD-51495C84D32B";
+				SUPPORTED_PLATFORMS = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -2139,8 +2138,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "83D4DF50-4E60-48E0-B592-BC118D0ECE48";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/BabyWith/ffmpeg\" \"$(SRCROOT)/BabyWith/ffmpeg/i386\" \"$(SRCROOT)/BabyWith/Classes\"";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -2178,8 +2175,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "83D4DF50-4E60-48E0-B592-BC118D0ECE48";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/BabyWith/ffmpeg\" \"$(SRCROOT)/BabyWith/ffmpeg/i386\" \"$(SRCROOT)/BabyWith/Classes\"";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;

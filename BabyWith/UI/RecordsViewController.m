@@ -293,6 +293,7 @@ int ppre_month=13;
 //那么就要添加到数据库，从数据库取出来，显示到界面上
 -(void)cameraPhoto:(NSArray *)imageArra
 {
+    
 
     for (NSDictionary *dic in imageArra)
     {
@@ -308,14 +309,12 @@ int ppre_month=13;
         //记录ID
         NSString *record_id = [NSString stringWithFormat:@"%@_%@",[dic objectForKey:@"time" ],[appDelegate.appDefault objectForKey:@"Member_id_self"]];
         
-        
-        //创建一个自动释放池
 
-        
         //图片相对路径
         NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
         
-       
+        //创建一个自动释放池
+        NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
         //保存图片到沙盒目录
         NSString *imagePath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path]];
         NSString *imageDir = [NSString stringWithFormat:@"%@",[imagePath stringByDeletingLastPathComponent]];
@@ -353,10 +352,10 @@ int ppre_month=13;
         {
             [self makeAlert:@"保存图片错误!"];
         }
-                             
+          [pool drain];                   
     }
     
-    
+   
 
 }
 
@@ -370,6 +369,8 @@ int ppre_month=13;
 }
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    //创建一个自动释放池
+   
     
     UICollectionViewCell *cell = [_imageCollection dequeueReusableCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY forIndexPath:indexPath];
     
@@ -394,6 +395,7 @@ int ppre_month=13;
     }
    
     [cell addSubview:imageView];
+    [imageView release];
     
     return cell;
 }

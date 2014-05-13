@@ -16,7 +16,6 @@
 
 {
 
-
     Activity *activity;
 }
 

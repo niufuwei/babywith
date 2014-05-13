@@ -31,7 +31,7 @@
 		UIView *subView = [aView.subviews objectAtIndex:i];
 		subView = [self findView:subView withName:name];
 		if (subView)
-			return subView;
+        return subView;
 	}
 	return nil;
 }
@@ -162,19 +162,15 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
 
-    
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     if (image != nil) {
-        
         
         //保存到相册
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
         
-        
         //拍照片的时间信息
         NSDate *date = [NSDate date];
         NSTimeInterval time = [date timeIntervalSince1970];
-        
         
         //取得拍出来的原照片
         CGImageRef imageRef;
