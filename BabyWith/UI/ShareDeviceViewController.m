@@ -77,7 +77,9 @@
     //设备ID以逗号隔开
     NSString * deviceID;
     int i = [appDelegate.selectDeviceArr count];
-    deviceID =  [[appDelegate.selectDeviceArr objectAtIndex:0] objectForKey:@"device_id"];  //一开始始终是取得第一个
+    deviceID =  [[appDelegate.selectDeviceArr objectAtIndex:0] objectForKey:@"device_id"];
+    //一开始始终是取得第一个
+    //这个device id需要用逗号隔开
      if(i > 1 )
      {
         for (int m = 1; m < i; m++)

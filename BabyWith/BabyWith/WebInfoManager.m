@@ -528,6 +528,7 @@
 
     WebInfoBinding *binding = [[WebInfoBinding alloc] initWithAddress:[NSString stringWithFormat:@"%@/device/get_device_info",[appDelegate.appDefault objectForKey:@"BabyWith_address_api"]]];
     NSDictionary *response = [binding UserShareDeviceUsingDeviceID:aDeviceID Phone:aPhone Token:aToken PhoneType:aPhoneType];
+    NSLog(@"分享的返回数%@",response);
     [binding release];
     if (response && [[response objectForKey:@"result"] isEqualToString:@"success"])
     {

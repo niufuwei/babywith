@@ -39,7 +39,6 @@
     
     
     
-    _messageArray = [[NSMutableArray alloc] initWithCapacity:1];
     
     
     _messageTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 44)];
@@ -51,13 +50,24 @@
     
     _messageTableView.frame = CGRectMake(0, 0, 320, 100.0*[self tableView:_messageTableView numberOfRowsInSection:0]);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMessageCount:) name:@"changeCount1" object:nil];
+    
+
     
 }
+-(void)changeMessageCount:(NSNotification*)NSNotification
+{
+    
+    [_messageTableView reloadData];
+    
+    
+    
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
 
     [super viewWillAppear:YES];
-    [_messageArray addObjectsFromArray:appDelegate.systemMessageArray];
     [_messageTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 
 }
@@ -104,8 +114,8 @@
             [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
         }
     }
-    cell.textLabel.text =[NSString stringWithFormat:@"%@ 将他使用的设备 %@ 分享给你",[[appDelegate.systemMessageArray objectAtIndex:indexPath.row] objectAtIndex:0],[[_messageArray objectAtIndex:indexPath.row] objectAtIndex:1]];
-    cell.detailTextLabel.text = [[_messageArray objectAtIndex:indexPath.row] lastObject];
+    cell.textLabel.text =[NSString stringWithFormat:@"%@",[appDelegate.appDefault objectForKey:@"alert"]];
+    cell.detailTextLabel.text = [[appDelegate.systemMessageArray objectAtIndex:indexPath.row] objectForKey:@"messageTime"];
     
     return cell;
 }

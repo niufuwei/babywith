@@ -441,20 +441,57 @@ int HudIsBecome = 0;
     NSLog(@"jieshoudaodexinxi shi  %@",userInfo);
     
     
-    NSArray *array = [[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] componentsSeparatedByString:@","];
+    NSString *alert  = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"] ;
+    
+    [appDelegate.appDefault setObject:alert forKey:@"alert"];
+    
+    
+    
+    
+    //接收消息的时间
     NSDate *date = [NSDate date];
     NSTimeInterval time = [date timeIntervalSince1970];
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *messageTime = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:time]];
-    NSMutableArray *messageArray1 = [NSMutableArray arrayWithArray:array];
-    [messageArray1 addObject:messageTime];
-    [self.messageArray addObject:messageArray1];
-    [self.systemMessageArray addObject:messageArray1];
     
-   
+    //接收到的消息id,以;隔开的
+    NSArray *msgIdArray = [[userInfo objectForKey:@"msgid"] componentsSeparatedByString:@";"];
+
+    
+    //数组里面包括每一条推送消息的id号和对应的时间，因为一次可能发送过来好几条消息，这几条消息的时间是一样的
+    NSMutableArray *messageArray = [[NSMutableArray alloc] initWithCapacity:1];
+    for (id obj in msgIdArray) {
+        NSDictionary *dic = [[NSDictionary alloc] init];
+        [dic setValue:obj forKey:@"msgid"];
+        [dic setValue:messageTime forKey:@"messageTime"];
+        [messageArray addObject:dic];
+        
+    }
     
     
+    
+    
+    
+    
+    
+    
+    
+    //主页的消息，只包括消息内容和消息id
+    [self.messageArray addObjectsFromArray:msgIdArray];
+    //更多里面的消息，包括消息内容、消息id、消息收到的时间
+    [self.systemMessageArray addObjectsFromArray:messageArray];
+
+    
+    
+    
+    
+    
+    //主页消息图标的改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCount" object:nil];
+    //更多里面的图标的改变
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCount1" object:nil];
+
     
     
     

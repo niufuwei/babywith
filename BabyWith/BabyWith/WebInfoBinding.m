@@ -170,13 +170,6 @@
 
 }
 
-
-
-
-
-
-
-
 -(NSDictionary *)performSynchOperation:(WebInfoBindingOper *)operation
 {
     synchOperComplete = NO;

@@ -16,6 +16,8 @@
     _agreeShareBtn.backgroundColor = babywith_green_color;
     
     _refuseShareBtn.backgroundColor = babywith_green_color;
+    _messageLabel.backgroundColor = [UIColor clearColor];
+    _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
 }
 

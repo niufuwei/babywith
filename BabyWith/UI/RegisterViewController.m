@@ -135,7 +135,6 @@
         if (result) {
             
             
-            [activity stop];
             
             UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
@@ -158,12 +157,15 @@
                     
                     if (result)
                     {
+                        [activity stop];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"MoveToMain" object:nil];
                         
                     }
                     
 
                 }else{ //错误判断 如果是版本更新TODO
+
+                    [activity stop];
 
                     [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
                 }
