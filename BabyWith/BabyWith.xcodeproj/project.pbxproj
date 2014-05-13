@@ -62,6 +62,7 @@
 		71A8E72218F394530025726F /* UIImage+Stretchable.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8E70418F394530025726F /* UIImage+Stretchable.m */; };
 		71A8E72918F394530025726F /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8E71218F394530025726F /* UIViewController+Alert.m */; };
 		71A90A201908DD9D00A0427C /* CommonProblemsGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A90A1F1908DD9D00A0427C /* CommonProblemsGuideViewController.m */; };
+		71A95D071921F3190075CC61 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A95D061921F3190075CC61 /* MessageCell.m */; };
 		71AA5B9418FA21FB0043D208 /* start1.png in Resources */ = {isa = PBXBuildFile; fileRef = 71AA5B9218FA21FB0043D208 /* start1.png */; };
 		71AA5B9518FA21FB0043D208 /* start2.png in Resources */ = {isa = PBXBuildFile; fileRef = 71AA5B9318FA21FB0043D208 /* start2.png */; };
 		71AA855718EA4C030047FFB9 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 71AA855618EA4C030047FFB9 /* HeaderView.m */; };
@@ -143,7 +144,6 @@
 		EF3578EB17ABB7B0009C6516 /* setSure_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578E717ABB7AC009C6516 /* setSure_highlight.png */; };
 		EF3578EC17ABB7B0009C6516 /* setSure.png in Resources */ = {isa = PBXBuildFile; fileRef = EF3578E817ABB7AF009C6516 /* setSure.png */; };
 		EF517DA91811340100EB5CED /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = EF517DA81811340100EB5CED /* Icon-80.png */; };
-		EF5784821781366300D1C9C4 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5784811781366300D1C9C4 /* MessageCell.m */; };
 		EF57848D1781875200D1C9C4 /* messageBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = EF57848C1781875200D1C9C4 /* messageBorder.png */; };
 		EF5B5CA717B24B04000935DB /* camera_shoot_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5B5CA517B24B04000935DB /* camera_shoot_highlight.png */; };
 		EF5B5CA817B24B04000935DB /* camera_shoot.png in Resources */ = {isa = PBXBuildFile; fileRef = EF5B5CA617B24B04000935DB /* camera_shoot.png */; };
@@ -384,6 +384,8 @@
 		71A8E71218F394530025726F /* UIViewController+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
 		71A90A1E1908DD9D00A0427C /* CommonProblemsGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonProblemsGuideViewController.h; sourceTree = "<group>"; };
 		71A90A1F1908DD9D00A0427C /* CommonProblemsGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonProblemsGuideViewController.m; sourceTree = "<group>"; };
+		71A95D051921F3190075CC61 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		71A95D061921F3190075CC61 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		71AA5B9218FA21FB0043D208 /* start1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start1.png; sourceTree = "<group>"; };
 		71AA5B9318FA21FB0043D208 /* start2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start2.png; sourceTree = "<group>"; };
 		71AA855518EA4C030047FFB9 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderView.h; path = ../UI/HeaderView.h; sourceTree = "<group>"; };
@@ -505,8 +507,6 @@
 		EF3578E817ABB7AF009C6516 /* setSure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setSure.png; sourceTree = "<group>"; };
 		EF423A3918D3E50100925BBE /* ULog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ULog.h; sourceTree = "<group>"; };
 		EF517DA81811340100EB5CED /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = "<group>"; };
-		EF5784801781366300D1C9C4 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
-		EF5784811781366300D1C9C4 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		EF57848C1781875200D1C9C4 /* messageBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageBorder.png; sourceTree = "<group>"; };
 		EF5B5CA517B24B04000935DB /* camera_shoot_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_shoot_highlight.png; sourceTree = "<group>"; };
 		EF5B5CA617B24B04000935DB /* camera_shoot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_shoot.png; sourceTree = "<group>"; };
@@ -1203,10 +1203,10 @@
 				71AA855618EA4C030047FFB9 /* HeaderView.m */,
 				7196B06318D8333A00B8D8BB /* ListCell.h */,
 				7196B06418D8333A00B8D8BB /* ListCell.m */,
-				EF5784801781366300D1C9C4 /* MessageCell.h */,
-				EF5784811781366300D1C9C4 /* MessageCell.m */,
 				EFE79572177C1B6000D15A32 /* SettingCell.h */,
 				EFE79573177C1B6100D15A32 /* SettingCell.m */,
+				71A95D051921F3190075CC61 /* MessageCell.h */,
+				71A95D061921F3190075CC61 /* MessageCell.m */,
 			);
 			name = "View&Cell";
 			sourceTree = "<group>";
@@ -1969,7 +1969,6 @@
 				EFE79574177C1B6100D15A32 /* SettingCell.m in Sources */,
 				7196B05D18D80E5D00B8D8BB /* ShareDeviceViewController.m in Sources */,
 				EF04E96E18D6A20B00429681 /* CustomSegmentView.m in Sources */,
-				EF5784821781366300D1C9C4 /* MessageCell.m in Sources */,
 				EF1D3C4E18D2B2D90079C358 /* HomeViewController.m in Sources */,
 				7196B05818D80E1000B8D8BB /* SetNickNameViewController.m in Sources */,
 				71A8E6E818F391DC0025726F /* MessageProcess.m in Sources */,
@@ -2031,6 +2030,7 @@
 				EFE8E6F8179F438B001689F4 /* CameraParamSettingViewController.m in Sources */,
 				EFF866CD17A220D40027570F /* CameraSetNameViewController.m in Sources */,
 				EFF0373617CCA30A00A1DDDA /* BabyWithCameraManagement.mm in Sources */,
+				71A95D071921F3190075CC61 /* MessageCell.m in Sources */,
 				EF14B7AC17D32CE0004F47AC /* CameraSetWifiViewController.m in Sources */,
 				EFED9DE517D59385009A62BA /* UncaughtExceptionHandler.m in Sources */,
 			);

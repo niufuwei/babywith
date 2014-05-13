@@ -10,8 +10,8 @@
 
 @interface NewMessageCell : UITableViewCell
 @property (retain, nonatomic) IBOutlet UILabel *messageLabel;
-@property (retain, nonatomic) IBOutlet UIButton *agreeShareBtn;
-@property (retain, nonatomic) IBOutlet UIButton *refuseShareBtn;
+@property (retain, nonatomic)  UIButton *agreeShareBtn;
+@property (retain, nonatomic) UIButton *refuseShareBtn;
 
 
 @end

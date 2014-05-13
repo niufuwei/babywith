@@ -50,19 +50,12 @@
     
     _messageTableView.frame = CGRectMake(0, 0, 320, 100.0*[self tableView:_messageTableView numberOfRowsInSection:0]);
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMessageCount:) name:@"changeCount1" object:nil];
+   
     
 
     
 }
--(void)changeMessageCount:(NSNotification*)NSNotification
-{
-    
-    [_messageTableView reloadData];
-    
-    
-    
-}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -106,7 +99,6 @@
     if (cell == nil) {
         cell = [[MessageCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.detailTextLabel.textAlignment = NSTextAlignmentCenter;
     }
     else
     {
@@ -114,8 +106,17 @@
             [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
         }
     }
-    cell.textLabel.text =[NSString stringWithFormat:@"%@",[appDelegate.appDefault objectForKey:@"alert"]];
-    cell.detailTextLabel.text = [[appDelegate.systemMessageArray objectAtIndex:indexPath.row] objectForKey:@"messageTime"];
+    
+    
+    NSLog(@"alert is %@,time is %@",[appDelegate.appDefault objectForKey:@"alert"],[[appDelegate.systemMessageArray objectAtIndex:indexPath.row] objectForKey:@"messageTime"]);
+    
+    cell.backgroundColor = babywith_background_color;
+
+    cell.alertLabel.text =[NSString stringWithFormat:@"%@",[appDelegate.appDefault objectForKey:@"alert"]];
+    
+    
+    cell.timeLabel.text = [[appDelegate.systemMessageArray objectAtIndex:indexPath.row] objectForKey:@"messageTime"];
+    
     
     return cell;
 }

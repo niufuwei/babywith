@@ -95,7 +95,7 @@
     BOOL result = [appDelegate.webInfoManger UserShareDeviceUsingDeviceID:deviceID Phone:_phoneNumber.text Token:[appDelegate.appDefault objectForKey:@"Token"] PhoneType:@"2"];
      if (result)
     {
-        [activity stop];
+        
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
         indicator.labelText = @"分享成功";
@@ -106,41 +106,29 @@
         } completionBlock:^{
             [indicator removeFromSuperview];
             
+            
+            //选择的设备的数量
             int i = [appDelegate.selectDeviceArr count];
             NSLog(@"选择的设备的数量是%d",i);
             
             
             for (int n = 1; n <= i; n++)
             {
-                //把号码添加到数组中,有多个设备的话就对应多个数组
-                NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:1];
-                [array addObject:self.phoneNumber.text];
+                
                 
                 NSLog(@"这里走了没");
                 //如果这个key不存在，就创建这个key
                 if (![appDelegate.appDefault objectForKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex:n - 1] objectForKey:@"device_id"]]])
                 {   //第一次创建的时候直接添加就行
-                    [appDelegate.appDefault setObject:array forKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex:n - 1] objectForKey:@"device_id"]]];
-                    NSLog(@"分享人员的名单是 %@",[appDelegate.appDefault objectForKey:[NSString stringWithFormat:@"%@_number" ,[[appDelegate.selectDeviceArr objectAtIndex:n-1] objectForKey:@"device_id"]]]);
+                    [appDelegate.appDefault setObject:self.phoneNumber.text forKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex:n - 1] objectForKey:@"device_id"]]];
+                    
                 }
                 else//如果对应的key里面有值(array),那就往这个array里面添加
                 {
                     NSMutableArray *array1 =[[NSMutableArray alloc] initWithArray: [appDelegate.appDefault arrayForKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex: n -1] objectForKey:@"device_id"]]]];
                     //把array里面的所有元素添加到新的array1里面
-                    int j = [array count];
-                    for (int s =1;s <= j; s++)
-                    {
-                        for (NSString * number in array1)
-                        {
-                            //号码不相同才添加进去
-                            if (![number isEqualToString:(NSString *)[array objectAtIndex:s - 1 ]])
-                            {
-                                [array1 addObject:[array objectAtIndex:s - 1 ]];
-                            }
-                            
-                        }
-                        
-                    }
+                   
+                    
                     
                     NSArray *array2 = [NSArray arrayWithArray:array1];
                     [appDelegate.appDefault setObject:array2 forKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex: n - 1] objectForKey:@"device_id"]]];
@@ -149,7 +137,7 @@
                     NSLog(@"分享人员的名单是 %@",[appDelegate.appDefault objectForKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex:n -1] objectForKey:@"device_id"]]]);
                 }
             }
-            
+            [activity stop];
             _submit.enabled = YES;
             [appDelegate.selectDeviceArr removeAllObjects];
             [NOTICECENTER postNotificationName:@"MoveToMain" object:nil];

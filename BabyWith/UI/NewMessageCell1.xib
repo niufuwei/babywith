@@ -21,26 +21,10 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CbU-Oh-yRb">
-                        <rect key="frame" x="20" y="79" width="104" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="同意">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pfe-Fb-ejr">
-                        <rect key="frame" x="196" y="79" width="104" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="拒绝">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="agreeShareBtn" destination="CbU-Oh-yRb" id="jzL-5y-zlS"/>
                 <outlet property="messageLabel" destination="JyJ-gE-ebP" id="mkF-Xu-Vrl"/>
-                <outlet property="refuseShareBtn" destination="Pfe-Fb-ejr" id="lVo-b6-UD0"/>
             </connections>
         </tableViewCell>
     </objects>

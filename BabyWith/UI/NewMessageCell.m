@@ -13,11 +13,25 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    _agreeShareBtn.backgroundColor = babywith_green_color;
     
-    _refuseShareBtn.backgroundColor = babywith_green_color;
     _messageLabel.backgroundColor = [UIColor clearColor];
     _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    
+    //20.79.104.30
+    _agreeShareBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 79, 104, 30)];
+    [_agreeShareBtn setTitle:@"同意" forState:UIControlStateNormal];
+    [_agreeShareBtn setTintColor:[UIColor whiteColor]];
+    [_agreeShareBtn setBackgroundColor:babywith_green_color];
+    [self addSubview:_agreeShareBtn];
+    
+    //196.79.104.30
+    _refuseShareBtn = [[UIButton alloc] initWithFrame:CGRectMake(196, 79, 104, 30)];
+    [_refuseShareBtn setTitle:@"拒绝" forState:UIControlStateNormal];
+    [_refuseShareBtn setTintColor:[UIColor whiteColor]];
+    [_refuseShareBtn setBackgroundColor:babywith_green_color];
+    [self addSubview:_refuseShareBtn];
+    
     
 }
 
