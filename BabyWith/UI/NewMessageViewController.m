@@ -34,6 +34,7 @@
     _messageTableView.delegate = self;
     _messageTableView.dataSource = self;
     _messageTableView.allowsSelection = NO;
+    _messageTableView.backgroundColor = babywith_background_color;
     _label = [[UILabel alloc] init];
     
     [self setTitle:@"新分享设备"];
@@ -106,9 +107,8 @@
     }
     
     
-    NSLog(@"全部的消息是%@",appDelegate.messageArray);
-    NSLog(@"单条的消息是%@",[[appDelegate.messageArray objectAtIndex:indexPath.row] objectAtIndex:0]);
-    cell.messageLabel.text = [NSString stringWithFormat:@"您好, %@ 将他使用的设备 %@ 分享给你,是否使用该设备?",[[appDelegate.messageArray objectAtIndex:indexPath.row] objectAtIndex:0],[[appDelegate.messageArray objectAtIndex:indexPath.row] objectAtIndex:1]];
+    cell.messageLabel.text = [NSString stringWithFormat:@"%@ ",[appDelegate.appDefault objectForKey:@"alert"]];
+    
     
     [cell.agreeShareBtn addTarget:self action:@selector(agreeShare:) forControlEvents:UIControlEventTouchUpInside];
     [cell.refuseShareBtn addTarget:self action:@selector(refuseShare:) forControlEvents:UIControlEventTouchUpInside];
@@ -135,7 +135,8 @@
     NSLog(@"同意分享1");
     UITableViewCell *cell = (UITableViewCell *)[btn superview];
     NSIndexPath *indexPath = [self.messageTableView indexPathForCell:cell];
-    NSString *IDMer = [NSString stringWithFormat:@"%@",[[appDelegate.messageArray objectAtIndex:indexPath.row] objectAtIndex:3]];
+    
+    NSString *IDMer = [NSString stringWithFormat:@"%@",[appDelegate.messageArray objectAtIndex:indexPath.row] ];
     
     if ([appDelegate.webInfoManger UserAgreeAddDeviceUsingIDMer:IDMer Toekn:[appDelegate.appDefault objectForKey:@"Token"]])
     {
@@ -147,6 +148,7 @@
     
         [self makeAlert:@"同意分享出错"];
     
+        
     }
 
 
@@ -155,8 +157,6 @@
  -(void)refuseShare:(UIButton *)btn
     
 {
-
-
 
     NSLog(@"拒绝别人的分享");
     UITableViewCell *cell = (UITableViewCell *)[btn superview];

@@ -13,8 +13,6 @@
 
 
     UITableView *_messageTableView;
-    NSMutableArray *_messageArray;
-    NSConditionLock *_messageLock;
 
 
 }

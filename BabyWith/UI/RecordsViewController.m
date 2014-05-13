@@ -405,6 +405,7 @@ int ppre_month=13;
     
     
     headerView.headerLabel.text = [_dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"time_record"] doubleValue]/1000]];
+    
     NSLog(@"头部视图是%@",headerView.headerLabel.text);
     
     return headerView;

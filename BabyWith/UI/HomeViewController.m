@@ -55,8 +55,18 @@
     [self titleSet:@"主页"];
     
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeMessageCount:) name:@"changeCount" object:nil];
+    
 }
+-(void)changeMessageCount:(NSNotification*)NSNotification
+{
 
+    [_homeTableView1 reloadData];
+    
+
+
+}
 - (void)viewWillAppear:(BOOL)animated{
     
     NSLog(@"view will appear");
@@ -65,6 +75,7 @@
     NSLog(@"self.device is %@",self.deviceArray);
     [_homeTableView1 reloadData];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -141,15 +152,16 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"信息提示背景.png"]];
         cell2.backgroundColor = babywith_background_color;
+        [cell2 addSubview:label];
 
         cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if ([appDelegate.messageArray count] == 0)
         {
-            [cell2 removeFromSuperview];
+            label.hidden = YES;
         }
         else
         {
-        [cell2 addSubview:label];
+            label.hidden = NO;
         }
         return cell2;
     }

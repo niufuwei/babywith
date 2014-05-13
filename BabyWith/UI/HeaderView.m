@@ -16,6 +16,7 @@
     if (self) {
         // Initialization code
         _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 320, 20)];
+        _headerLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_headerLabel];
     }
     return self;

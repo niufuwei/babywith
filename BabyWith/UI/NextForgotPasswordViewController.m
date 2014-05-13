@@ -120,7 +120,7 @@
         return;
     }
     
-    
+    [activity start];
     BOOL result = [appDelegate.webInfoManger UserResetPasswordByPhoneUsingUsername:_configPhoneNum Authcode:_checkCodeTF.text Password:_passwordTF.text];
     if (result) {
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
@@ -139,6 +139,7 @@
             
             if (result) {
                 
+                [activity stop];
                 //放进数据库，保证下次进来的时候就是最新的用户信息
                 [appDelegate.appDefault setObject:self.configPhoneNum forKey:@"Username"];
                 [appDelegate.appDefault setObject:self.passwordTF.text forKey:@"Password"];
@@ -147,6 +148,8 @@
             }
             else
             {
+                [activity stop];
+
                 //提示框提示错误
                 [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
             }
@@ -154,6 +157,8 @@
                         
         }];
     }else{
+        [activity stop];
+
         [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
     }
     
