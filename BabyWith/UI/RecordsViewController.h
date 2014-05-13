@@ -34,6 +34,7 @@
     UIImageView *_startImage;
     
     UILabel *_label;
+    BOOL isFirst;
 
 
 }

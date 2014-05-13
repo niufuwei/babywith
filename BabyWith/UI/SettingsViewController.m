@@ -101,9 +101,7 @@
     
     //修改昵称和系统消息的cell稍有不同
     if ([indexPath row] == 0) {
-        
-        
-        
+
         NSLog(@"昵称////////////////////%@",[appDelegate.appDefault objectForKey:@"Appel_self"]);
         if (![[appDelegate.appDefault objectForKey:@"Appel_self"]  isEqual: @""])
         {
@@ -227,10 +225,10 @@
     else
     {
     
-        [activity stop];
-
-    [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
-    
+//        [activity stop];
+//
+//    [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
+//    
 
     }
 }
