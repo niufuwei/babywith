@@ -30,6 +30,12 @@
 }
 
 
+//-(void)dealloc{
+//    [_photoArray release];
+//    [_photoScrollView release];
+//    [_image release];
+//    [super dealloc];
+//}
 
 -(void)viewDidLoad{
     
@@ -51,6 +57,7 @@
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView: setButton];
         self.navigationItem.rightBarButtonItem = rightItem;
         
+//        [setButton release];
         
         
         currentPage = 0;
@@ -64,6 +71,8 @@
         titleLabel.font = [UIFont systemFontOfSize:20];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         self.navigationItem.titleView = titleLabel;
+        
+//        [titleLabel release];
     }
     
     int contentHeight = self.view.frame.size.height;
@@ -84,14 +93,14 @@
     for (NSDictionary *dic in _photoArray)
     {
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(i*320, 0, 320, contentHeight)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(i*320, 0, 320, contentHeight)] ;
         view.tag = i+1;
         
         
         NSData *imageData = [NSData dataWithContentsOfFile: [babywith_sandbox_address stringByAppendingPathComponent:[dic objectForKey:@"path"]]];
         UIImage *image = [UIImage imageWithData:imageData];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image] ;
         
         if ([[dic objectForKey:@"height_image"] integerValue] == 180) {
             imageView.frame = CGRectMake(0, (view.frame.size.height - 180)/2 - 60, view.frame.size.width,180);
@@ -103,12 +112,12 @@
         //是视频图片的话要添加开始按钮一样的东西作为普通图片和视频区别
         if ([[dic objectForKey:@"is_vedio"] intValue] ==1)
         {
-            UIImageView *startImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"start2.png"]];
+            UIImageView *startImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"start2.png"]] ;
             startImage.frame = CGRectMake(128, 58, 64, 64);
             [imageView addSubview:startImage];
             
             
-            UITapGestureRecognizer *gester = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startPlay)];
+            UITapGestureRecognizer *gester = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startPlay)] ;
             gester.numberOfTapsRequired = 1;
             [imageView addGestureRecognizer:gester];
             
@@ -230,8 +239,6 @@
     return newImage;
 
 
-
-
 }
 
 
@@ -321,7 +328,7 @@
     [_photoArray removeObjectAtIndex:index];
     
     
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"imageCollectionReload" object:self];
     
     
     

@@ -343,9 +343,7 @@ int HudIsBecome = 0;
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageCount" object:@"1"];
     
     
-     AudioServicesPlaySystemSound(1007);
     
-    NSLog(@"看护器移动了%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,",motion_armed,motion_sensitivity,input_armed,ioin_level,alarmpresetsit,iolinkage,ioout_level,mail,snapshot,upload_interval,record);
     
     
     
@@ -556,17 +554,17 @@ int HudIsBecome = 0;
     
     
 }
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-
-{
-
-    
-    NSLog(@"后台接受到得参数%@",completionHandler);
-    
-    
-    
-
-
-
-}
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+//
+//{
+//
+//    
+//    NSLog(@"后台接受到得参数%@",completionHandler);
+//    
+//    
+//    
+//
+//
+//
+//}
 @end

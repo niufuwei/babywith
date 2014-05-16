@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CollectionCell : UICollectionViewCell
-@property(nonatomic,retain)UIImageView *image;
-@property(nonatomic,retain)UIImageView *startImage;
+
 @end

@@ -36,10 +36,14 @@
     UILabel *_label;
     BOOL isFirst;
 
+    NSMutableDictionary * RowDictionary;
+    NSMutableDictionary * statusDictionary;
+    
+    NSMutableArray * tempImageArray;
 
 }
-@property (nonatomic, retain) NSMutableArray *imageArray;
-@property (nonatomic,retain) UICollectionView *imageCollection;
+@property (nonatomic, copy) NSMutableArray *imageArray;
+@property (nonatomic,copy) UICollectionView *imageCollection;
 //-(void)DeleteRecord:(NSDictionary *)dic;
 //-(void)InsertRecord:(NSDictionary *)dic;
 @end

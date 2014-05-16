@@ -267,9 +267,6 @@
     
     pageCount -= 1;
     
-    
-    
-    
    
     NSLog(@"数组的元素是 %@",[_photoArray objectAtIndex:index]);
     

@@ -53,6 +53,8 @@
     int _vedioHasRecord;
     
     CCustomAVRecorder *_customAVRecorder;
+    BOOL _isFirst;
+    
 }
 
 @property (nonatomic, retain) UIImageView *playView;

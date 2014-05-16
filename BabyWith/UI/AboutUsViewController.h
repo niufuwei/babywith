@@ -10,10 +10,4 @@
 
 @interface AboutUsViewController : BaseViewController
 
-
-
-@property (retain, nonatomic) IBOutlet UILabel *rightLab;
-
-@property (retain, nonatomic) IBOutlet UILabel *detailLab;
-
 @end

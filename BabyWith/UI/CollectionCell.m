@@ -15,9 +15,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        _image=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 75.5, 75.5)];
-        [self addSubview:_image];
-        
     }
     return self;
 }

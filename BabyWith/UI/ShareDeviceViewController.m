@@ -45,6 +45,7 @@
     
     
     activity = [[Activity alloc] initWithActivity:self.view];
+    
 
 }
 
@@ -63,6 +64,9 @@
 }
 - (void)submitBtn:(id)sender
 {
+    
+    [activity start];
+    
     _submit.enabled = NO;
     self.phoneNumber.text = [self.phoneNumber.text
                             stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -74,6 +78,13 @@
     {
         return;
     }
+    
+    
+    
+    
+    
+    
+    
     //设备ID以逗号隔开
     NSString * deviceID;
     int i = [appDelegate.selectDeviceArr count];
@@ -91,10 +102,13 @@
     }
     
     
-    [activity start];
+    
     BOOL result = [appDelegate.webInfoManger UserShareDeviceUsingDeviceID:deviceID Phone:_phoneNumber.text Token:[appDelegate.appDefault objectForKey:@"Token"] PhoneType:@"2"];
      if (result)
     {
+        
+        [activity stop];
+
         
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
@@ -116,6 +130,8 @@
             {
                 
                 
+                NSLog(@"设备的分享人员是%@",[appDelegate.appDefault objectForKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex:n - 1] objectForKey:@"device_id"]]]);
+                
                 NSLog(@"这里走了没");
                 //如果这个key不存在，就创建这个key
                 if (![appDelegate.appDefault objectForKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex:n - 1] objectForKey:@"device_id"]]])
@@ -127,9 +143,17 @@
                 {
                     NSMutableArray *array1 =[[NSMutableArray alloc] initWithArray: [appDelegate.appDefault arrayForKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex: n -1] objectForKey:@"device_id"]]]];
                     //把array里面的所有元素添加到新的array1里面
-                   
+                    NSLog(@"array1----------- is %d---------------",[array1 count]);
+                    
+                    if ([array1 containsObject:self.phoneNumber.text] == NO)
+                    {
+                        
+                        [array1 addObject:self.phoneNumber.text];
+                    }
                     
                     
+                    NSLog(@"array1----------- is %d---------------",[array1 count]);
+
                     NSArray *array2 = [NSArray arrayWithArray:array1];
                     [appDelegate.appDefault setObject:array2 forKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex: n - 1] objectForKey:@"device_id"]]];
                     
@@ -137,7 +161,6 @@
                     NSLog(@"分享人员的名单是 %@",[appDelegate.appDefault objectForKey:[NSString stringWithFormat:@"%@_number",[[appDelegate.selectDeviceArr objectAtIndex:n -1] objectForKey:@"device_id"]]]);
                 }
             }
-            [activity stop];
             _submit.enabled = YES;
             [appDelegate.selectDeviceArr removeAllObjects];
             [NOTICECENTER postNotificationName:@"MoveToMain" object:nil];

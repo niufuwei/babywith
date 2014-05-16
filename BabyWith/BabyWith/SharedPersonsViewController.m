@@ -24,11 +24,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self titleSet:@"分享人员"];
+    
+    
     // Do any additional setup after loading the view.
     _sharedPersonTableView =  [[UITableView alloc] init];
     _sharedPersonTableView.delegate = self;
     _sharedPersonTableView.dataSource = self;
-    
+    _sharedPersonTableView.backgroundColor = [UIColor clearColor];
     _label = [[UILabel alloc] init];
     
 }
@@ -38,7 +42,13 @@
     [super viewWillAppear:YES];
     [_sharedPersonTableView reloadData];
     
-    if ([appDelegate.messageArray count] == 0)
+    
+    
+    NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:[appDelegate.appDefault arrayForKey:[NSString stringWithFormat:@"%@_number",self.deviceID]]];
+    NSLog(@"arr is %d",[arr count]);
+    
+    
+    if ([arr count] == 0)
     {
         
         _sharedPersonTableView.frame = CGRectMake(0, 0, 0, 0);
@@ -53,6 +63,10 @@
     {
         _label.hidden = YES;
         _sharedPersonTableView.frame = CGRectMake(0, 0, 320, 60.0*[self tableView:_sharedPersonTableView numberOfRowsInSection:0]);
+        if (60.0*[self tableView:_sharedPersonTableView numberOfRowsInSection:0] > self.view.frame.size.height - 64)
+        {
+            _sharedPersonTableView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height );
+        }
         
         
     }
@@ -99,7 +113,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.textLabel.text = [[appDelegate.appDefault arrayForKey:[NSString stringWithFormat:@"%@_number",self.deviceID]] objectAtIndex:indexPath.row];
-
+    cell.backgroundColor = babywith_background_color;
     return cell;
 }
 @end

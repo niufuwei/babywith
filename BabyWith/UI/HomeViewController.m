@@ -40,7 +40,7 @@
     _homeTableView1.delegate = self;
     _homeTableView1.dataSource = self;
     _homeTableView1.backgroundView = nil;
-    self.view.backgroundColor = babywith_background_color;
+    _homeTableView1.backgroundColor = babywith_background_color;
     [self.view addSubview:_homeTableView1];
     
     

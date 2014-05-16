@@ -14,8 +14,9 @@
 #import "HeaderView.h"
 #import "PhotoScanViewController.h"
 #import "AppGlobal.h"
+#import "myCollectionViewCell.h"
 
-#define REUSEABLE_CELL_IDENTITY @"CELL"
+//#define REUSEABLE_CELL_IDENTITY @"CELL"
 #define REUSEABLE_HEADER @"HEADER"
 @interface RecordsViewController ()
 
@@ -23,6 +24,7 @@
 int flag_monthList = 0;
 int pre_month=12;
 int ppre_month=13;
+static NSString * REUSEABLE_CELL_IDENTITY = @"cee";
 @implementation RecordsViewController
 
 
@@ -32,17 +34,25 @@ int ppre_month=13;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+//    isFirst=TRUE;
+    
+    
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCollentView) name:@"imageCollectionReload" object:nil];
+    
     UIButton *navButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
     [navButton setImage:[UIImage imageNamed:@"拍照.png"] forState:UIControlStateNormal];
     [navButton setImage:[UIImage imageNamed:@"拍照.png"] forState:UIControlStateHighlighted];
     [navButton addTarget:self action:@selector(takePic:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView: navButton];
     self.navigationItem.rightBarButtonItem = rightItem;
+//    [navButton release];
     
     [self titleSet:@"记录"];
     
-    
-    
+    statusDictionary = [[NSMutableDictionary alloc] init];
+    RowDictionary = [[NSMutableDictionary alloc] init];
+    tempImageArray = [[NSMutableArray alloc] init];
     
     _label = [[UILabel alloc] init];
     _year = 0;
@@ -57,35 +67,94 @@ int ppre_month=13;
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     //
+    
+    [appDelegate.sqliteManager getLocalListOfYearCount];
+    _yearArray = appDelegate.recordLocalYearCountArray;
+    
     UICollectionViewFlowLayout *fl =[[UICollectionViewFlowLayout alloc] init];
     _imageCollection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, kScreenHeight - 64 - 44) collectionViewLayout:fl];
     _imageCollection.backgroundColor = [UIColor clearColor];
     _imageCollection.delegate = self;
     _imageCollection.dataSource = self;
-    [_imageCollection registerClass:[CollectionCell class] forCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY];
-    
+    //    [_imageCollection registerClass:[CollectionCell class] forCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY];
+    //
     [_imageCollection registerClass:[HeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:REUSEABLE_HEADER];
     
+//    [fl release];
     [self.view addSubview:_imageCollection];
+    
+//    NSLog(@"viewwillAppear调用");
+    [self performSelector:@selector(ShowRecordList) withObject:nil afterDelay:0.1];
     
     
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    if (isFirst) {
+        if([[[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveVideo"] isEqualToString:@"1"])
+        {
+            [self reloadCollentView];
+        }
+    }
+    isFirst=TRUE;
+    
+}
+-(void)reloadCollentView
+{
+    
+    [RowDictionary removeAllObjects];
+    [tempImageArray removeAllObjects];
+    [statusDictionary removeAllObjects];
+    
+    [_countForSectionArray removeAllObjects];
+    [_sectionArray removeAllObjects];
+    
     [appDelegate.sqliteManager getLocalListOfYearCount];
     _yearArray = appDelegate.recordLocalYearCountArray;
     
-
-    NSLog(@"viewwillAppear调用");
-    [self performSelector:@selector(ShowRecordList) withObject:nil afterDelay:0.1];
+//    UICollectionViewFlowLayout *fl =[[UICollectionViewFlowLayout alloc] init];
+//    _imageCollection = [[[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, kScreenHeight - 64 - 44) collectionViewLayout:fl] autorelease];
+//    _imageCollection.backgroundColor = [UIColor clearColor];
+//    _imageCollection.delegate = self;
+//    _imageCollection.dataSource = self;
+//    //    [_imageCollection registerClass:[CollectionCell class] forCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY];
+//    //
+//    [_imageCollection registerClass:[HeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:REUSEABLE_HEADER];
+//    
+//    [fl release];
+//    [self.view addSubview:_imageCollection];
     
+//    NSLog(@"viewwillAppear调用");
+    [self performSelector:@selector(ShowRecordList) withObject:nil afterDelay:0.1];
+
 }
+
+//-(void)dealloc
+//{
+//    [statusDictionary release];
+//    [RowDictionary release];
+//    [tempImageArray release];
+//    [_picker release];
+//    [_label release];
+//
+//    [_recordLocalMonthListDic release];
+//    [_recordLocalMonthCountDic release];
+//    [_deleteDic release];
+//    [_yearArray release];
+//    [_countForSectionArray release];
+//    [_sectionArray release];
+//    
+//    [_dateFormatter release ];
+//    [_imageCollection release];
+//    [super dealloc];
+//}
+//
+
 -(void)viewDidDisappear:(BOOL)animated
 {
-
-    [_countForSectionArray removeAllObjects];
-    [_sectionArray removeAllObjects];
-    NSLog(@"viewwilldisappear调用");
+  
+    
+//    NSLog(@"viewwilldisappear调用");
 
 }
 -(void)ShowRecordList
@@ -138,7 +207,10 @@ int ppre_month=13;
         [self setDaysListFromMonth:i Year:_year];
     }
     
+    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"isSaveVideo"];
+    
     [_imageCollection reloadData];
+    
 
     
 }
@@ -154,7 +226,7 @@ int ppre_month=13;
     //取得本地的某一年的月记录
     //也就是一年所有的记录
     NSArray *localArray = [NSArray arrayWithArray:[appDelegate.recordLocalYearMonthListDic objectForKey:[NSString stringWithFormat:@"%d", year]]];
-    NSLog(@"本地的年记录是%d",[localArray count]);
+//    NSLog(@"本地的年记录是%d",[localArray count]);
     if ([localArray count] ==0) {
         return;
     }
@@ -270,7 +342,7 @@ int ppre_month=13;
         count += num;
     }
 
-    NSLog(@"数组是%@,section总数是%@",_countForSectionArray,_sectionArray);
+//    NSLog(@"数组是%@,section总数是%@",_countForSectionArray,_sectionArray);
 }
 
 //进入拍照页面
@@ -302,7 +374,7 @@ int ppre_month=13;
         //记录的日期
         NSDate *saveDate = [dic objectForKey:@"date"];
         unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
-        NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] ;
         NSDateComponents *nowComp = [myCal components:units fromDate:saveDate];
         
         
@@ -314,7 +386,6 @@ int ppre_month=13;
         NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
         
         //创建一个自动释放池
-        NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
         //保存图片到沙盒目录
         NSString *imagePath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path]];
         NSString *imageDir = [NSString stringWithFormat:@"%@",[imagePath stringByDeletingLastPathComponent]];
@@ -352,7 +423,6 @@ int ppre_month=13;
         {
             [self makeAlert:@"保存图片错误!"];
         }
-          [pool drain];                   
     }
     
    
@@ -362,42 +432,72 @@ int ppre_month=13;
 #pragma mark -CollectionDelegate
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSLog(@"有%d个元素",[ [_countForSectionArray objectAtIndex:section] integerValue]);
+//    NSLog(@"有%d个元素",[ [_countForSectionArray objectAtIndex:section] integerValue]);
     return [[_countForSectionArray objectAtIndex:section] integerValue];
     
     
 }
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+// 
+//    NSLog(@"%@",RowDictionary);
+//    NSLog(@"%@",tempImageArray);
+//    NSLog(@"%@",statusDictionary);
+    
+//    [_imageCollection registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellid];
     //创建一个自动释放池
-   
-    
-    UICollectionViewCell *cell = [_imageCollection dequeueReusableCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY forIndexPath:indexPath];
-    
+//
+    [_imageCollection registerClass:[myCollectionViewCell class] forCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY];
+    myCollectionViewCell *cell = [_imageCollection dequeueReusableCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY forIndexPath:indexPath];
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[[_sectionArray  objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
     
-    NSData *imageData = [NSData dataWithContentsOfFile: [babywith_sandbox_address stringByAppendingPathComponent:[dic objectForKey:@"path"]]];
-    UIImage *image = [UIImage imageWithData:imageData];
+    NSLog(@"....%d",indexPath.section);
     
-    NSLog(@"图片是%@",image);
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.frame = CGRectMake(0, 0, 75.5, 75.5);
-    
-    
-    
-    //假如是视频图片，要加一个按钮一样的图片加以区别
-    if ([[dic objectForKey:@"is_vedio"] intValue] ==1)
+    if(![[RowDictionary objectForKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]] isEqualToString:@"ok"])
     {
-        _startImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"start1.png"]];
-        _startImage.frame = CGRectMake(21.75, 21.75,32, 32);
-        [imageView addSubview:_startImage];
+       
+        NSData *imageData = [NSData dataWithContentsOfFile: [babywith_sandbox_address stringByAppendingPathComponent:[dic objectForKey:@"path"]]];
+        
+        UIImage *image = [UIImage imageWithData:imageData];
+        [tempImageArray addObject:image];
+
+//        NSLog(@"图片是%@",image);
+        
+        [cell.image setImage:image];
+        //假如是视频图片，要加一个按钮一样的图片加以区别
+        if ([[dic objectForKey:@"is_vedio"] intValue] !=1)
+        {
+            [cell.videoImage setHidden:YES];
+            [statusDictionary setObject:@"0" forKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]];
+            
+        }
+        else
+        {
+            [statusDictionary setObject:@"1" forKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]];
+            [cell.videoImage setHidden:NO];
+        }
+        
+        [RowDictionary setObject:@"ok" forKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]];
+
     }
-   
-    [cell addSubview:imageView];
-    [imageView release];
+    else{
+        
+        [cell.image setImage:[tempImageArray objectAtIndex:indexPath.row]];
+
+        
+        if(![[statusDictionary objectForKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]] isEqualToString:@"1"])
+        {
+            [cell.videoImage setHidden:YES];
+        }
+        else
+        {
+            [cell.videoImage setHidden:NO];
+            
+        }
+    }
     
-    return cell;
+//    NSLog(@"------>%@",statusDictionary);
+        return cell;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
@@ -408,7 +508,7 @@ int ppre_month=13;
     
     headerView.headerLabel.text = [_dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"time_record"] doubleValue]/1000]];
     
-    NSLog(@"头部视图是%@",headerView.headerLabel.text);
+//    NSLog(@"头部视图是%@",headerView.headerLabel.text);
     
     return headerView;
 
@@ -429,7 +529,7 @@ int ppre_month=13;
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     
-    NSLog(@"section的个数是%d",[_sectionArray count]);
+//    NSLog(@"section的个数是%d",[_sectionArray count]);
     return [_sectionArray count];
     
 }
@@ -456,6 +556,7 @@ int ppre_month=13;
     NSMutableArray *currentSectionPhoto = [_sectionArray objectAtIndex:indexPath.section];
     PhotoScanViewController *photoController = [[PhotoScanViewController alloc] initWithArray:currentSectionPhoto Type:0 Delegate:nil];
     [self.navigationController pushViewController:photoController animated:YES];
+//    [photoController release];
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define IS_IPHONE5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
-#define ScreenHeight (IS_IPHONE5 ? 472.0 : 426.0)
+#define ScreenHeight (IS_IPHONE5 ? 514.0-87.0 : 426.0)
 
 @protocol ImagePickerControllerDelegate;
 

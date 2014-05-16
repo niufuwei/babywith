@@ -26,17 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if (IOS7) {
-        self.rightLab.frame=CGRectMake(80, 400-44, 160, 30);
-        self.detailLab.frame=CGRectMake(20, 430-44, 280, 20);
-    }
-    else
-    {
-        self.rightLab.frame=CGRectMake(80, 380-64, 160, 30);
-        self.detailLab.frame=CGRectMake(20, 410-64, 280, 20);
-    }
-    
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,6 +35,5 @@
     // Dispose of any resources that can be recreated.
     
 }
-
 
 @end
