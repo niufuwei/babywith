@@ -444,7 +444,7 @@
     [binding release];
     
     if (response && [[response objectForKey:@"result"] isEqualToString:@"success"]) {
-        [appDelegate.appDefault setObject:[[response objectForKey:@"value"] objectForKey:@"auth"] forKey:@"Phone_checkcode"];
+        //[appDelegate.appDefault setObject:[[response objectForKey:@"value"] objectForKey:@"auth"] forKey:@"Phone_checkcode"];
         return YES;
         
     }else{
@@ -457,7 +457,7 @@
     WebInfoBinding *binding = [[WebInfoBinding alloc] initWithAddress:[NSString stringWithFormat:@"%@/user/forgot_pass2",[appDelegate.appDefault objectForKey:@"BabyWith_address_api"]]];
     NSDictionary *response = [ binding UserResetPasswordByPhoneUsingUsername:aUsername Authcode:aAuthCode Password:aPassword];
     [binding release];
-    
+    NSLog(@"respomse is %@",[response objectForKey:@"resultMessage"]);
     if (response && [[response objectForKey:@"result"] isEqualToString:@"success"])
     {
         
@@ -557,6 +557,10 @@
     WebInfoBinding *binding = [[WebInfoBinding alloc] initWithAddress:[NSString stringWithFormat:@"%@/family/add_baby",[appDelegate.appDefault objectForKey:@"BabyWith_address_api"]]];
     NSDictionary *response = [binding UserAgreeAddDeviceUsingIDMer:aIDMer Toekn:aToken];
     [binding release];
+    
+    
+    NSLog(@"同意分享结果%@",[response objectForKey:@"resultMessage"]);
+    
     
     if (response && [[response objectForKey:@"result"] isEqualToString:@"success"])
     {

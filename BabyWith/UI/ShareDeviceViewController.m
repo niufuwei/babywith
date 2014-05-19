@@ -46,7 +46,6 @@
     self.phoneNumber.delegate = self;
     
     
-    activity = [[Activity alloc] initWithActivity:self.view];
 
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -74,10 +73,10 @@
 - (void)submitBtn:(id)sender
 {
     
+    [self.phoneNumber endEditing:YES];
     
-    [activity start];
-    
-    
+    activity = [[Activity alloc] initWithActivity:self.view];
+
     _submit.enabled = NO;
     self.phoneNumber.text = [self.phoneNumber.text
                             stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -85,7 +84,7 @@
     //检查电话号码是否符合规格
     int phone_email_flag = [self checkTel:self.phoneNumber.text Type:1];
     NSLog(@"%d",phone_email_flag);
-    if (phone_email_flag < 0 )
+    if (phone_email_flag == 0 )
     {
         [activity stop];
         return;
@@ -114,7 +113,8 @@
     }
     
     
-    
+    [activity start];
+
     BOOL result = [appDelegate.webInfoManger UserShareDeviceUsingDeviceID:deviceID Phone:_phoneNumber.text Token:[appDelegate.appDefault objectForKey:@"Token"] PhoneType:@"2"];
      if (result)
     {

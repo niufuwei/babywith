@@ -16,7 +16,7 @@
     if (self) {
         // Initialization code
         
-        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 18, 24, 24)];
+        _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 18, 80, 24)];
         [self addSubview:_statusLabel];
         
         

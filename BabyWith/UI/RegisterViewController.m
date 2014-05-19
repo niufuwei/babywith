@@ -13,7 +13,6 @@
 #import "MainAppDelegate.h"
 #import <AdSupport/ASIdentifierManager.h>
 #import "CameraAddingViewController.h"
-#import "HaveSharedDeviceViewController.h"
 #import "Activity.h"
 
 @interface RegisterViewController ()
@@ -185,33 +184,33 @@
 //"refist_type", 手机端类型Android1，ios2；
 //"pass",密码；
 //"mac", mac地址);
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView.tag != 1)
-    {
-        return;
-    }
-    switch (buttonIndex)
-    {
-        case 0:
-        {
-            HaveSharedDeviceViewController *vc = [[HaveSharedDeviceViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
-
-        }
-            break;
-        case 1:
-        {
-            CameraAddingViewController *vc = [[CameraAddingViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
-            //self.navigationItem.backBarButtonItem.tintColor = babywith_orange_color;
-            //[NOTICECENTER postNotificationName:@"MoveToMain" object:Nil];
-        }
-            break;
-        default:
-            break;
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (alertView.tag != 1)
+//    {
+//        return;
+//    }
+//    switch (buttonIndex)
+//    {
+//        case 0:
+//        {
+//            HaveSharedDeviceViewController *vc = [[HaveSharedDeviceViewController alloc]init];
+//            [self.navigationController pushViewController:vc animated:YES];
+//
+//        }
+//            break;
+//        case 1:
+//        {
+//            CameraAddingViewController *vc = [[CameraAddingViewController alloc]init];
+//            [self.navigationController pushViewController:vc animated:YES];
+//            //self.navigationItem.backBarButtonItem.tintColor = babywith_orange_color;
+//            //[NOTICECENTER postNotificationName:@"MoveToMain" object:Nil];
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//}
 
 - (void)macAddressGet
 {

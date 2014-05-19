@@ -48,7 +48,15 @@
     _messageTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:_messageTableView];
     
-    _messageTableView.frame = CGRectMake(0, 0, 320, 100.0*[self tableView:_messageTableView numberOfRowsInSection:0]);
+    
+    if (100.0*[self tableView:_messageTableView numberOfRowsInSection:0] > self.view.frame.size.height)
+    {
+        _messageTableView.frame = CGRectMake(0, 0, 320,self.view.frame.size.height -64);
+
+    } else {
+        _messageTableView.frame = CGRectMake(0, 0, 320, 100.0*[self tableView:_messageTableView numberOfRowsInSection:0]);
+
+    }
     
    
     

@@ -71,7 +71,7 @@
 
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
-        indicator.labelText = @"验证码已发送。";
+        indicator.labelText = @"验证码已发送";
         indicator.mode = MBProgressHUDModeText;
         [window addSubview:indicator];
         [indicator showAnimated:YES whileExecutingBlock:^{
@@ -103,7 +103,7 @@
         return;
     }
     
-    if ([_checkCodeTF.text length] != 6 || [_checkCodeTF.text integerValue] != [[appDelegate.appDefault objectForKey:@"Phone_checkcode"]integerValue]) {
+    if ([_checkCodeTF.text length] != 6 ) {
         [self makeAlert:@"验证码不正确"];
         return;
     }

@@ -61,9 +61,15 @@
     else
     {
         _label.hidden = YES;
+        if (130.0*[self tableView:_messageTableView numberOfRowsInSection:0] > self.view.frame.size.height - 66)
+        {
+            _messageTableView.frame = CGRectMake(0, 0, 320, self.view.frame.size.height);
+        }
+        else
+        {
         _messageTableView.frame = CGRectMake(0, 0, 320, 130.0*[self tableView:_messageTableView numberOfRowsInSection:0]);
 
-    
+        }
     }
     [self.view addSubview:_messageTableView];
 
@@ -139,9 +145,12 @@
     
     NSString *IDMer = [NSString stringWithFormat:@"%@",[appDelegate.messageArray objectAtIndex:indexPath.row] ];
     
+    
+    NSLog(@"iiiiiiiiiiiiii%@",IDMer);
     if ([appDelegate.webInfoManger UserAgreeAddDeviceUsingIDMer:IDMer Toekn:[appDelegate.appDefault objectForKey:@"Token"]])
     {
         NSLog(@"分享成功");
+        [appDelegate.messageArray removeObjectAtIndex:indexPath.row];
         [self.navigationController popViewControllerAnimated:YES];
     }
      else

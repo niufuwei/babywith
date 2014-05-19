@@ -153,8 +153,6 @@
 		EF96F12F18D2E110002C1245 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = EF96F12C18D2E110002C1245 /* Default.png */; };
 		EF96F13018D2E110002C1245 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EF96F12D18D2E110002C1245 /* Default@2x.png */; };
 		EF96F30418D2E279002C1245 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF96F30318D2E279002C1245 /* Images.xcassets */; };
-		EFB12A5E18D42B000002E7A6 /* HaveSharedDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB12A5C18D42B000002E7A6 /* HaveSharedDeviceViewController.m */; };
-		EFB12A5F18D42B000002E7A6 /* HaveSharedDeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB12A5D18D42B000002E7A6 /* HaveSharedDeviceViewController.xib */; };
 		EFC71A6817B7F1E50089DA4A /* edit_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EFC71A6717B7F1E50089DA4A /* edit_background.png */; };
 		EFC71A6A17B7F56A0089DA4A /* rightDirGray.png in Resources */ = {isa = PBXBuildFile; fileRef = EFC71A6917B7F5670089DA4A /* rightDirGray.png */; };
 		EFD6663F1834C0E000DD2A02 /* lock_off_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = EFD666351834C0E000DD2A02 /* lock_off_highlighted.png */; };
@@ -518,9 +516,6 @@
 		EF96F12C18D2E110002C1245 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		EF96F12D18D2E110002C1245 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		EF96F30318D2E279002C1245 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		EFB12A5B18D42B000002E7A6 /* HaveSharedDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HaveSharedDeviceViewController.h; sourceTree = "<group>"; };
-		EFB12A5C18D42B000002E7A6 /* HaveSharedDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HaveSharedDeviceViewController.m; sourceTree = "<group>"; };
-		EFB12A5D18D42B000002E7A6 /* HaveSharedDeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HaveSharedDeviceViewController.xib; sourceTree = "<group>"; };
 		EFC71A6717B7F1E50089DA4A /* edit_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_background.png; sourceTree = "<group>"; };
 		EFC71A6917B7F5670089DA4A /* rightDirGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightDirGray.png; sourceTree = "<group>"; };
 		EFD666351834C0E000DD2A02 /* lock_off_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_off_highlighted.png; sourceTree = "<group>"; };
@@ -1065,9 +1060,6 @@
 				7195029318D43E85006FCB7F /* LoginViewController.h */,
 				7195029418D43E85006FCB7F /* LoginViewController.m */,
 				7195029518D43E85006FCB7F /* LoginViewController.xib */,
-				EFB12A5B18D42B000002E7A6 /* HaveSharedDeviceViewController.h */,
-				EFB12A5C18D42B000002E7A6 /* HaveSharedDeviceViewController.m */,
-				EFB12A5D18D42B000002E7A6 /* HaveSharedDeviceViewController.xib */,
 				EF1D3C3118D2B2D90079C358 /* LoginRegisterViewController.h */,
 				EF1D3C3218D2B2D90079C358 /* LoginRegisterViewController.m */,
 				EF1D3C3318D2B2D90079C358 /* LoginRegisterViewController.xib */,
@@ -1948,7 +1940,6 @@
 				EFEC8C3B17D87C09009E3CA1 /* headphoneButton_selected.png in Resources */,
 				EFEC8C3D17D88DF0009E3CA1 /* camera_background_pic.png in Resources */,
 				EFEA5A3717E9A1780047C0CE /* Icon-120.png in Resources */,
-				EFB12A5F18D42B000002E7A6 /* HaveSharedDeviceViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2010,7 +2001,6 @@
 				EFF7BA0E1788862B0035FB82 /* PPPPChannel.mm in Sources */,
 				EFF7BA0F1788862B0035FB82 /* PPPPChannelManagement.mm in Sources */,
 				EFF7BA101788862B0035FB82 /* RecPathDBUtils.mm in Sources */,
-				EFB12A5E18D42B000002E7A6 /* HaveSharedDeviceViewController.m in Sources */,
 				EFF7BA111788862B0035FB82 /* RecPathManagement.m in Sources */,
 				EFF7BA121788862B0035FB82 /* SearchDVS.mm in Sources */,
 				EFF7BA131788862B0035FB82 /* SearchListMgt.mm in Sources */,

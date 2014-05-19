@@ -125,6 +125,7 @@
         {
             
             cell.statusLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"信息提示背景.png"]];
+            cell.statusLabel.frame = CGRectMake(230, 18, 24, 24);
             cell.statusLabel.textAlignment = NSTextAlignmentCenter;
             cell.statusLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[appDelegate.systemMessageArray count]];
         }
@@ -192,7 +193,8 @@
 #pragma mark - UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==0) {
+    if (buttonIndex==0)
+    {
         BOOL result = [appDelegate.webInfoManger UserLogoutUsingToken:[appDelegate.appDefault objectForKey:@"Token"]];
         if(result)
         {
@@ -226,7 +228,8 @@
     
         [activity stop];
 
-    [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
+    
+        
     
 
     }
