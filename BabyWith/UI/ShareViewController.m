@@ -39,7 +39,7 @@
     _shareListTable.backgroundColor = [UIColor clearColor];
     _shareListTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
-    
+    NSLog(@"ooooooooooooooooo");
     
     
     

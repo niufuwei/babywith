@@ -36,16 +36,33 @@
     [appDelegate.appDefault setValue:@"1" forKey:@"initFinish"];
 }
 
--(void)putDeviceInfo:(NSArray *)DeviceInfoList{
+-(void)putDeviceInfo:(NSArray *)DeviceInfoList
+{
     [DeviceCondition lock];
+    
+    NSLog(@"DeviceInfo list is %@",DeviceInfoList);
+    NSLog(@"deviceList id %@,,,,,,,",DeviceList);
+
     
     for (NSMutableDictionary *dict in DeviceInfoList)
     {
+        
+        
+        NSLog(@"deviceList id %@,,,,,,,",DeviceList);
+        
+        NSLog(@"dict is %@",dict);
+
         
         //寻找相同的设备
         int same = 0;
         for (NSMutableDictionary *saveDict in DeviceList)
         {
+            
+            
+            NSLog(@"dict is %@,saveDict is %@",dict,saveDict);
+            
+            
+            
             if ([[dict objectForKey:@"device_id"] isEqualToString:[saveDict objectForKey:@"device_id"]])
             {
                 same = 1;
@@ -60,6 +77,35 @@
 //            [appDelegate.appDefault synchronize];
         }
     }
+    
+//    for (NSMutableDictionary *dict in DeviceInfoList)
+//    {
+//    
+//        
+//        int same = 0;
+//        if ([DeviceList containsObject:dict])
+//        {
+//            same = 1;
+//            break;
+//        }
+//    
+//        if (same == 0)
+//        {
+//            [DeviceList addObject:dict];
+//        }
+//    
+//    
+//    
+//    
+//    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     [DeviceCondition unlock];
 }

@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-@interface ShareDeviceViewController : BaseViewController
+@interface ShareDeviceViewController : BaseViewController<UITextFieldDelegate>
 
 @property (retain, nonatomic) IBOutlet UITextField *phoneNumber;
 @property (retain, nonatomic)  UIButton *submit;

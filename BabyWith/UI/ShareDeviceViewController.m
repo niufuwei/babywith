@@ -43,12 +43,21 @@
     [_submit addTarget:self action:@selector(submitBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_submit];
     
+    self.phoneNumber.delegate = self;
+    
     
     activity = [[Activity alloc] initWithActivity:self.view];
-    
 
 }
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
 
+    self.phoneNumber.keyboardType = UIKeyboardTypeNumberPad;
+
+
+
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -65,7 +74,9 @@
 - (void)submitBtn:(id)sender
 {
     
+    
     [activity start];
+    
     
     _submit.enabled = NO;
     self.phoneNumber.text = [self.phoneNumber.text
@@ -76,6 +87,7 @@
     NSLog(@"%d",phone_email_flag);
     if (phone_email_flag < 0 )
     {
+        [activity stop];
         return;
     }
     
@@ -107,7 +119,6 @@
      if (result)
     {
         
-        [activity stop];
 
         
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
@@ -120,7 +131,8 @@
         } completionBlock:^{
             [indicator removeFromSuperview];
             
-            
+            [activity stop];
+
             //选择的设备的数量
             int i = [appDelegate.selectDeviceArr count];
             NSLog(@"选择的设备的数量是%d",i);

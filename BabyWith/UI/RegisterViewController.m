@@ -131,7 +131,6 @@
     BOOL result = [appDelegate.webInfoManger UserRegisterUsingUser:phoneStr Vesting:@"86" RefistType:@"1" Password:@"" Mac:[appDelegate.appDefault objectForKey:@"Mac_self"]];
 
     
-    //    BOOL result = [appDelegate.webInfoManger UserRegisterUsingUser:userTextField.text Checkcode:[appDelegate.appDefault objectForKey:@"Phone_checkcode"] Password:passwdTextField.text Mac:[appDelegate.appDefault objectForKey:@"Mac_self"] RegistType:[NSString stringWithFormat:@"%d",phone_email_flag] Vesting:@"86"];
         if (result) {
             
             
@@ -147,9 +146,7 @@
                 [indicator removeFromSuperview];
                 [USRDEFAULT setInteger:1 forKey:@"First_use_flag"];
                 if (result) {
-//                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"有分享设备" otherButtonTitles:@"没有分享设备", nil];
-//                    alert.tag = 1;
-//                    [alert show];
+
                     
                     
                     //登陆校验，发送消息到服务器

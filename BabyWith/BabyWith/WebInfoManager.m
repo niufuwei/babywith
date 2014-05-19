@@ -304,7 +304,14 @@
 //        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:aDeviceId, @"device_id", aDeviceName, @"name", aDeviceUser, @"user", aDevicePasswd, @"pass", [appDelegate.appDefault objectForKey:@"Memeber_id_self"], @"id_member", nil];
 //        NSArray *array = [NSArray arrayWithObject:dic];
         
-        NSArray *array = [NSArray arrayWithObject:[response objectForKey:@"value"]];
+        NSArray *array = [NSArray arrayWithArray:[response objectForKey:@"value"]];
+        
+        
+        
+        NSLog(@"绑定的设备列表的数组是%@",[response objectForKey:@"value"]);
+        
+        
+        
         [appDelegate.deviceConnectManager putDeviceInfo:array];
         
         NSLog(@"UserAddDeviceUsingToken success ");

@@ -57,8 +57,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 -(void)viewDidLoad{
     
     [super viewDidLoad];
-    _isFirst=TRUE;
-    
 
     NSLog(@"camera play view did load!");
 
@@ -430,7 +428,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
         NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateComponents *nowComp = [myCal components:units fromDate:date];
-        
         //记录ID
         NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
         //图片相对路径
@@ -447,8 +444,8 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         //视频流相对路径
         //这里加入了视频流的路径，让所有的图片保存保持一样的参数，但是在这里并没有存入视频，取的时候也不会用到这个视频的路径
         NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@.pm4",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
-        NSString *vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
-        NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath stringByDeletingLastPathComponent]];
+        NSString *vedioPath1 = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
+        NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath1 stringByDeletingLastPathComponent]];
         NSError *vedioError = nil;
         [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
         
@@ -495,6 +492,24 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     }
     else if(button.tag == 2)//录制视频
     {
+        if (_isRecord==1) {
+            UIButton *btn = (UIButton *)[_lView viewWithTag:2];
+            [btn setTitle:@"正在录制" forState:UIControlStateNormal];
+            
+            UIButton *btn1 = (UIButton *)[_pView viewWithTag:2];
+            [btn1 setTitle:@"正在录制" forState:UIControlStateNormal];
+            
+        }
+        else
+        {
+            UIButton *btn = (UIButton *)[_lView viewWithTag:2];
+            [btn setTitle:@"录制视频" forState:UIControlStateNormal];
+            
+            UIButton *btn1 = (UIButton *)[_pView viewWithTag:2];
+            [btn1 setTitle:@"录制视频" forState:UIControlStateNormal];
+        }
+        
+        
         
         _isStart = !_isStart;
         if (_isStart)
@@ -516,13 +531,10 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             indicator.mode = MBProgressHUDModeText;
             [window addSubview:indicator];
             [indicator showAnimated:YES whileExecutingBlock:^{
-                self.view.userInteractionEnabled = NO;
                 sleep(4);
             } completionBlock:^{
                 [indicator removeFromSuperview];
                 [self.collectionView reloadData];
-                self.view.userInteractionEnabled = YES;
-
             }];
             
             
@@ -690,19 +702,17 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 {
     [self performSelector:@selector(refreshImage:) withObject:image];
 }
-
 - (void) YUVNotify: (Byte*) yuv length:(int)length width: (int) width height:(int)height timestamp:(unsigned int)timestamp DID:(NSString *)did
 {
     UIImage* image = [APICommon YUV420ToImage:yuv width:width height:height];
 
     NSLog(@"lenght is %d,width is %d,height is %d",length,width,height);
-    if (_isFirst) {
-        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",length] forKey:@"vedioDataLength"];
-        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",width] forKey:@"vedioDataWidth"];
-        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",height] forKey:@"vedioDataHeight"];
-        _isFirst=FALSE;
-    }
+    [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",length] forKey:@"vedioDataLength"];
+    [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",width] forKey:@"vedioDataWidth"];
+    [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",height] forKey:@"vedioDataHeight"];
     
+   
+
     if (_isRecord ==1 )//开始录制
     {
         //第一次进来开始录制的时候取得第一张图片，录制过程中不需要图片，只需要数据
@@ -715,16 +725,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         else
         {
         
-        //得到视频数据  （内存会猛涨肿么办？）
+        //得到视频数据
+       [_recordData appendBytes:yuv length:length];
             
-        [_recordData appendBytes:yuv length:length];
-        
-       
-        }
-    }
-    else if(_isRecord ==2)
-        //停止录制
-    {
             //照片和视频都在这里保存
             //创建时间
             NSDate *date = [NSDate date];
@@ -732,15 +735,13 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             //图片转换成数据
             NSData *imageData = UIImageJPEGRepresentation(_recordImage ,0.3);
             NSLog(@"data length =[%lu]", (unsigned long)[imageData length]);
-        
-        
-        
+            
             NSFileManager *fileManager = [NSFileManager defaultManager];
             NSString *tmpDir =  NSTemporaryDirectory();
             NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
             if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil])
             {
-                [self makeAlert:@"保存图片出错"];
+                [self makeAlert:@"保存图片出错。"];
             }
             
             
@@ -752,10 +753,10 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             NSDateComponents *nowComp = [myCal components:units fromDate:date];
             //记录ID
             NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
-        
+            
             //视频流相对路径
-            NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@.pm4",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
-            NSString *vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
+            NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@320x240.264",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+            vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
             NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath stringByDeletingLastPathComponent]];
             NSError *vedioError = nil;
             [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
@@ -764,14 +765,14 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             {   //保存数据
                 if ([fileManager createFileAtPath:vedioPath contents:_recordData attributes:nil])
                 {
-                    _recordData = nil;
-                    _vedioHasRecord = 1;//视频保存成功
                     
+                    //_vedioHasRecord = 1;//视频保存成功
                     [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
-                    
                 }
                 else
                 {
+                    
+                    
                     [self makeAlert:@"保存视频出错"];
                 }
             }
@@ -784,9 +785,12 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             
             
             
+            
+            
+            
             //获取快照,这里加入了图片对应视频的路径，方便以后找到对应的视频
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date", [NSString stringWithFormat:@"%d", 320], @"width", [NSString stringWithFormat:@"%d", 180], @"height",[NSString stringWithFormat:@"%d",1],@"is_vedio",path1,@"record_data_path",nil];
-        
+            
             //图片相对路径
             NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png", [nowComp year],[nowComp month], [nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
             
@@ -796,7 +800,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             NSError *error = nil;
             [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:&error];
             //如果视频保存成功了才去保存图片
-            if (!error && _vedioHasRecord ==1)
+            if (!error)
             {
                 
                 if ([fileManager createFileAtPath:imagePath contents:imageData attributes:nil])
@@ -812,14 +816,15 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     {
                         //这里对照片直接进行保存
                         [_imageArray addObject:insertDic];
-                        
-                        _vedioHasRecord = 0;
+                        _photoCount += 1;
+
+                        //_vedioHasRecord = 0;
                         //添加到数组，作为显示的时候用
                         [_collectionImageArray addObject:_recordImage];
                         NSLog(@"collection数组是%@",_collectionImageArray);
-                        [self.collectionView reloadData];
-                        _photoCount += 1;
-                        NSLog(@"这里走了没有呢");
+                        
+                        
+                        
                         
                         
                     }
@@ -836,16 +841,33 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                 }
             }
             
-        _isRecord = 3;//回到normal状态下的值，开始录制是1，完成了录制是2
-        _recordImage = nil;//保证下次再录制的时候得到下一次的第一张图片
+            _isRecord = 4;//回到normal状态下的值，开始录制是1，完成了录制是2
+            _recordImage = nil;//保证下次再录制的时候得到下一次的第一张图片
+        }
     }
+    else if (_isRecord == 4)
+    {
+    
+        
+        NSMutableData *data =  [[[NSFileManager defaultManager] contentsAtPath:vedioPath] mutableCopy];
+        [data appendBytes:yuv length:length];
+        [[NSFileManager defaultManager] createFileAtPath:vedioPath contents:data attributes:nil];
+        NSLog(@"沙盒数据的长度是%d",[[[NSFileManager defaultManager] contentsAtPath:vedioPath] length]);
     
     
-    
-    
+    }
+    else if(_isRecord ==2)
+        //停止录制
+    {
+        
+        [self.collectionView reloadData];
+                NSLog(@"这里走了没有呢");
+        _isRecord = 3;
+        _recordData = nil;
+        
+    }
     [self performSelector:@selector(refreshImage:) withObject:image];
-//    [NSTimer timerWithTimeInterval:0.01 target:self selector:@selector(refreshImage:) userInfo:nil repeats:YES];
-//    [NSThread detachNewThreadSelector:@selector(refreshImage:) toTarget:self withObject:image];
+
     
 }
 - (void) H264Data: (Byte*) h264Frame length: (int) length type: (int) type timestamp: (NSInteger) timestamp
@@ -853,9 +875,11 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     //ULog(@"H264Data is %d",length);
     
     
-//    NSLog(@"视频数据、、、、、、、、、、、、、、、");
+    NSLog(@"视频数据、、、、、、、、、、、、、、、");
     
-
+    
+    
+    
 
 }
 

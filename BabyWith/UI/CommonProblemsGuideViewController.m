@@ -31,6 +31,8 @@
     [self setTitle:@"常见问题"];
     _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
     [self.view addSubview:_webView];
+    _webView.backgroundColor = [UIColor clearColor];
+    [_webView setOpaque:NO];
     
     NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"help" ofType:@"html"];
     NSString *htmlString = [[NSString alloc] initWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];

@@ -25,6 +25,9 @@
     [_agreeShareBtn setBackgroundColor:babywith_green_color];
     [self addSubview:_agreeShareBtn];
     
+    
+    self.backgroundColor = babywith_background_color;
+    
     //196.79.104.30
     _refuseShareBtn = [[UIButton alloc] initWithFrame:CGRectMake(196, 79, 104, 30)];
     [_refuseShareBtn setTitle:@"拒绝" forState:UIControlStateNormal];
@@ -42,11 +45,5 @@
 //    // Configure the view for the selected state
 //}
 
-- (void)dealloc {
-    [_messageLabel release];
-    [_agreeShareBtn release];
-    [_refuseShareBtn release];
-    [super dealloc];
-}
 
 @end

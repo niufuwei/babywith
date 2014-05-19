@@ -56,6 +56,7 @@
         _label.textAlignment = NSTextAlignmentCenter;
         _label.text =@"您还没有将设备分享给别人";
         _label.hidden = NO;
+        _label.backgroundColor = [UIColor clearColor];
         [self.view addSubview:_label];
        
     }
