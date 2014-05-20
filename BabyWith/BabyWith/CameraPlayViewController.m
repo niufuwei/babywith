@@ -742,142 +742,128 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         //得到视频数据
        [_recordData appendBytes:yuv length:length];
             
-            //照片和视频都在这里保存
-            //创建时间
-            NSDate *date = [NSDate date];
-            NSTimeInterval time = [date timeIntervalSince1970];
-            //图片转换成数据
-            NSData *imageData = UIImageJPEGRepresentation(_recordImage ,0.3);
-            NSLog(@"data length =[%lu]", (unsigned long)[imageData length]);
-            
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            NSString *tmpDir =  NSTemporaryDirectory();
-            NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
-            if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil])
-            {
-                [self makeAlert:@"保存图片出错。"];
-            }
-            
-            
-            
-            
-            //得到年月日
-            unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
-            NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-            NSDateComponents *nowComp = [myCal components:units fromDate:date];
-            //记录ID
-            NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
-            
-            //视频流相对路径
-            NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@320x240.264",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
-            vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
-            NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath stringByDeletingLastPathComponent]];
-            NSError *vedioError = nil;
-            [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
-            
-            if (!vedioError)
-            {   //保存数据
-                if ([fileManager createFileAtPath:vedioPath contents:_recordData attributes:nil])
-                {
-                    
-                    //_vedioHasRecord = 1;//视频保存成功
-                    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
-                }
-                else
-                {
-                    
-                    
-                    [self makeAlert:@"保存视频出错"];
-                }
-            }
-            else
-            {
-                
-                [self makeAlert:@"保存视频出错"];
-                
-            }
-            
-            
-            
-            
-            
-            
-            //获取快照,这里加入了图片对应视频的路径，方便以后找到对应的视频
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date", [NSString stringWithFormat:@"%d", 320], @"width", [NSString stringWithFormat:@"%d", 180], @"height",[NSString stringWithFormat:@"%d",1],@"is_vedio",path1,@"record_data_path",nil];
-            
-            //图片相对路径
-            NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png", [nowComp year],[nowComp month], [nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
-            
-            //保存图片至沙盒目录
-            NSString *imagePath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path]];
-            NSString *imageDir = [NSString stringWithFormat:@"%@", [imagePath stringByDeletingLastPathComponent]];
-            NSError *error = nil;
-            [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:&error];
-            //如果视频保存成功了才去保存图片
-            if (!error)
-            {
-                
-                if ([fileManager createFileAtPath:imagePath contents:imageData attributes:nil])
-                {
-                    //插入库表
-                    NSArray *array = [NSArray arrayWithObjects:record_id,[appDelegate.appDefault objectForKey:@"Member_id_self"],[dic objectForKey:@"time"],[NSString stringWithFormat:@"%d",[nowComp year]],[NSString stringWithFormat:@"%d",[nowComp month]], [NSString stringWithFormat:@"%d",[nowComp day]],[dic objectForKey:@"width"],[dic objectForKey:@"height"], path,[NSString stringWithFormat:@"%d",1],path1, nil];
-                    
-                    
-                    NSArray *keyArray = [NSArray arrayWithObjects:@"id_record", @"id_member", @"time_record",@"year_record",@"month_record",@"day_record", @"width_image",@"height_image",@"path",@"is_vedio",@"record_data_path",nil];
-                    NSDictionary *insertDic = [NSDictionary dictionaryWithObjects:array forKeys:keyArray];
-                    
-                    if ([appDelegate.sqliteManager insertRecordInfo:insertDic])
-                    {
-                        //这里对照片直接进行保存
-                        [_imageArray addObject:insertDic];
-                        _photoCount += 1;
-
-                        //_vedioHasRecord = 0;
-                        //添加到数组，作为显示的时候用
-                        [_collectionImageArray addObject:_recordImage];
-                        NSLog(@"collection数组是%@",_collectionImageArray);
-                        
-                        
-                        
-                        
-                        
-                    }
-                    else
-                    {
-                        //删除图片
-                        
-                        [self makeAlert:@"保存视频错误！"];
-                    }
-                }
-                else
-                {
-                    [self makeAlert:@"保存视频错误！"];
-                }
-            }
-            
-            _isRecord = 4;//回到normal状态下的值，开始录制是1，完成了录制是2
-            _recordImage = nil;//保证下次再录制的时候得到下一次的第一张图片
+           
         }
-    }
-    else if (_isRecord == 4)
-    {
-    
-        
-        NSMutableData *data =  [[[NSFileManager defaultManager] contentsAtPath:vedioPath] mutableCopy];
-        [data appendBytes:yuv length:length];
-        [[NSFileManager defaultManager] createFileAtPath:vedioPath contents:data attributes:nil];
-        NSLog(@"沙盒数据的长度是%d",[[[NSFileManager defaultManager] contentsAtPath:vedioPath] length]);
-    
-    
     }
     else if(_isRecord ==2)
         //停止录制
     {
+        //照片和视频都在这里保存
+        //创建时间
+        NSDate *date = [NSDate date];
+        NSTimeInterval time = [date timeIntervalSince1970];
+        //图片转换成数据
+        NSData *imageData = UIImageJPEGRepresentation(_recordImage ,0.3);
+        NSLog(@"data length =[%lu]", (unsigned long)[imageData length]);
         
-        [self.collectionView reloadData];
-                NSLog(@"这里走了没有呢");
-        _isRecord = 3;
-        _recordData = nil;
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *tmpDir =  NSTemporaryDirectory();
+        NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
+        if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil])
+        {
+            [self makeAlert:@"保存图片出错。"];
+        }
+        
+        
+        
+        
+        //得到年月日
+        unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
+        NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *nowComp = [myCal components:units fromDate:date];
+        //记录ID
+        NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
+        
+        //视频流相对路径
+        NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@320x240.264",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+        NSString *vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
+        NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath stringByDeletingLastPathComponent]];
+        NSError *vedioError = nil;
+        [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
+        
+        if (!vedioError)
+        {   //保存数据
+            if ([fileManager createFileAtPath:vedioPath contents:_recordData attributes:nil])
+            {
+                _recordData = nil;
+                _vedioHasRecord = 1;//视频保存成功
+                [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
+            }
+            else
+            {
+                
+                
+                [self makeAlert:@"保存视频出错"];
+            }
+        }
+        else
+        {
+            
+            [self makeAlert:@"保存视频出错"];
+            
+        }
+        
+        
+        
+        
+        
+        
+        //获取快照,这里加入了图片对应视频的路径，方便以后找到对应的视频
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date", [NSString stringWithFormat:@"%d", 320], @"width", [NSString stringWithFormat:@"%d", 180], @"height",[NSString stringWithFormat:@"%d",1],@"is_vedio",path1,@"record_data_path",nil];
+        
+        //图片相对路径
+        NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png", [nowComp year],[nowComp month], [nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+        
+        //保存图片至沙盒目录
+        NSString *imagePath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path]];
+        NSString *imageDir = [NSString stringWithFormat:@"%@", [imagePath stringByDeletingLastPathComponent]];
+        NSError *error = nil;
+        [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:&error];
+        //如果视频保存成功了才去保存图片
+        if (!error && _vedioHasRecord ==1)
+        {
+            
+            if ([fileManager createFileAtPath:imagePath contents:imageData attributes:nil])
+            {
+                //插入库表
+                NSArray *array = [NSArray arrayWithObjects:record_id,[appDelegate.appDefault objectForKey:@"Member_id_self"],[dic objectForKey:@"time"],[NSString stringWithFormat:@"%d",[nowComp year]],[NSString stringWithFormat:@"%d",[nowComp month]], [NSString stringWithFormat:@"%d",[nowComp day]],[dic objectForKey:@"width"],[dic objectForKey:@"height"], path,[NSString stringWithFormat:@"%d",1],path1, nil];
+                
+                
+                NSArray *keyArray = [NSArray arrayWithObjects:@"id_record", @"id_member", @"time_record",@"year_record",@"month_record",@"day_record", @"width_image",@"height_image",@"path",@"is_vedio",@"record_data_path",nil];
+                NSDictionary *insertDic = [NSDictionary dictionaryWithObjects:array forKeys:keyArray];
+                
+                if ([appDelegate.sqliteManager insertRecordInfo:insertDic])
+                {
+                    //这里对照片直接进行保存
+                    [_imageArray addObject:insertDic];
+                    
+                    _vedioHasRecord = 0;
+                    //添加到数组，作为显示的时候用
+                    [_collectionImageArray addObject:_recordImage];
+                    NSLog(@"collection数组是%@",_collectionImageArray);
+                    [self.collectionView reloadData];
+                    _photoCount += 1;
+                    NSLog(@"这里走了没有呢");
+                    
+                    
+                    
+                    
+                }
+                else
+                {
+                    //删除图片
+                    
+                    [self makeAlert:@"保存视频错误！"];
+                }
+            }
+            else
+            {
+                [self makeAlert:@"保存视频错误！"];
+            }
+        }
+        
+        _isRecord = 3;//回到normal状态下的值，开始录制是1，完成了录制是2
+        _recordImage = nil;//保证下次再录制的时候得到下一次的第一张图片
         
     }
     [self performSelector:@selector(refreshImage:) withObject:image];
