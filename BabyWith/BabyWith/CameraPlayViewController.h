@@ -53,7 +53,6 @@
     int _vedioHasRecord;
     
     CCustomAVRecorder *_customAVRecorder;
-    NSString *vedioPath;
     
     
     
