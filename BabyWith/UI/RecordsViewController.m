@@ -49,10 +49,9 @@ static NSString * REUSEABLE_CELL_IDENTITY = @"cee";
 //    [navButton release];
     
     [self titleSet:@"记录"];
-    
+    arrayDictionary = [[NSMutableDictionary alloc] init];
     statusDictionary = [[NSMutableDictionary alloc] init];
     RowDictionary = [[NSMutableDictionary alloc] init];
-    tempImageArray = [[NSMutableArray alloc] init];
     
     _label = [[UILabel alloc] init];
     _year = 0;
@@ -103,7 +102,7 @@ static NSString * REUSEABLE_CELL_IDENTITY = @"cee";
 {
     
     [RowDictionary removeAllObjects];
-    [tempImageArray removeAllObjects];
+    [arrayDictionary removeAllObjects];
     [statusDictionary removeAllObjects];
     
     [_countForSectionArray removeAllObjects];
@@ -450,8 +449,7 @@ static NSString * REUSEABLE_CELL_IDENTITY = @"cee";
     [_imageCollection registerClass:[myCollectionViewCell class] forCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY];
     myCollectionViewCell *cell = [_imageCollection dequeueReusableCellWithReuseIdentifier:REUSEABLE_CELL_IDENTITY forIndexPath:indexPath];
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[[_sectionArray  objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
-    
-    NSLog(@"....%d",indexPath.section);
+
     
     if(![[RowDictionary objectForKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]] isEqualToString:@"ok"])
     {
@@ -459,7 +457,9 @@ static NSString * REUSEABLE_CELL_IDENTITY = @"cee";
         NSData *imageData = [NSData dataWithContentsOfFile: [babywith_sandbox_address stringByAppendingPathComponent:[dic objectForKey:@"path"]]];
         
         UIImage *image = [UIImage imageWithData:imageData];
-        [tempImageArray addObject:image];
+//        [tempImageArray addObject:image];
+        
+        [arrayDictionary setObject:image forKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]];
 
 //        NSLog(@"图片是%@",image);
         
@@ -482,7 +482,7 @@ static NSString * REUSEABLE_CELL_IDENTITY = @"cee";
     }
     else{
         
-        [cell.image setImage:[tempImageArray objectAtIndex:indexPath.row]];
+        [cell.image setImage:[arrayDictionary objectForKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]]];
 
         
         if(![[statusDictionary objectForKey:[NSString stringWithFormat:@"%d",(indexPath.section+1)*1000+indexPath.row]] isEqualToString:@"1"])

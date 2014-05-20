@@ -38,8 +38,8 @@
 
     NSMutableDictionary * RowDictionary;
     NSMutableDictionary * statusDictionary;
-    
-    NSMutableArray * tempImageArray;
+
+    NSMutableDictionary * arrayDictionary;
 
 }
 @property (nonatomic, copy) NSMutableArray *imageArray;

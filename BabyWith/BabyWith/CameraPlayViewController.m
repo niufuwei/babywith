@@ -68,7 +68,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView: navButton];
         self.navigationItem.rightBarButtonItem = rightItem;
         
-        _switchFlag = 0;
+        _switchFlag = 0;  //0是没有连接，1是开始连接
 
     }
     
@@ -285,16 +285,21 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    if (_orientationFlag == 1) { //横屏
-        if (_toolBarHiddenFlag == 0) { //工具栏显示
+    if (_orientationFlag == 1)
+    { //横屏
+        if (_toolBarHiddenFlag == 0)
+        { //工具栏显示
             UITouch *touch = [touches anyObject];
             CGPoint point = [touch  locationInView:self.view];
-            if(point.y < 52 || point.y > 268){
-                if (_switchFlag == 0 || _listenFlag == 1) {
+            if(point.y < 52 || point.y > 268)
+            {
+                if (_switchFlag == 0 || _listenFlag == 1)
+                {
                     return;
                 }
                 
-                if (_hiddenTimer) {
+                if (_hiddenTimer)
+                {
                     [_hiddenTimer invalidate];
                     _hiddenTimer = nil;
                 }
@@ -306,16 +311,21 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (_orientationFlag == 1) { //横屏
-        if (_toolBarHiddenFlag == 0) { //工具栏显示
+    if (_orientationFlag == 1)
+    { //横屏
+        if (_toolBarHiddenFlag == 0)
+        { //工具栏显示
             UITouch *touch = [touches anyObject];
             CGPoint point = [touch  locationInView:self.view];
-            if(point.y < 52 || point.y > 268){
-                if (_switchFlag == 0 || _listenFlag == 1) {
+            if(point.y < 52 || point.y > 268)
+            {
+                if (_switchFlag == 0 || _listenFlag == 1)
+                {
                     return;
                 }
                 _touchFlag = 0;
-                if (_hiddenTimer) {
+                if (_hiddenTimer)
+                {
                     [_hiddenTimer invalidate];
                     _hiddenTimer = nil;
                 }
@@ -349,7 +359,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 -(void)stopCameraConnect:(UITapGestureRecognizer *)taprecognizer{
     NSLog(@"stop connect flag =======");
     if (_finishFlag != 0) {
-        _stopConnectFlag = 1;
+        _stopConnectFlag = 1;//没有完成的时候就不停止连接
         NSLog(@"stop connect flag = [%d] [%d]", _finishFlag, _stopConnectFlag);
     }
 }
@@ -477,6 +487,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     _photoCount += 1;
                 
                 }
+                [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
             }
             
         }
@@ -700,7 +711,10 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 #pragma mark -ImageNotifyProtocol
 - (void) ImageNotify: (UIImage *)image timestamp: (NSInteger)timestamp DID:(NSString *)did
 {
-    [self performSelector:@selector(refreshImage:) withObject:image];
+    //[self performSelector:@selector(refreshImage:) withObject:image];
+    
+    
+    NSLog(@"图片切换");
 }
 - (void) YUVNotify: (Byte*) yuv length:(int)length width: (int) width height:(int)height timestamp:(unsigned int)timestamp DID:(NSString *)did
 {
@@ -958,6 +972,10 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 
 -(void)ShowCameraPlaying{
     NSLog(@"ShowCameraPlaying");
+    
+    self.navigationItem.leftBarButtonItem.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    
     [appDelegate.appDefault setInteger:0 forKey:@"Last_page_flag"];
 
         NSLog(@"ShowCameraPlaying else");
@@ -976,7 +994,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         else if(result == 1)
         { //连接成功，检测账号密码。
             //发送检测账户指令？
-            _finishFlag = 1;
+            _finishFlag = 1; //代表连接成功
             _passwordFlag = 0;
             _stopConnectFlag = 0;
             NSLog(@"password 2 is %d",_passwordFlag);
@@ -1013,7 +1031,12 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     {
                         _errorMsg = @"看护器连接错误。";
                     }
-                    [self makeAlert:_errorMsg];
+//                    [self makeAlert:_errorMsg];
+                    
+                    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:nil message:@"看护器连接错误，请重置看护器" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    alert.tag=10010;
+                    [alert show];
+
                 }
             }];
             
@@ -1061,7 +1084,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView:self.view];
     indicator.labelText = @"视频连接中";
     indicator.dimBackground = YES;
-    //[self addTapGest:indicator];//点击终止视频
+    [self addTapGest:indicator];//点击终止视频
     [self.view addSubview:indicator];
     [indicator showAnimated:YES whileExecutingBlock:^{
         
@@ -1071,6 +1094,8 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         while (_finishFlag != 0 && _stopConnectFlag == 0) {
             
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+            
+            
         }
     } completionBlock:^{
         [indicator removeFromSuperview];
@@ -1132,13 +1157,22 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 
                     
                 }else{
-                    [self makeAlert:_errorMsg];
+//                    [self makeAlert:_errorMsg];
+                    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:nil message:@"看护器连接错误，请重置看护器" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    alert.tag=10086;
+                    [alert show];
+                    
                 }
             }else{
                 if ([_errorMsg length] == 0) {
                     _errorMsg = @"看护器连接错误。";
                 }
-                [self makeAlert:_errorMsg];
+//                [self makeAlert:_errorMsg];
+                
+               
+                UIAlertView *alert=[[UIAlertView alloc] initWithTitle:nil message:@"看护器连接错误，请重置看护器" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                alert.tag=10000;
+                [alert show];
             }
         }
         
@@ -1246,14 +1280,14 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     NSLog(@"password 7 is %d",_passwordFlag);
 
                     _errorFlag = 4;
-                    _errorMsg = @"看护器连接错误，请重置看护器。";
+                    _errorMsg = @"看护器连接错误，请重置看护器";
                     [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
                 }
             }
             else
             {
                 _errorFlag = 4;
-                _errorMsg = @"看护器账号连接错误，请重置看护器。";
+                _errorMsg = @"看护器账号连接错误，请重置看护器";
                 [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
                 
             }
@@ -1365,7 +1399,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 
 
     
-    [self makeAlert:@"看护器连接断开，请确认。"];
+    [self makeAlert:@"看护器连接断开，请确认"];
 }
 
 -(void)Finish:(NSString *)flag{
@@ -1689,6 +1723,13 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 }
 
 -(void)ActionForStartVideo{
+    
+    
+    self.navigationItem.leftBarButtonItem.enabled=YES;
+    self.navigationItem.rightBarButtonItem.enabled=YES;
+    
+    
+    
     [self startVideo];
     //开启定时隐藏工具栏任务
     if (_orientationFlag == 1)
@@ -1801,6 +1842,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark alertViewDelegate
+#pragma mark alertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
@@ -1812,12 +1854,34 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         }
         
     }
-
+    if (alertView.tag==10010) {
+        if (buttonIndex==0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    if (alertView.tag==10086) {
+        if (buttonIndex==0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    if (alertView.tag==10000) {
+        if (buttonIndex==0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
     
-
-
+    if (alertView.tag==777) {
+        if (buttonIndex==0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    
+    
+    
+    
+    
 }
-#pragma mark - 
+#pragma mark -
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

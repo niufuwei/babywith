@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>CB0F0C1F-B96E-46CA-8835-5E576D390449</string>
+	<string>CFBAD145-E33E-4433-BC02-C25FE17DA7C5</string>
 	<key>IDESourceControlProjectName</key>
 	<string>BabyWith</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>8F6F5E6E-3406-40A2-BD92-B3783C417AF6</key>
-		<string>https://github.com/niufuwei/BabyWith.git</string>
+		<key>FEEB61C5-42D9-40CC-AC33-35BA12790FEA</key>
+		<string>https://github.com/niufuwei/babywith.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>BabyWith/BabyWith.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>8F6F5E6E-3406-40A2-BD92-B3783C417AF6</key>
+		<key>FEEB61C5-42D9-40CC-AC33-35BA12790FEA</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/niufuwei/BabyWith.git</string>
+	<string>https://github.com/niufuwei/babywith.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>8F6F5E6E-3406-40A2-BD92-B3783C417AF6</string>
+	<string>FEEB61C5-42D9-40CC-AC33-35BA12790FEA</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8F6F5E6E-3406-40A2-BD92-B3783C417AF6</string>
+			<string>FEEB61C5-42D9-40CC-AC33-35BA12790FEA</string>
 			<key>IDESourceControlWCCName</key>
-			<string>BabyWith</string>
+			<string>babywith</string>
 		</dict>
 	</array>
 </dict>

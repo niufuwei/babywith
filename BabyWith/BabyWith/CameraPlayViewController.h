@@ -34,8 +34,8 @@
     UIBarButtonItem *_rightItem;
     NSMutableDictionary *_currentDeviceDic;
     int _switchFlag;
-    int _finishFlag;
-    int _stopConnectFlag;
+    int _finishFlag;   //为0连接成功   1未成功
+    int _stopConnectFlag;   //1是未停止连接  0是连接成功
     int _wifiFlag;
     int _talkFlag;
     int _listenFlag;

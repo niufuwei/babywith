@@ -109,12 +109,15 @@
         {
             NSLog(@"昵称是%@",[appDelegate.appDefault objectForKey:@"Appel_self"]);
             cell.statusLabel.text = [NSString stringWithFormat:@"%@",[appDelegate.appDefault objectForKey:@"Appel_self"]];
+            cell.statusLabel.textAlignment = NSTextAlignmentCenter;
 
         }
         else
         {
         
             cell.statusLabel.text = @"无";
+            cell.statusLabel.textAlignment = NSTextAlignmentCenter;
+
 
         
         }
