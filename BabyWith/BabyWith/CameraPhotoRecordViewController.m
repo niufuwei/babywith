@@ -266,14 +266,8 @@
     }
     
     pageCount -= 1;
-    
-    
-    
-    
    
     NSLog(@"数组的元素是 %@",[_photoArray objectAtIndex:index]);
-    
-    
     
     //有视频，就删除
     NSString *vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address
@@ -296,8 +290,6 @@
          deleteType:1];
     }
     
-    
-    
      if (pageCount == 0)
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -308,17 +300,9 @@
         currentPage =  (_photoScrollView.contentOffset.x /_photoScrollView.frame.size.width);
         NSLog(@"当前的currentPage是%d",currentPage);
         
-        
-        
         ((UILabel *)self.navigationItem.titleView).text = [NSString stringWithFormat:@"%d/%d", currentPage+1, pageCount];
 
     }
-    
-    
-    
-    
-   
-
 }
 
 - (void)didReceiveMemoryWarning

@@ -157,11 +157,8 @@
     {
     
         [self makeAlert:@"同意分享出错"];
-    
-        
+  
     }
-
-
 
 }
  -(void)refuseShare:(UIButton *)btn
@@ -176,12 +173,5 @@
 
 
 }
-
-
-
-
-
-
-
 
 @end

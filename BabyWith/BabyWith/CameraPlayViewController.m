@@ -58,6 +58,8 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     
     [super viewDidLoad];
 
+    _isFirst=TRUE;
+    
     NSLog(@"camera play view did load!");
 
     //导航条设置
@@ -261,10 +263,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     NSLog(@"current dic is %@",_currentDeviceDic);
     
     
-    
-    
-    
-    
+
     
 }
 
@@ -503,25 +502,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     }
     else if(button.tag == 2)//录制视频
     {
-        if (_isRecord==1) {
-            UIButton *btn = (UIButton *)[_lView viewWithTag:2];
-            [btn setTitle:@"正在录制" forState:UIControlStateNormal];
-            
-            UIButton *btn1 = (UIButton *)[_pView viewWithTag:2];
-            [btn1 setTitle:@"正在录制" forState:UIControlStateNormal];
-            
-        }
-        else
-        {
-            UIButton *btn = (UIButton *)[_lView viewWithTag:2];
-            [btn setTitle:@"录制视频" forState:UIControlStateNormal];
-            
-            UIButton *btn1 = (UIButton *)[_pView viewWithTag:2];
-            [btn1 setTitle:@"录制视频" forState:UIControlStateNormal];
-        }
-        
-        
-        
+    
         _isStart = !_isStart;
         if (_isStart)
         {
@@ -564,7 +545,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     }
     else if(button.tag == 13)
     {//开启对讲
-        
+        _isViode=TRUE;
         NSLog(@"start Talk ============");
         button.hidden = YES;
         if (!_isFullScreen)
@@ -592,6 +573,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     }
     else if (button.tag == 15)//结束对讲
     {
+        _isViode=FALSE;
         button.hidden = YES;
         if (!_isFullScreen) {
             [_lTalkView viewWithTag:13].hidden = NO;
@@ -609,9 +591,54 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     }
     else if (button.tag == 4)
     {
+        
+        if (_isRecord==1) {
+            UIButton *btn = (UIButton *)[_lView viewWithTag:2];
+            [btn setTitle:@"正在录制" forState:UIControlStateNormal];
+            
+            UIButton *btn1 = (UIButton *)[_pView viewWithTag:2];
+            [btn1 setTitle:@"正在录制" forState:UIControlStateNormal];
+            
+        }
+        else
+        {
+            UIButton *btn = (UIButton *)[_lView viewWithTag:2];
+            [btn setTitle:@"录制视频" forState:UIControlStateNormal];
+            
+            UIButton *btn1 = (UIButton *)[_pView viewWithTag:2];
+            [btn1 setTitle:@"录制视频" forState:UIControlStateNormal];
+        }
+        
+        if (_isViode) {
+            [_lView viewWithTag:13].hidden = YES;
+            [_lView viewWithTag:14].hidden = NO;
+            [_lView viewWithTag:15].hidden = NO;
+            
+            [_lTalkView viewWithTag:13].hidden = YES;
+            [_lTalkView viewWithTag:14].hidden = NO;
+            [_lTalkView viewWithTag:15].hidden = NO;
+
+
+        }
+        else
+        {
+            [_lView viewWithTag:13].hidden = NO;
+            [_lView viewWithTag:14].hidden = YES;
+            [_lView viewWithTag:15].hidden = YES;
+            
+            [_lTalkView viewWithTag:13].hidden = NO;
+            [_lTalkView viewWithTag:14].hidden = YES;
+            [_lTalkView viewWithTag:15].hidden = YES;
+
+            
+        }
+        
+        
         //进入全屏或者退出全屏
         if (!_isFullScreen)
         {
+            
+            
             [UIApplication sharedApplication].statusBarHidden = YES;
             self.navigationController.navigationBarHidden = YES;
             self.collectionView.hidden = YES;
@@ -624,14 +651,14 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                 if(kIsIphone5)
                 {
                     
-                    _playView.frame = CGRectMake(0, 0, 568, 320);
+                    _playView.frame = CGRectMake(0, 44, 568, 320);
                     
                 }
                 
                 else
                 {
                     
-                    _playView.frame = CGRectMake(0, 0, 480, 320);
+                    _playView.frame = CGRectMake(0, 44, 480, 320);
                     
                 }
               
@@ -641,6 +668,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         }
         else
         {
+            
             [UIApplication sharedApplication].statusBarHidden = NO;
             self.navigationController.navigationBarHidden = NO;
             self.collectionView.hidden = NO;
@@ -721,9 +749,15 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     UIImage* image = [APICommon YUV420ToImage:yuv width:width height:height];
 
     NSLog(@"lenght is %d,width is %d,height is %d",length,width,height);
-    [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",length] forKey:@"vedioDataLength"];
-    [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",width] forKey:@"vedioDataWidth"];
-    [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",height] forKey:@"vedioDataHeight"];
+    if (!_isFirst)
+    {
+        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",length] forKey:@"vedioDataLength"];
+        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",width] forKey:@"vedioDataWidth"];
+        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",height] forKey:@"vedioDataHeight"];
+        _isFirst = !_isFirst;
+        NSLog(@"保存数据");
+    }
+
     
    
 
@@ -804,10 +838,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         }
         
         
-        
-        
-        
-        
         //获取快照,这里加入了图片对应视频的路径，方便以后找到对应的视频
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date", [NSString stringWithFormat:@"%d", 320], @"width", [NSString stringWithFormat:@"%d", 180], @"height",[NSString stringWithFormat:@"%d",1],@"is_vedio",path1,@"record_data_path",nil];
         
@@ -845,9 +875,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     _photoCount += 1;
                     NSLog(@"这里走了没有呢");
                     
-                    
-                    
-                    
+           
                 }
                 else
                 {
@@ -1070,7 +1098,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView:self.view];
     indicator.labelText = @"视频连接中";
     indicator.dimBackground = YES;
-    [self addTapGest:indicator];//点击终止视频
+//    [self addTapGest:indicator];//点击终止视频
     [self.view addSubview:indicator];
     [indicator showAnimated:YES whileExecutingBlock:^{
         

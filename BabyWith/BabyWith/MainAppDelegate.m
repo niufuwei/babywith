@@ -342,7 +342,7 @@ int HudIsBecome = 0;
 //    [appDelegate.messageArray insertObject:dic atIndex:0];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageCount" object:@"1"];
     
-    
+    NSLog(@"移动侦测的返回参数是%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",motion_armed,motion_sensitivity,input_armed,ioin_level,alarmpresetsit,iolinkage,ioout_level,mail,snapshot,upload_interval,record);
     
     
     

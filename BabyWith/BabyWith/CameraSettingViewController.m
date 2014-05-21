@@ -286,7 +286,8 @@
     //校验密码是否未初始密码，如果是，修改密码 -- 可放置在对象中完成
     if (![[_deviceDictionary objectForKey:@"pass"] isEqualToString:DeviceInitPass])
     {    NSLog(@"password 12 is %d",_passwordFlag);
-        if (_passwordFlag == 1) {
+        if (_passwordFlag == 1)
+        {
             //修改密码
             appDelegate.m_PPPPChannelMgt->SetUserPwdForOther((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], (char *)[DeviceInitUser UTF8String], (char *)[DeviceInitPass UTF8String]);
             
@@ -297,7 +298,8 @@
                 [self makeAlert:@"看护器第一次使用，初始化中，请耐心等待。"];
             }
         }
-        else{
+        else
+        {
             NSLog(@"password 13 is %d",_passwordFlag);
             appDelegate.m_PPPPChannelMgt->SetOnlineFlag((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], 2);
             
@@ -317,12 +319,14 @@
             appDelegate.m_PPPPChannelMgt->CameraControl( (char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String],13, [[[appDelegate.appDefault objectForKey:[_deviceDictionary objectForKey:@"device_id"]] objectForKey:@"quality"] integerValue]);
             
             //设置移动侦测
-            appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], [[[appDelegate.appDefault objectForKey:[_deviceDictionary objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue], 7, 0, 0, 0, 0, 0, 0, 0, 0);
+            appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], [[[appDelegate.appDefault objectForKey:[_deviceDictionary objectForKey:@"device_id"]] objectForKey:@"sense"] integerValue], 1, 1, 0, 0, 1, 0, 0, 0, 0);
             //获取WIFI设置信息
             appDelegate.m_PPPPChannelMgt->PPPPSetSystemParams((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], MSG_TYPE_GET_PARAMS, nil, 0);
             
         }
-    }else{
+    }
+    else
+    {
         //生成随机数，修改密码
         int randInt = [[_deviceDictionary objectForKey:@"pass"] integerValue];
         while (randInt == [[_deviceDictionary objectForKey:@"pass"] integerValue]) {
