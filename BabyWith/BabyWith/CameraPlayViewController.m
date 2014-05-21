@@ -57,9 +57,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 -(void)viewDidLoad{
     
     [super viewDidLoad];
-
-    _isFirst=TRUE;
-    
     NSLog(@"camera play view did load!");
 
     //导航条设置
@@ -430,7 +427,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         NSString *tmpDir =  NSTemporaryDirectory();
         NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
         if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil]) {
-            [self makeAlert:@"保存图片出错。"];
+            [self makeAlert:@"保存图片出错"];
         }
         
         //得到年月日
@@ -651,14 +648,14 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                 if(kIsIphone5)
                 {
                     
-                    _playView.frame = CGRectMake(0, 44, 568, 320);
+                    _playView.frame = CGRectMake(0, 0, 568, 320);
                     
                 }
                 
                 else
                 {
                     
-                    _playView.frame = CGRectMake(0, 44, 480, 320);
+                    _playView.frame = CGRectMake(0, 0, 480, 320);
                     
                 }
               
@@ -709,7 +706,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         if (error == nil)
         {
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView:self.view];
-            indicator.labelText = @"照片已经保存至相册中。";
+            indicator.labelText = @"照片已经保存至相册中";
             indicator.mode = MBProgressHUDModeText;
             [self.view addSubview:indicator];
             [indicator showAnimated:YES whileExecutingBlock:^{
@@ -723,12 +720,12 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             if (error.code == ALAssetsLibraryAccessUserDeniedError || error.code == ALAssetsLibraryDataUnavailableError)
             {
                 NSLog(@"error code == ALAssetsLibraryAccessUserDeniedError");
-                [self makeAlert:@"您已关闭相册权限，如需开启，请在iPhone的“设置”-“隐私”-“照片”功能中，找到应用程序“BabyWith”进行更改。"];
+                [self makeAlert:@"您已关闭相册权限，如需开启，请在iPhone的“设置”-“隐私”-“照片”功能中，找到应用程序“BabyWith”进行更改"];
             }
             else
             {
                 NSLog(@"SAVE IMAGE ERROR=[%@][%d]", [error localizedDescription],error.code);
-                [self makeAlert:@"保存照片出错。"];
+                [self makeAlert:@"保存照片出错"];
             }
         }
     }
@@ -749,14 +746,12 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     UIImage* image = [APICommon YUV420ToImage:yuv width:width height:height];
 
     NSLog(@"lenght is %d,width is %d,height is %d",length,width,height);
-    if (!_isFirst)
-    {
+    
         [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",length] forKey:@"vedioDataLength"];
         [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",width] forKey:@"vedioDataWidth"];
         [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",height] forKey:@"vedioDataHeight"];
-        _isFirst = !_isFirst;
         NSLog(@"保存数据");
-    }
+    
 
     
    
@@ -795,7 +790,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
         if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil])
         {
-            [self makeAlert:@"保存图片出错。"];
+            [self makeAlert:@"保存图片出错"];
         }
         
         
@@ -817,6 +812,8 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         
         if (!vedioError)
         {   //保存数据
+            
+            NSLog(@"data record is %d",[_recordData length]);
             if ([fileManager createFileAtPath:vedioPath contents:_recordData attributes:nil])
             {
                 _recordData = nil;
@@ -1006,7 +1003,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             [self ConnectCamForUnEqual];
         }
         else if(result == 1)
-        { //连接成功，检测账号密码。
+        { //连接成功，检测账号密码
             //发送检测账户指令？
             _finishFlag = 1; //代表连接成功
             _passwordFlag = 0;
@@ -1043,7 +1040,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     
                     if ([_errorMsg length] == 0)
                     {
-                        _errorMsg = @"看护器连接错误。";
+                        _errorMsg = @"看护器连接错误";
                     }
 //                    [self makeAlert:_errorMsg];
                     
@@ -1093,7 +1090,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     _finishFlag = 1;
     _passwordFlag = 0;
     _stopConnectFlag = 0;
-    _errorMsg = @"看护器连接错误。";
+    _errorMsg = @"看护器连接错误";
     NSLog(@"password 3 is %d",_passwordFlag);
     MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView:self.view];
     indicator.labelText = @"视频连接中";
@@ -1179,7 +1176,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                 }
             }else{
                 if ([_errorMsg length] == 0) {
-                    _errorMsg = @"看护器连接错误。";
+                    _errorMsg = @"看护器连接错误";
                 }
 //                [self makeAlert:_errorMsg];
                 
@@ -1247,7 +1244,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             strPPPPStatus = NSLocalizedStringFromTable(@"PPPPStatusInvalidID", @STR_LOCALIZED_FILE_NAME, nil);
             if (_finishFlag == 1) {
                 _errorFlag = 1; //序列号错误
-                _errorMsg = @"看护器序列号错误。";
+                _errorMsg = @"看护器序列号错误";
                 [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
             }
             break;
@@ -1260,7 +1257,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             strPPPPStatus = NSLocalizedStringFromTable(@"CameraIsNotOnline", @STR_LOCALIZED_FILE_NAME, nil);
             if (_finishFlag == 1) {
                 _errorFlag = 2;
-                _errorMsg = @"看护器不在线。";
+                _errorMsg = @"看护器不在线";
                 [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
             }
             break;
@@ -1269,7 +1266,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             strPPPPStatus = NSLocalizedStringFromTable(@"PPPPStatusConnectTimeout", @STR_LOCALIZED_FILE_NAME, nil);
             if (_finishFlag == 1) {
                 _errorFlag = 3;
-                _errorMsg = @"看护器连接超时。";
+                _errorMsg = @"看护器连接超时";
                 [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
             }
             break;
@@ -1324,7 +1321,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     appDelegate.m_PPPPChannelMgt->RebootDevice((char *)[_cameraID UTF8String], (char *)[DeviceInitUser UTF8String], (char *)[DeviceInitPass UTF8String]);
                     
                     _errorFlag = 5;
-                    _errorMsg = @"看护器重启中,\n请等待。";
+                    _errorMsg = @"看护器重启中,\n请等待";
                     [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
                     
                 }
@@ -1384,11 +1381,11 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     appDelegate.m_PPPPChannelMgt->SetUserAndPwd((char *)[_cameraID UTF8String], (char *)[DeviceInitUser UTF8String], (char *)[[NSString stringWithFormat:@"%d", randInt] UTF8String]);
                     
                     _errorFlag = 5;
-                    _errorMsg = @"看护器重启中,\n请等待。";
+                    _errorMsg = @"看护器重启中,\n请等待";
                     [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
                 }else{
                     _errorFlag = 6;
-                    _errorMsg = @"设备连接错误。";
+                    _errorMsg = @"设备连接错误";
                     [self performSelectorOnMainThread:@selector(Finish:) withObject:@"0" waitUntilDone:NO];
                 }
             }
@@ -1890,10 +1887,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         }
     }
     
-    
-    
-    
-    
 }
 #pragma mark -
 #pragma mark UICollectionViewDataSource
@@ -1944,9 +1937,4 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     NSLog(@"方法调用..........");
     [self viewAddGest:[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath]];
 }
-
-
-
-
-
 @end

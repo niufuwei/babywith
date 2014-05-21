@@ -97,7 +97,7 @@
         }
         
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView:self.view];
-        indicator.labelText = @"视频质量已设置。";
+        indicator.labelText = @"视频质量已设置";
         indicator.mode = MBProgressHUDModeText;
         [self.view addSubview:indicator];
         [indicator showAnimated:YES whileExecutingBlock:^{

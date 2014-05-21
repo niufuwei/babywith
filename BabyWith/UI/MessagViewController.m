@@ -27,7 +27,7 @@
     
     
     
-    if ([appDelegate.systemMessageArray count] == 0)
+    if ([[appDelegate.appDefault objectForKey:@"systemMessageArray"] count] == 0)
     {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 200, 280, 60)];
         label.textAlignment = NSTextAlignmentCenter;
@@ -83,7 +83,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return [appDelegate.systemMessageArray count];
+    return [[appDelegate.appDefault objectForKey:@"systemMessageArray"] count];
 
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -116,34 +116,17 @@
     }
     
     
-    NSLog(@"alert is %@,time is %@",[appDelegate.appDefault objectForKey:@"alert"],[[appDelegate.systemMessageArray objectAtIndex:indexPath.row] objectForKey:@"messageTime"]);
+    NSLog(@"alert is %@,time is %@",[appDelegate.appDefault objectForKey:@"alert"],[[[appDelegate.appDefault objectForKey:@"systemMessageArray"] objectAtIndex:indexPath.row] objectForKey:@"messageTime"]);
     
     cell.backgroundColor = babywith_background_color;
 
     cell.alertLabel.text =[NSString stringWithFormat:@"%@",[appDelegate.appDefault objectForKey:@"alert"]];
     
     
-    cell.timeLabel.text = [[appDelegate.systemMessageArray objectAtIndex:indexPath.row] objectForKey:@"messageTime"];
+    cell.timeLabel.text = [[[appDelegate.appDefault objectForKey:@"systemMessageArray"] objectAtIndex:indexPath.row] objectForKey:@"messageTime"];
     
     
     return cell;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

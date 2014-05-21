@@ -54,7 +54,6 @@
     
     CCustomAVRecorder *_customAVRecorder;
     
-    BOOL _isFirst;
     BOOL _isViode;
     
     

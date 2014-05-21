@@ -129,7 +129,7 @@
             
             UIAlertView *alertViewTwice = [[UIAlertView alloc] initWithTitle:@"输入密码" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             alertViewTwice.alertViewStyle = UIAlertViewStyleSecureTextInput;
-            alertViewTwice.message = @"密码不可为空。";
+            alertViewTwice.message = @"密码不可为空";
             alertViewTwice.delegate = self;
             alertViewTwice.tag = alertView.tag;
             [alertViewTwice show];
@@ -166,7 +166,7 @@
         
         
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView:self.view];
-        indicator.labelText = @"看护器已设置WIFI，将重启后生效。";
+        indicator.labelText = @"看护器已设置WIFI，将重启后生效";
         indicator.mode = MBProgressHUDModeText;
         [self.view addSubview:indicator];
         [indicator showAnimated:YES whileExecutingBlock:^{

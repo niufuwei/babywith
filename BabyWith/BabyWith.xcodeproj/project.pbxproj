@@ -58,7 +58,6 @@
 		71A8CB6418E93E41008C793D /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8CB6318E93E41008C793D /* CollectionCell.m */; };
 		71A8DD9318E2D449006861A6 /* 拍照.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A8DD9218E2D448006861A6 /* 拍照.png */; };
 		71A8E6E518F391B50025726F /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8E6E418F391B50025726F /* NSData+Base64.m */; };
-		71A8E6E818F391DC0025726F /* MessageProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8E6E718F391DC0025726F /* MessageProcess.m */; };
 		71A8E72218F394530025726F /* UIImage+Stretchable.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8E70418F394530025726F /* UIImage+Stretchable.m */; };
 		71A8E72918F394530025726F /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A8E71218F394530025726F /* UIViewController+Alert.m */; };
 		71A90A201908DD9D00A0427C /* CommonProblemsGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A90A1F1908DD9D00A0427C /* CommonProblemsGuideViewController.m */; };
@@ -375,8 +374,6 @@
 		71A8DD9218E2D448006861A6 /* 拍照.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "拍照.png"; sourceTree = "<group>"; };
 		71A8E6E318F391B50025726F /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		71A8E6E418F391B50025726F /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
-		71A8E6E618F391DC0025726F /* MessageProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageProcess.h; sourceTree = "<group>"; };
-		71A8E6E718F391DC0025726F /* MessageProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageProcess.m; sourceTree = "<group>"; };
 		71A8E70318F394530025726F /* UIImage+Stretchable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Stretchable.h"; sourceTree = "<group>"; };
 		71A8E70418F394530025726F /* UIImage+Stretchable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Stretchable.m"; sourceTree = "<group>"; };
 		71A8E71118F394530025726F /* UIViewController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
@@ -1120,8 +1117,6 @@
 		EF21C06D18D2D172003D7C5F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				71A8E6E618F391DC0025726F /* MessageProcess.h */,
-				71A8E6E718F391DC0025726F /* MessageProcess.m */,
 				EF1D3C4018D2B2D90079C358 /* SettingsViewController.h */,
 				EF1D3C4118D2B2D90079C358 /* SettingsViewController.m */,
 				EF1D3C4218D2B2D90079C358 /* SettingsViewController.xib */,
@@ -1967,7 +1962,6 @@
 				EF04E96E18D6A20B00429681 /* CustomSegmentView.m in Sources */,
 				EF1D3C4E18D2B2D90079C358 /* HomeViewController.m in Sources */,
 				7196B05818D80E1000B8D8BB /* SetNickNameViewController.m in Sources */,
-				71A8E6E818F391DC0025726F /* MessageProcess.m in Sources */,
 				7196B08918D837F700B8D8BB /* AboutUsViewController.m in Sources */,
 				EFF7B932178885730035FB82 /* CameraAddingViewController.m in Sources */,
 				71A876B51906384B002DAA33 /* NewMessageViewController.m in Sources */,

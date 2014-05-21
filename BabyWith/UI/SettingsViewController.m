@@ -18,7 +18,6 @@
 #import "AboutUsViewController.h"
 #import "SetPasswordViewController.h"
 
-#import "MessageProcess.h"
 
 #import "Activity.h"
 @interface SettingsViewController ()
@@ -66,9 +65,15 @@
     activity = [[Activity alloc] initWithActivity:self.view];
     
     
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RefreshMessageCount:) name:@"RefreshMessageCount" object:nil] ;
-   // [self performSelector:@selector(afterViewdidLoad) withObject:nil afterDelay:0];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCount1) name:@"changeCount1" object:nil] ;
     
+}
+-(void)changeCount1
+{
+
+     [self.tableList reloadData];
+
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -124,15 +129,15 @@
     }
     else if([indexPath row] == 2)
     {
-        if ([appDelegate.systemMessageArray count] > 0)
+        if ([[appDelegate.appDefault objectForKey:@"systemMessageArray"] count] > 0)
         {
             
             cell.statusLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"信息提示背景.png"]];
             cell.statusLabel.frame = CGRectMake(230, 18, 24, 24);
             cell.statusLabel.textAlignment = NSTextAlignmentCenter;
-            cell.statusLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[appDelegate.systemMessageArray count]];
+            cell.statusLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[[appDelegate.appDefault objectForKey:@"systemMessageArray"] count]];
         }
-        else if([appDelegate.systemMessageArray count] == 0)
+        else if([[appDelegate.appDefault objectForKey:@"systemMessageArray"] count] == 0)
         {
           //[cell.statusLabel removeFromSuperview];
         }

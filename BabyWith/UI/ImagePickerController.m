@@ -281,7 +281,7 @@
         //根据时间所做的路径信息
         NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
         if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil]) {
-            [self makeAlert:@"保存图片出错。"];
+            [self makeAlert:@"保存图片出错"];
         }
         
         //获取快照

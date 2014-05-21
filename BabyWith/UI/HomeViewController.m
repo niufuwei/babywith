@@ -148,14 +148,14 @@
     {
         cell2.textLabel.text = @"新分享设备";
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(250, 10, 24, 24)];
-        label.text =[NSString stringWithFormat:@"%lu",(unsigned long)[appDelegate.messageArray count]];
+        label.text =[NSString stringWithFormat:@"%lu",(unsigned long)[[appDelegate.appDefault objectForKey:@"messageArray"] count]];
         label.textAlignment = NSTextAlignmentCenter;
         label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"信息提示背景.png"]];
         cell2.backgroundColor = babywith_background_color;
         [cell2 addSubview:label];
 
         cell2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if ([appDelegate.messageArray count] == 0)
+        if ([[appDelegate.appDefault objectForKey:@"messageArray"] count] == 0)
         {
             label.hidden = YES;
         }
@@ -196,8 +196,6 @@
     }
     else if (indexPath.section == 2)
     {
-        
-        NSLog(@"self.array is %@",self.deviceArray);
         
         
         [appDelegate.appDefault setObject:[self.deviceArray objectAtIndex:indexPath.row] forKey:@"Device_selected"];

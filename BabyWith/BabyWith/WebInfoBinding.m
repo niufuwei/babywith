@@ -182,7 +182,7 @@
     
     if (operation.responseDic == nil || [operation.responseDic objectForKey:@"result"] == nil)
     {
-        [appDelegate.appDefault setObject:@"请确认您的网络。" forKey:@"Error_message"];
+        [appDelegate.appDefault setObject:@"请确认您的网络" forKey:@"Error_message"];
         [appDelegate.appDefault setObject:@"net_error" forKey:@"Error_code"];
     }
     else

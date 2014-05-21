@@ -46,7 +46,7 @@
     [super viewWillAppear:YES];
     [_messageTableView reloadData];
     
-    if ([appDelegate.messageArray count] == 0)
+    if ([[appDelegate.appDefault objectForKey:@"messageArray"] count] == 0)
     {
         
         _messageTableView.frame = CGRectMake(0, 0, 0, 0);
@@ -94,9 +94,8 @@
 #pragma mark TableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"numberOfRowsInSection %d",[appDelegate.messageArray count]);
 
-   return  [appDelegate.messageArray count];
+   return  [[appDelegate.appDefault objectForKey:@"messageArray"] count];
 
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -143,14 +142,23 @@
     UITableViewCell *cell = (UITableViewCell *)[btn superview];
     NSIndexPath *indexPath = [self.messageTableView indexPathForCell:cell];
     
-    NSString *IDMer = [NSString stringWithFormat:@"%@",[appDelegate.messageArray objectAtIndex:indexPath.row] ];
+    NSString *IDMer = [NSString stringWithFormat:@"%@",[[appDelegate.appDefault objectForKey:@"messageArray"] objectAtIndex:indexPath.row] ];
     
     
     NSLog(@"iiiiiiiiiiiiii%@",IDMer);
     if ([appDelegate.webInfoManger UserAgreeAddDeviceUsingIDMer:IDMer Toekn:[appDelegate.appDefault objectForKey:@"Token"]])
     {
         NSLog(@"分享成功");
+        
+        NSLog(@"messageArray is %@",appDelegate.messageArray);
+        [appDelegate.messageArray addObjectsFromArray: [appDelegate.appDefault objectForKey:@"messageArray"]];
+        NSLog(@"messageArray is %@",appDelegate.messageArray);
+        NSLog(@"messageArray is %@",[appDelegate.appDefault objectForKey:@"messageArray"]);
         [appDelegate.messageArray removeObjectAtIndex:indexPath.row];
+        [appDelegate.appDefault setObject:appDelegate.messageArray forKey:@"messageArray"];
+        NSLog(@"messageArray is %@",[appDelegate.appDefault objectForKey:@"messageArray"]);
+        [appDelegate.messageArray removeAllObjects];
+        [self.messageTableView reloadData];
         [self.navigationController popViewControllerAnimated:YES];
     }
      else
@@ -168,8 +176,23 @@
     NSLog(@"拒绝别人的分享");
     UITableViewCell *cell = (UITableViewCell *)[btn superview];
     NSIndexPath *indexPath = [self.messageTableView indexPathForCell:cell];
+    [appDelegate.messageArray addObjectsFromArray: [appDelegate.appDefault objectForKey:@"messageArray"]];
     [appDelegate.messageArray removeObjectAtIndex:indexPath.row];
+    [appDelegate.appDefault setObject:appDelegate.messageArray forKey:@"messageArray"];
+    [appDelegate.messageArray removeAllObjects];
+
     [self.messageTableView reloadData];
+    
+    
+    if ([[appDelegate.appDefault objectForKey:@"messageArray"] count]==0) {
+        [_messageTableView removeFromSuperview];
+        _label.frame = CGRectMake(20, 200, 280, 60);
+        _label.textAlignment = NSTextAlignmentCenter;
+        _label.text =@"您还没有设备分享信息";
+        _label.hidden = NO;
+        _label.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_label];
+    }
 
 
 }

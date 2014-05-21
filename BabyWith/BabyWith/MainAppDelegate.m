@@ -69,7 +69,10 @@
 //        //设置状态条风格为黑色
 //        [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
 //}
+    
 
+  
+    
     
     //防锁屏
     [UIApplication sharedApplication].idleTimerDisabled = YES; 
@@ -104,70 +107,92 @@
     
     NSDictionary* pushNotificationKey = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
 
-    if (pushNotificationKey) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"推送通知"
-                                                       message:@"这是通过推送窗口启动的程序，你可以在这里处理推送内容"
-                                                      delegate:nil
-                                             cancelButtonTitle:@"知道了"
-                                             otherButtonTitles:nil, nil];
-        [alert show];
-        //[alert release];
+    if (pushNotificationKey)
+    {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"推送通知"
+//                                                       message:@"这是通过推送窗口启动的程序，你可以在这里处理推送内容"
+//                                                      delegate:nil
+//                                             cancelButtonTitle:@"知道了"
+//                                             otherButtonTitles:nil, nil];
+//        [alert show];
+//        //[alert release];
+        
+        
+        
+        //消息的内容，所有的都一样
+        NSString *alertStr  = [[pushNotificationKey objectForKey:@"aps"] objectForKey:@"alert"] ;
+        
+        [appDelegate.appDefault setObject:alertStr forKey:@"alert"];
+        
+        
+        
+        
+        //接收消息的时间
+        NSDate *date = [NSDate date];
+        NSTimeInterval time = [date timeIntervalSince1970];
+        NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *messageTime = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:time]];
+        
+        //接收到的消息id,以;隔开的
+        NSLog(@"message id is %@",[pushNotificationKey objectForKey:@"msgid"]);
+        NSArray *msgIdArray = [[pushNotificationKey objectForKey:@"msgid"] componentsSeparatedByString:@";"];
+        NSLog(@"msgid array is %@",msgIdArray);
+        
+        //数组里面包括每一条推送消息的id号和对应的时间，因为一次可能发送过来好几条消息，这几条消息的时间是一样的
+        NSMutableArray *messageArr = [[NSMutableArray alloc] initWithCapacity:1];
+        for (id obj in msgIdArray)
+        {
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"0",@"0",@"msgid",@"messageTime",nil];
+            
+            [dic setValue:obj forKey:@"msgid"];
+            [dic setValue:messageTime forKey:@"messageTime"];
+            [messageArr addObject:dic];
+            
+        }
+        
+        
+        //主页的消息，只包括消息内容和消息id
+        if ([self.appDefault integerForKey:@"firstUse"] == 0)
+        {
+            [self.appDefault setObject:msgIdArray forKey:@"messageArray"];
+            [self.appDefault setObject:messageArr forKey:@"systemMessageArray"];
+            [self.appDefault setInteger:1 forKey:@"firstUse"];
+            
+        }
+        else
+        {
+            [self.messageArray removeAllObjects];
+
+            [self.messageArray addObjectsFromArray:[self.appDefault objectForKey:@"messageArray"]];
+            [self.messageArray addObjectsFromArray:msgIdArray];
+            [self.appDefault setObject:self.messageArray forKey:@"messageArray"];
+            [self.messageArray removeAllObjects];
+
+            
+            
+            //更多里面的消息，包括消息内容、消息id、消息收到的时间
+            [self.systemMessageArray removeAllObjects];
+
+            [self.systemMessageArray addObjectsFromArray:[self.appDefault objectForKey:@"systemMessageArray"]];
+            [self.systemMessageArray addObjectsFromArray:messageArr];
+            [self.appDefault setObject:self.systemMessageArray forKey:@"systemMessageArray"];
+            [self.systemMessageArray removeAllObjects];
+
+            
+        }
+        
+        
+        
+        //主页消息图标的改变
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCount" object:nil];
+        //更多里面的图标的改变
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCount1" object:nil];
+ 
+        
     }
  
-    //消息的内容，所有的都一样
-    NSString *alert  = [[pushNotificationKey objectForKey:@"aps"] objectForKey:@"alert"] ;
-    
-    [appDelegate.appDefault setObject:alert forKey:@"alert"];
-    
-    
-    
-    
-    //接收消息的时间
-    NSDate *date = [NSDate date];
-    NSTimeInterval time = [date timeIntervalSince1970];
-    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *messageTime = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:time]];
-    
-    //接收到的消息id,以;隔开的
-    NSLog(@"message id is %@",[pushNotificationKey objectForKey:@"msgid"]);
-    NSArray *msgIdArray = [[pushNotificationKey objectForKey:@"msgid"] componentsSeparatedByString:@";"];
-    NSLog(@"msgid array is %@",msgIdArray);
-    
-    //数组里面包括每一条推送消息的id号和对应的时间，因为一次可能发送过来好几条消息，这几条消息的时间是一样的
-    NSMutableArray *messageArray = [[NSMutableArray alloc] initWithCapacity:1];
-    for (id obj in msgIdArray)
-    {
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"0",@"0",@"msgid",@"messageTime",nil];
-        
-        [dic setValue:obj forKey:@"msgid"];
-        [dic setValue:messageTime forKey:@"messageTime"];
-        [messageArray addObject:dic];
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //主页的消息，只包括消息内容和消息id
-    [self.messageArray addObjectsFromArray:msgIdArray];
-    //更多里面的消息，包括消息内容、消息id、消息收到的时间
-    [self.systemMessageArray addObjectsFromArray:messageArray];
-    
-    
-    
-    
-    
-    
-    //主页消息图标的改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCount" object:nil];
-    //更多里面的图标的改变
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCount1" object:nil];
+   
 
     return YES;
 }
@@ -337,7 +362,7 @@ int HudIsBecome = 0;
     
     NSLog(@"=========================================================");
 //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[_deviceConnectManager getDeviceInfo:szDID]];
-//    [dic setObject:[NSString stringWithFormat:@"看护器“%@”发生移动侦测。", [dic objectForKey:@"name"]] forKey:@"text"];
+//    [dic setObject:[NSString stringWithFormat:@"看护器“%@”发生移动侦测", [dic objectForKey:@"name"]] forKey:@"text"];
 //    [dic setObject:@"1" forKey:@"status"];
 //    [appDelegate.messageArray insertObject:dic atIndex:0];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageCount" object:@"1"];
@@ -515,21 +540,52 @@ int HudIsBecome = 0;
     NSLog(@"msgid array is %@",msgIdArray);
     
     //数组里面包括每一条推送消息的id号和对应的时间，因为一次可能发送过来好几条消息，这几条消息的时间是一样的
-    NSMutableArray *messageArray = [[NSMutableArray alloc] initWithCapacity:1];
+    NSMutableArray *messageArr = [[NSMutableArray alloc] initWithCapacity:1];
     for (id obj in msgIdArray)
     {
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"0",@"0",@"msgid",@"messageTime",nil];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"0",@"msgid",@"0",@"messageTime",nil];
     
         [dic setValue:obj forKey:@"msgid"];
         [dic setValue:messageTime forKey:@"messageTime"];
-        [messageArray addObject:dic];
+        [messageArr addObject:dic];
         
     }
-    //主页的消息，只包括消息内容和消息id
-    [self.messageArray addObjectsFromArray:msgIdArray];
-    //更多里面的消息，包括消息内容、消息id、消息收到的时间
-    [self.systemMessageArray addObjectsFromArray:messageArray];
     
+    
+    
+    NSLog(@"jjjjjjjjjj%d",[self.appDefault integerForKey:@"firstUse"]);
+    //主页的消息，只包括消息内容和消息id
+    if ([self.appDefault integerForKey:@"firstUse"] == 0)
+    {
+        [self.appDefault setObject:msgIdArray forKey:@"messageArray"];
+        NSLog(@"first messageArray is %@",[self.appDefault objectForKey:@"messageArray"]);
+        [self.appDefault setObject:messageArr forKey:@"systemMessageArray"];
+        NSLog(@"first systemMessageArray is %@",[self.appDefault objectForKey:@"systemMessageArray"]);
+        [self.appDefault setInteger:1 forKey:@"firstUse"];
+
+    }
+    else
+    {
+       
+    //更多里面的消息，包括消息内容、消息id、消息收到的时间
+    [self.systemMessageArray removeAllObjects];
+    [self.systemMessageArray addObjectsFromArray:[self.appDefault objectForKey:@"systemMessageArray"]];
+    NSLog(@"self.systemMessageArray is %@,messageArr %@",self.systemMessageArray,messageArr);
+    [self.systemMessageArray addObjectsFromArray:messageArr];
+    [self.appDefault setObject:self.systemMessageArray forKey:@"systemMessageArray"];
+        [self.systemMessageArray removeAllObjects];
+
+        
+    
+    [self.messageArray removeAllObjects];
+    [self.messageArray addObjectsFromArray:[self.appDefault objectForKey:@"messageArray"]];
+    NSLog(@"self.messageArray is %@,msgIdArray %@",self.messageArray,msgIdArray);
+    [self.messageArray addObjectsFromArray:msgIdArray];
+    [self.appDefault setObject:self.messageArray forKey:@"messageArray"];
+        [self.messageArray removeAllObjects];
+
+    
+    }
     //主页消息图标的改变
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCount" object:nil];
     //更多里面的图标的改变

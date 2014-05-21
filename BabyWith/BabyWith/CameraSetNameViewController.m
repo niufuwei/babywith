@@ -123,7 +123,7 @@
 -(void)ModifyCameraName{
     
     if ([[_cameraTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
-        [self makeAlert:@"看护器名称不可为空。"];
+        [self makeAlert:@"看护器名称不可为空"];
         return;
     }
     
@@ -132,7 +132,7 @@
     if (result) {
         UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
         MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
-        indicator.labelText = @"看护器名称修改成功。";
+        indicator.labelText = @"看护器名称修改成功";
         indicator.mode = MBProgressHUDModeText;
         [window addSubview:indicator];
         [indicator showAnimated:YES whileExecutingBlock:^{

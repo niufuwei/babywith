@@ -237,7 +237,7 @@
 
 -(void)ConnectTimeout{
     if ([self.view window] != nil) {
-        [self makeAlert:@"看护器连接超时。"];
+        [self makeAlert:@"看护器连接超时"];
     }
 }
 
@@ -249,7 +249,7 @@
 
 -(void)InvalidId{
     if ([self.view window] != nil) {
-        [self makeAlert:@"看护器序列号错误。"];
+        [self makeAlert:@"看护器序列号错误"];
     }
 }
 
@@ -270,14 +270,14 @@
         else{
             if ([self.view window] != nil) {
                 NSLog(@"invalid chongzhi.........");
-                [self makeAlert:@"看护器连接错误，请重置看护器。"];
+                [self makeAlert:@"看护器连接错误，请重置看护器"];
                 NSLog(@"password 11 is %d",_passwordFlag);
             }
         }
     }else{
         if ([self.view window] != nil) {
             NSLog(@"invalid chongzhi2222.........");
-            [self makeAlert:@"看护器连接错误，请重置看护器。"];
+            [self makeAlert:@"看护器连接错误，请重置看护器"];
         }
     }
 }
@@ -295,7 +295,7 @@
             appDelegate.m_PPPPChannelMgt->RebootDevice((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], (char *)[DeviceInitUser UTF8String], (char *)[DeviceInitPass UTF8String]);
             
             if ([self.view window] != nil) {
-                [self makeAlert:@"看护器第一次使用，初始化中，请耐心等待。"];
+                [self makeAlert:@"看护器第一次使用，初始化中，请耐心等待"];
             }
         }
         else
@@ -352,7 +352,7 @@
             //重设账户密码
             appDelegate.m_PPPPChannelMgt->SetUserAndPwd((char *)[[_deviceDictionary objectForKey:@"device_id"] UTF8String], (char *)[[_deviceDictionary objectForKey:@"user"] UTF8String], (char *)[[NSString stringWithFormat:@"%d", randInt] UTF8String]);
             
-            [self makeAlert:@"看护器第一次使用，初始化中，请耐心等待。"];
+            [self makeAlert:@"看护器第一次使用，初始化中，请耐心等待"];
         }
     }
 }
@@ -470,7 +470,7 @@
         {//获取视频质量
             
             if ([self CheckOnline] != 2) {
-                [self makeAlert:@"看护器未连接，请稍后重试。"];
+                [self makeAlert:@"看护器未连接，请稍后重试"];
             }else{
                 _cameraParamSettingViewController = [[CameraParamSettingViewController alloc] initWithDelegate:self];
                 [self.navigationController pushViewController:_cameraParamSettingViewController animated:YES];
@@ -481,7 +481,7 @@
         case 1://网络选择
         {
             if ([self CheckOnline] != 2) {
-                [self makeAlert:@"看护器未连接，请稍后重试。"];
+                [self makeAlert:@"看护器未连接，请稍后重试"];
             }else{
                 if (_cameraSetWifiViewController == nil) {
                     _cameraSetWifiViewController = [[CameraSetWifiViewController alloc] init];

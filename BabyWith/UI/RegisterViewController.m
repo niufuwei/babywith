@@ -136,7 +136,7 @@
             
             UIWindow *window = [[UIApplication sharedApplication].windows objectAtIndex:[[UIApplication sharedApplication].windows count]-1];
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithWindow:window];
-            indicator.labelText = @"注册成功。";
+            indicator.labelText = @"注册成功";
             indicator.mode = MBProgressHUDModeText;
             [window addSubview:indicator];
             [indicator showAnimated:YES whileExecutingBlock:^{
