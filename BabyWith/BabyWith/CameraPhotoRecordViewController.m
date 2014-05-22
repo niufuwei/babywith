@@ -175,8 +175,12 @@
             NSString *vedioPath1 = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:vedioPath]];
             //取得相应的视频数据
             NSLog(@"获取数据之前");
-            _vedioData = [NSData dataWithContentsOfFile:vedioPath1];
-            //数据的总长度
+        
+        
+        NSError * err;
+        _vedioData = [NSData dataWithContentsOfFile:vedioPath1 options:kNilOptions error:&err];
+        
+        //数据的总长度
             
             NSLog(@"获取数据完毕");
         

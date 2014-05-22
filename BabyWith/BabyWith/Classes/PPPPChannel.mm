@@ -2815,7 +2815,7 @@ void CPPPPChannel::SetAlarmParamsDelegate(id delegate)
     [m_AlarmParamsLock unlock];
 }
 
-int CPPPPChannel::SetAlarm(    
+int CPPPPChannel::SetAlarm(
              int motion_armed,
              int motion_sensitivity,
              int input_armed,
@@ -2829,6 +2829,7 @@ int CPPPPChannel::SetAlarm(
 {
     STRU_ALARM_PARAMS alarmParam;
     memset(&alarmParam, 0, sizeof(alarmParam));
+   
     alarmParam.motion_armed = motion_armed;
     alarmParam.motion_sensitivity = motion_sensitivity;
     alarmParam.input_armed = input_armed;

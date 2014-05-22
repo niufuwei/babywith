@@ -54,11 +54,17 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     self.view = view;
 }
 
+
 -(void)viewDidLoad{
     
     [super viewDidLoad];
+
+    _isFirst=TRUE;
+    
     NSLog(@"camera play view did load!");
 
+    //默认是非截屏状态
+    screenshots = 0;
     //导航条设置
     {
         UIButton *navButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 35)];
@@ -72,8 +78,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     }
     
     //显示视频的画面
-    _playView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320,  180)];
-    _playView.image = [UIImage imageNamed:@"cameraBackView.png"];
+    _playView = [[OpenGLView20 alloc] initWithFrame:CGRectMake(0, 0, 320,  180)];
+    [_playView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cameraBackView.png"]]];
+    [_playView setVideoSize:320 height:180];
     [self.view addSubview:_playView];
     [self imageAddGest:_playView];//增加手势，让摄像头可以左右上下旋转
     
@@ -94,13 +101,13 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     _lView.hidden = YES;
     
     
-    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button1.frame = CGRectMake(0, 0, self.view.frame.size.height/6, 44);
-    button1.tag = 1;
-    [button1 setTitle:@"截屏" forState:UIControlStateNormal];
-    [button1 setTitleColor:babywith_green_color forState:UIControlStateNormal];
-    [button1 addTarget:self action:@selector(ButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [_lView addSubview:button1];
+    screenshotsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    screenshotsButton.frame = CGRectMake(0, 0, self.view.frame.size.height/6, 44);
+    screenshotsButton.tag = 1;
+    [screenshotsButton setTitle:@"截屏" forState:UIControlStateNormal];
+    [screenshotsButton setTitleColor:babywith_green_color forState:UIControlStateNormal];
+    [screenshotsButton addTarget:self action:@selector(ButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [_lView addSubview:screenshotsButton];
     
     
     UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -406,96 +413,101 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     appDelegate.m_PPPPChannelMgt->StartPPPPAudio([_cameraID UTF8String]);
 }
 #pragma mark -点击按钮引发的事件
+
+-(void)timerFired:(UIImage *)screenshotsImage
+{
+    //保存到相册
+    UIImageWriteToSavedPhotosAlbum(screenshotsImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    //创建时间
+    NSDate *date = [NSDate date];
+    NSTimeInterval time = [date timeIntervalSince1970];
+    NSData *imageData = UIImageJPEGRepresentation(screenshotsImage ,0.3);
+    NSLog(@"data length =[%lu]", (unsigned long)[imageData length]);
+    
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *tmpDir =  NSTemporaryDirectory();
+    NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
+    if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil]) {
+        [self makeAlert:@"保存图片出错"];
+    }
+    
+    //得到年月日
+    unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
+    NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *nowComp = [myCal components:units fromDate:date];
+    //记录ID
+    NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
+    //图片相对路径
+    NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+    
+    
+    //保存图片到沙盒目录
+    NSString *imagePath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path]];
+    NSString *imageDir = [NSString stringWithFormat:@"%@",[imagePath stringByDeletingLastPathComponent]];
+    
+    NSError *error = nil;
+    [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:&error];
+    
+    //视频流相对路径
+    //这里加入了视频流的路径，让所有的图片保存保持一样的参数，但是在这里并没有存入视频，取的时候也不会用到这个视频的路径
+    NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@.pm4",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+    NSString *vedioPath1 = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
+    NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath1 stringByDeletingLastPathComponent]];
+    NSError *vedioError = nil;
+    [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
+    
+    
+    
+    //获取快照
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date", [NSString stringWithFormat:@"%d", 320], @"width", [NSString stringWithFormat:@"%d", 180], @"height",[NSString stringWithFormat:@"%d",0],@"is_vedio",path1,@"record_data_path",nil];
+    [_collectionImageArray addObject:screenshotsImage];
+    
+    
+    
+    if (!error)
+    {
+        if ([fileManager createFileAtPath:imagePath contents:imageData attributes:nil])
+        {
+            //插入表库
+            NSArray *array = [NSArray arrayWithObjects:record_id,[appDelegate.appDefault objectForKey:@"Member_id_self"],[dic objectForKey:@"time"],[NSString stringWithFormat:@"%d",[nowComp year]],[NSString stringWithFormat:@"%d",[nowComp month]],[NSString stringWithFormat:@"%d",[nowComp day]],[dic objectForKey:@"width"],[dic objectForKey:@"height"],path,[dic objectForKey:@"is_vedio"],[dic objectForKey:@"record_data_path"],nil];
+            
+            NSArray *keyArray = [NSArray arrayWithObjects:@"id_record", @"id_member", @"time_record",@"year_record",@"month_record",@"day_record",@"width_image",@"height_image",@"path",@"is_vedio",@"record_data_path", nil];
+            NSDictionary *insertDic = [NSDictionary dictionaryWithObjects:array forKeys:keyArray];
+            
+            
+            //插入到数据库
+            if([appDelegate.sqliteManager insertRecordInfo:insertDic])
+            {
+                
+                [_imageArray addObject:insertDic];
+                
+                _photoCount += 1;
+                
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
+        }
+        
+    }
+    else
+    {
+        [self makeAlert:@"保存图片错误!"];
+    }
+    
+    
+    screenshotsButton.enabled = YES;
+    [_collectionView reloadData];
+
+}
+
 -(void)ButtonPressed:(UIButton *)button{
   
     //截屏
     if (button.tag == 1)
     {
         
-        UIImage *testImg = [_playView.image copy];
+        screenshots =1;
         
-        //保存到相册
-        UIImageWriteToSavedPhotosAlbum(testImg, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-        //创建时间
-        NSDate *date = [NSDate date];
-        NSTimeInterval time = [date timeIntervalSince1970];
-        NSData *imageData = UIImageJPEGRepresentation(testImg ,0.3);
-        NSLog(@"data length =[%lu]", (unsigned long)[imageData length]);
-        
-        
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *tmpDir =  NSTemporaryDirectory();
-        NSString *filePath = [tmpDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f", time*1000]];
-        if (![fileManager createFileAtPath:filePath contents:imageData attributes:nil]) {
-            [self makeAlert:@"保存图片出错"];
-        }
-        
-        //得到年月日
-        unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
-        NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *nowComp = [myCal components:units fromDate:date];
-        //记录ID
-        NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
-        //图片相对路径
-        NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
-        
-        
-        //保存图片到沙盒目录
-        NSString *imagePath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path]];
-        NSString *imageDir = [NSString stringWithFormat:@"%@",[imagePath stringByDeletingLastPathComponent]];
-        
-        NSError *error = nil;
-        [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:&error];
-        
-        //视频流相对路径
-        //这里加入了视频流的路径，让所有的图片保存保持一样的参数，但是在这里并没有存入视频，取的时候也不会用到这个视频的路径
-        NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@.pm4",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
-        NSString *vedioPath1 = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
-        NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath1 stringByDeletingLastPathComponent]];
-        NSError *vedioError = nil;
-        [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
-        
-        
-        
-        //获取快照
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date", [NSString stringWithFormat:@"%d", 320], @"width", [NSString stringWithFormat:@"%d", 180], @"height",[NSString stringWithFormat:@"%d",0],@"is_vedio",path1,@"record_data_path",nil];
-        [_collectionImageArray addObject:testImg];
-
-        
-        
-        if (!error)
-        {
-            if ([fileManager createFileAtPath:imagePath contents:imageData attributes:nil])
-            {
-                //插入表库
-                NSArray *array = [NSArray arrayWithObjects:record_id,[appDelegate.appDefault objectForKey:@"Member_id_self"],[dic objectForKey:@"time"],[NSString stringWithFormat:@"%d",[nowComp year]],[NSString stringWithFormat:@"%d",[nowComp month]],[NSString stringWithFormat:@"%d",[nowComp day]],[dic objectForKey:@"width"],[dic objectForKey:@"height"],path,[dic objectForKey:@"is_vedio"],[dic objectForKey:@"record_data_path"],nil];
-                
-                NSArray *keyArray = [NSArray arrayWithObjects:@"id_record", @"id_member", @"time_record",@"year_record",@"month_record",@"day_record",@"width_image",@"height_image",@"path",@"is_vedio",@"record_data_path", nil];
-                NSDictionary *insertDic = [NSDictionary dictionaryWithObjects:array forKeys:keyArray];
-                
-                
-                //插入到数据库
-                if([appDelegate.sqliteManager insertRecordInfo:insertDic])
-                {
-                
-                    [_imageArray addObject:insertDic];
-                    
-                    _photoCount += 1;
-                
-                }
-                [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
-            }
-            
-        }
-        else
-        {
-            [self makeAlert:@"保存图片错误!"];
-        }
-
-   
-        button.enabled = YES;
-        [_collectionView reloadData];
-    
     }
     else if(button.tag == 2)//录制视频
     {
@@ -534,7 +546,8 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     else if (button.tag == 3)
     {
         [self ActionForStopVideo:0 RemindFlag:1];
-
+        
+        self.navigationController.navigationBarHidden=NO;
         SharedPersonsViewController *sharedPersonVC = [[SharedPersonsViewController alloc] initWithDeviceID:[_currentDeviceDic objectForKey:@"device_id"]];
         [self.navigationController pushViewController:sharedPersonVC animated:YES];
         
@@ -589,6 +602,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     else if (button.tag == 4)
     {
         
+        
         if (_isRecord==1) {
             UIButton *btn = (UIButton *)[_lView viewWithTag:2];
             [btn setTitle:@"正在录制" forState:UIControlStateNormal];
@@ -635,7 +649,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         if (!_isFullScreen)
         {
             
-            
+            _isScreen=TRUE;
             [UIApplication sharedApplication].statusBarHidden = YES;
             self.navigationController.navigationBarHidden = YES;
             self.collectionView.hidden = YES;
@@ -665,7 +679,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         }
         else
         {
-            
+            _isScreen=FALSE;
             [UIApplication sharedApplication].statusBarHidden = NO;
             self.navigationController.navigationBarHidden = NO;
             self.collectionView.hidden = NO;
@@ -706,7 +720,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         if (error == nil)
         {
             MBProgressHUD *indicator = [[MBProgressHUD alloc] initWithView:self.view];
-            indicator.labelText = @"照片已经保存至相册中";
+            indicator.labelText = @"照片已经保存至相册中。";
             indicator.mode = MBProgressHUDModeText;
             [self.view addSubview:indicator];
             [indicator showAnimated:YES whileExecutingBlock:^{
@@ -743,33 +757,95 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 }
 - (void) YUVNotify: (Byte*) yuv length:(int)length width: (int) width height:(int)height timestamp:(unsigned int)timestamp DID:(NSString *)did
 {
-    UIImage* image = [APICommon YUV420ToImage:yuv width:width height:height];
+    
+    
+    [_playView displayYUV420pData:yuv width:width height:height];
+    
+//
+//    NSLog(@"lenght is %d,width is %d,height is %d",length,width,height);
+//    
+        _isFirst = !_isFirst;
 
-    NSLog(@"lenght is %d,width is %d,height is %d",length,width,height);
-    
-        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",length] forKey:@"vedioDataLength"];
-        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",width] forKey:@"vedioDataWidth"];
-        [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",height] forKey:@"vedioDataHeight"];
-        NSLog(@"保存数据");
-    
-
-    
-   
+    //screenshots ==0 非截屏，   ＝＝1 截屏
+    if(screenshots==1)
+    {
+        //得到开始录制的时候的第一张图片
+        [self timerFired: [APICommon YUV420ToImage:yuv width:width height:height]];
+        screenshots = 0;
+    }
 
     if (_isRecord ==1 )//开始录制
     {
         //第一次进来开始录制的时候取得第一张图片，录制过程中不需要图片，只需要数据
         if (!_recordImage)
         {
-            //得到开始录制的时候的第一张图片
-            _recordImage = image;
+            [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",length] forKey:@"vedioDataLength"];
+            [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",width] forKey:@"vedioDataWidth"];
+            [appDelegate.appDefault setValue:[NSString stringWithFormat:@"%d",height] forKey:@"vedioDataHeight"];
             
+            //得到开始录制的时候的第一张图片
+            UIImage* image = [APICommon YUV420ToImage:yuv width:width height:height];
+            _recordImage = image;
+            NSDate *date = [NSDate date];
+            NSTimeInterval time = [date timeIntervalSince1970];
+
+            //得到年月日
+            unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
+            NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+            NSDateComponents *nowComp = [myCal components:units fromDate:date];
+            //记录ID
+           record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
+            
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+
+            //视频流相对路径
+            NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@320x240.264",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+            vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
+            NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath stringByDeletingLastPathComponent]];
+            NSError *vedioError = nil;
+            [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
+
+            [_recordData appendBytes:yuv length:length];
+            if ([fileManager createFileAtPath:vedioPath contents:_recordData attributes:nil])
+            {
+                _recordData = nil;
+                _vedioHasRecord = 1;//视频保存成功
+                [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
+            }
+            else
+            {
+                
+                
+                [self makeAlert:@"保存视频出错"];
+            }
+
         }
         else
         {
         
         //得到视频数据
-       [_recordData appendBytes:yuv length:length];
+            _recordData =nil;
+            _recordData = [[NSMutableData alloc] init];
+
+            [_recordData appendBytes:yuv length:length];
+            
+            NSFileHandle * fileHandle = [NSFileHandle fileHandleForWritingAtPath:vedioPath];
+            
+            if(fileHandle == nil)
+                
+            {
+                
+                return;
+                
+            }
+            
+            [fileHandle seekToEndOfFile];
+            
+            [fileHandle writeData:_recordData];
+            
+            [fileHandle closeFile];
+    
+            NSLog(@"我在保存数据");
             
            
         }
@@ -793,48 +869,13 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             [self makeAlert:@"保存图片出错"];
         }
         
-        
-        
-        
         //得到年月日
         unsigned units  = NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit;
         NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateComponents *nowComp = [myCal components:units fromDate:date];
-        //记录ID
-        NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
-        
+
         //视频流相对路径
         NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@320x240.264",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
-        NSString *vedioPath = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
-        NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath stringByDeletingLastPathComponent]];
-        NSError *vedioError = nil;
-        [fileManager createDirectoryAtPath:vedioDir withIntermediateDirectories:YES attributes:nil error:&vedioError];
-        
-        if (!vedioError)
-        {   //保存数据
-            
-            NSLog(@"data record is %d",[_recordData length]);
-            if ([fileManager createFileAtPath:vedioPath contents:_recordData attributes:nil])
-            {
-                _recordData = nil;
-                _vedioHasRecord = 1;//视频保存成功
-                [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isSaveVideo"];
-            }
-            else
-            {
-                
-                
-                [self makeAlert:@"保存视频出错"];
-            }
-        }
-        else
-        {
-            
-            [self makeAlert:@"保存视频出错"];
-            
-        }
-        
-        
         //获取快照,这里加入了图片对应视频的路径，方便以后找到对应的视频
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:filePath,@"image",[NSString stringWithFormat:@"%.0f", time*1000], @"time", date, @"date", [NSString stringWithFormat:@"%d", 320], @"width", [NSString stringWithFormat:@"%d", 180], @"height",[NSString stringWithFormat:@"%d",1],@"is_vedio",path1,@"record_data_path",nil];
         
@@ -891,16 +932,13 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         _recordImage = nil;//保证下次再录制的时候得到下一次的第一张图片
         
     }
-    [self performSelector:@selector(refreshImage:) withObject:image];
-
-    
 }
 - (void) H264Data: (Byte*) h264Frame length: (int) length type: (int) type timestamp: (NSInteger) timestamp
 {
     //ULog(@"H264Data is %d",length);
     
     
-    NSLog(@"视频数据、、、、、、、、、、、、、、、");
+   // NSLog(@"视频数据、、、、、、、、、、、、、、、");
     
     
     
@@ -992,7 +1030,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         NSLog(@"ShowCameraPlaying else");
     
         //选择的那个设备
-        [_currentDeviceDic addEntriesFromDictionary:[appDelegate.appDefault objectForKey:@"Device_selected"]];
+        _currentDeviceDic =[appDelegate.appDefault objectForKey:@"Device_selected"];
         //先校验是否在线
         int result = appDelegate.m_PPPPChannelMgt->CheckOnlineReturn((char *)[[_currentDeviceDic objectForKey:@"device_id"] UTF8String]);
     
@@ -1003,7 +1041,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             [self ConnectCamForUnEqual];
         }
         else if(result == 1)
-        { //连接成功，检测账号密码
+        { //连接成功，检测账号密码。
             //发送检测账户指令？
             _finishFlag = 1; //代表连接成功
             _passwordFlag = 0;
@@ -1081,7 +1119,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     appDelegate.m_PPPPChannelMgt->Stop((char *)[_cameraID UTF8String]);
     
     dispatch_async(dispatch_get_main_queue(),^{
-        _playView.image = [UIImage imageNamed:@"cameraBackView.png"];
+//        _playView.image = [UIImage imageNamed:@"cameraBackView.png"];
     });
     
 //    [_currentDeviceDic addEntriesFromDictionary:[appDelegate.appDefault objectForKey:@"Device_selected"]];
@@ -1407,9 +1445,6 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     
     [self ActionForStopVideo:0 RemindFlag:0];
     
-
-
-    
     [self makeAlert:@"看护器连接断开，请确认"];
 }
 
@@ -1427,7 +1462,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 - (void) refreshImage:(UIImage* )image{
     if (image != nil) {
         dispatch_async(dispatch_get_main_queue(),^{
-            _playView.image = image;
+//            _playView.image = image;
         });
     }
 }
@@ -1593,16 +1628,16 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     _lockFlag = 0;
     [_lockButton setImage:[UIImage imageNamed:@"lock_off.png"] forState:UIControlStateNormal];
     [_lockButton setImage:[UIImage imageNamed:@"lock_off_highlighted.png"] forState:UIControlStateHighlighted];
-    
-    
-    
+   
     [self CameraTargetPressed];
     [self.collectionView reloadData];
 
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    
+    if (_isScreen) {
+        self.navigationController.navigationBarHidden=YES;
+    }
     
     if ([[appDelegate.appDefault objectForKey:[ _currentDeviceDic objectForKey:@"device_id"]] objectForKey:@"invert"])
     {
@@ -1718,7 +1753,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     [imageView setImage:[UIImage imageNamed:@"switch_off.png"]];
     [(UIButton *)[self.view viewWithTag:2020] setImage:[UIImage imageNamed:@"vertical_switch_off.png"] forState:UIControlStateNormal];
     [(UIButton *)[self.view viewWithTag:2020] setImage:[UIImage imageNamed:@"vertical_switch_off_highlighted.png"] forState:UIControlStateHighlighted];
-    _playView.image = [UIImage imageNamed:@"cameraBackView.png"];
+//    _playView.image = [UIImage imageNamed:@"cameraBackView.png"];
     
     //竖屏工具条
     ((UIButton *)[self.view viewWithTag:1]).enabled = NO;
@@ -1805,7 +1840,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         [self.view viewWithTag:2010].frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, 52);
         
 
-        _playView.image = [UIImage imageNamed:@"cameraBackView.png"];
+//        _playView.image = [UIImage imageNamed:@"cameraBackView.png"];
         
         //竖屏工具栏
         ((UIButton *)[self.view viewWithTag:1]).enabled = NO;
@@ -1887,6 +1922,10 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         }
     }
     
+    
+    
+    
+    
 }
 #pragma mark -
 #pragma mark UICollectionViewDataSource
@@ -1937,4 +1976,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     NSLog(@"方法调用..........");
     [self viewAddGest:[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath]];
 }
+
+
+
+
+
 @end

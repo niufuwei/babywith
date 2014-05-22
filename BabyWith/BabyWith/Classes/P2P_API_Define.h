@@ -252,6 +252,7 @@ typedef struct tag_STRU_MAIL_PARAMS
 
 typedef struct tag_STRU_ALARM_PARAMS
 {
+    
     int motion_armed;
     int motion_sensitivity;
     int input_armed;

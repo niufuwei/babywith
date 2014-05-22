@@ -80,7 +80,7 @@ public:
     int SetMail(char *sender, char *smtp_svr, int smtp_port, int ssl, int auth, char *user,  char *pwd, char *recv1, char *recv2, char *recv3, char *recv4);
     
     void SetAlarmParamsDelegate(id delegate);
-    int SetAlarm(  
+    int SetAlarm(
                  int motion_armed,
                  int motion_sensitivity,
                  int input_armed,

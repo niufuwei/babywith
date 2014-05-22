@@ -17,12 +17,13 @@
 #import "ImageNotifyProtocol.h"
 #import "BaseViewController.h"
 #import "CustomAVRecorder.h"
+#import "OpenGLView20.h"
 @class CameraMainViewController;
 @class CameraPhotoRecordViewController;
 
 @interface CameraPlayViewController : BaseViewController<ImageNotifyProtocol,UIGestureRecognizerDelegate ,UICollectionViewDataSource ,UICollectionViewDelegate,UIAlertViewDelegate>
 {
-    UIImageView *_playView;
+    OpenGLView20 *_playView;
     NSCondition *_m_PPPPChannelMgtCondition;
     NSString *_cameraID;
     //UIImageView *_snapImageView;
@@ -54,12 +55,21 @@
     
     CCustomAVRecorder *_customAVRecorder;
     
+    BOOL _isFirst;
     BOOL _isViode;
+    BOOL _isScreen;
     
     
+    NSInteger screenshots;
+    UIButton *screenshotsButton;
+    
+    //记录ID
+    NSString *record_id;
+    
+    NSString *vedioPath;
 }
 
-@property (nonatomic, retain) UIImageView *playView;
+@property (nonatomic, retain) OpenGLView20 *playView;
 @property (nonatomic, retain) NSCondition *m_PPPPChannelMgtCondition;
 @property (nonatomic, retain) NSString *cameraID;
 @property (nonatomic, retain) NSMutableArray *imageArray;
