@@ -26,7 +26,9 @@
 #define babywith_sandbox_address [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"babywith"]
 #define DeviceInitUser @"admin"
 #define DeviceInitPass @"888888"
-
+#define KeyFrameLenth 1382400
+#define KeyFrameWidth 1280
+#define KeyFrameHeight 720
 
 
 #endif

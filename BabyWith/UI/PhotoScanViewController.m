@@ -10,6 +10,10 @@
 #import "AppGlobal.h"
 #import "MainAppDelegate.h"
 #import "SQLiteManager.h"
+#import <stdio.h>
+#import <stdlib.h>
+#import <string>
+
 
 @implementation PhotoScanViewController
 
@@ -173,56 +177,53 @@
         
     });
     
+    //副线程处理数据，在主线程更新完UI之后，在提示加载的同时
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         // 处理耗时操作的代码块...
-        
         NSString *vedioPath = [[_photoArray objectAtIndex:currentPage] objectForKey:@"record_data_path"];
         NSString *vedioPath1 = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:vedioPath]];
-        //取得相应的视频数据
-        NSLog(@"获取数据之前");
-        NSError * err;
-        //            _vedioData = [NSData dataWithContentsOfFile:vedioPath1];
-        _vedioData = [NSData dataWithContentsOfFile:vedioPath1 options:NSDataReadingMapped error:&err];        //数据的总长度
-        
-        NSLog(@"获取数据完毕");
         
         
-        int totalLengt = [_vedioData length];
-        //有多少个字节流数据，就是有多少张图片
-        NSLog(@"totalLength is %d",totalLengt);
-        _count = totalLengt/[[appDelegate.appDefault objectForKey:@"vedioDataLength"] intValue];
-        NSLog(@"count is %d",_count);
-        //取数据的范围
-        int range = 0;
+        FILE * FileHandle =NULL;
         
-        for (int i =1; i <= _count; i++)
+        FileHandle =fopen([vedioPath1 UTF8String],"rb");
+        
+        if (FileHandle != NULL)
         {
-            NSData *everyData = [_vedioData subdataWithRange:NSMakeRange(range,[[appDelegate.appDefault objectForKey:@"vedioDataLength"] intValue])];
-            range +=[[appDelegate.appDefault objectForKey:@"vedioDataLength"] intValue];
-            Byte *byte =(Byte *)[everyData bytes];
-            
-            
-            //对取得的图片进行压缩，不然会内存吃紧
-            @autoreleasepool
-            {
-                _image = [APICommon YUV420ToImage:byte width:[[appDelegate.appDefault objectForKey:@"vedioDataWidth"] intValue] height:[[appDelegate.appDefault objectForKey:@"vedioDataHeight"] intValue]];
+            int idxPos = 0;
+            uint8_t * byte[KeyFrameLenth];
+
+            while(1)  {
                 
-                NSLog(@"image width is %f,height is %f",_image.size.width,_image.size.height);
-                CGSize imageSize = _image.size;
-                imageSize.height = 320;
-                imageSize.width = tmpself.view.frame.size.width - 64;
+                 fseek(FileHandle, idxPos, SEEK_SET);
+                 
+                 
+                 idxPos +=KeyFrameLenth;
+                 memset(byte,0,KeyFrameLenth);
+                 
+                 if(fread(byte, 1, KeyFrameLenth, FileHandle)==0)
+                 {
+                     break;
+                 }
+                @autoreleasepool {
+                    _image = [APICommon YUV420ToImage:(uint8_t*)byte width:KeyFrameWidth height:KeyFrameHeight];
+                    
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        CGSize imageSize = _image.size;
+                        imageSize.height = 320;
+                        imageSize.width = self.view.frame.size.width - 64;
+                        [_playView setImage:_image];
+                        
+                        
+                    });
+                    
+                }
+     
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [_playView setImage:_image];
-                    
-                    
-                });
             }
             
-           
-            
         }
-         dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
 
          [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(stopPlaying) userInfo:nil repeats:NO];
         });

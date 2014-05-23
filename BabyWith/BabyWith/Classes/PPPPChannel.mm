@@ -2852,8 +2852,8 @@ void CPPPPChannel::SetSDCardScheduleDelegate(id delegate){
     [m_SDCardScheduleLock unlock];
 }
 int CPPPPChannel::SetSDCardScheduleParams(
-                                              int coverage_enable,
-                                              int timelength,
+                                          int coverage_enable,
+                                          int timelength,
                                           int fixed_enable,
                                           int record_schedule_sun_0,
                                           int record_schedule_sun_1,

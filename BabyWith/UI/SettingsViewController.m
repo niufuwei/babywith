@@ -62,6 +62,7 @@
     _tableList.scrollEnabled = NO;
     [self.view addSubview:_tableList];
     _tableList.frame = CGRectMake(0, 90, 320, [self tableView:_tableList numberOfRowsInSection:0]*[self tableView:_tableList heightForRowAtIndexPath:0]);
+    
     activity = [[Activity alloc] initWithActivity:self.view];
     
     
@@ -193,7 +194,6 @@
 - (IBAction)logOut:(id)sender
 {
     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出登录吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
-//    alert.delegate=self;
     [alert show];
     
  }
@@ -203,9 +203,12 @@
 {
     if (buttonIndex==0)
     {
+        [activity start];
+        
         BOOL result = [appDelegate.webInfoManger UserLogoutUsingToken:[appDelegate.appDefault objectForKey:@"Token"]];
         if(result)
         {
+             [activity stop];
             
             if (![[appDelegate.appDefault objectForKey:@"Password"] isEqualToString:@""])
             {
@@ -224,6 +227,7 @@
         }
         else
         {
+            [activity stop];
             
             [self makeAlertForServerUseTitle:[appDelegate.appDefault objectForKey:@"Error_message"] Code:[appDelegate.appDefault objectForKey:@"Error_code"]];
             
@@ -242,13 +246,6 @@
 
     }
 }
-
-
-
-
-
-
-
 
 
 @end

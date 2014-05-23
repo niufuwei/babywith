@@ -90,7 +90,7 @@
     if (flag == 0) {
         
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:strDID,@"strDID", strSSID, @"strSSID", strMac, @"strMac", [NSString stringWithFormat:@"%d", security], @"security",[NSString stringWithFormat:@"%d", mode], @"mode",[NSString stringWithFormat:@"%d", channel], @"channel", nil];
-        
+        NSLog(@"dic is %@",dic);
         [_wifiSearchList addObject:dic];
         [_wifiListTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }

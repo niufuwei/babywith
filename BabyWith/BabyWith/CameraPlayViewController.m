@@ -437,9 +437,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     NSCalendar *myCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *nowComp = [myCal components:units fromDate:date];
     //记录ID
-    NSString *record_id = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
+    NSString *record_id_save = [NSString stringWithFormat:@"%f_%@",time,[appDelegate.appDefault objectForKey:@"Member_id_self"]];
     //图片相对路径
-    NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+    NSString *path = [NSString stringWithFormat:@"/image/record/%d/%d/%d/%d/%@.png",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id_save];
     
     
     //保存图片到沙盒目录
@@ -451,7 +451,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
     
     //视频流相对路径
     //这里加入了视频流的路径，让所有的图片保存保持一样的参数，但是在这里并没有存入视频，取的时候也不会用到这个视频的路径
-    NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@.pm4",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id];
+    NSString *path1 = [NSString stringWithFormat:@"/vedio/record/%d/%d/%d/%d/%@.pm4",[nowComp year],[nowComp month],[nowComp day],[[appDelegate.appDefault objectForKey:@"Member_id_self"] integerValue]%10,record_id_save];
     NSString *vedioPath1 = [NSString stringWithFormat:@"%@",[babywith_sandbox_address stringByAppendingPathComponent:path1]];
     NSString *vedioDir = [NSString stringWithFormat:@"%@",[vedioPath1 stringByDeletingLastPathComponent]];
     NSError *vedioError = nil;
@@ -470,7 +470,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         if ([fileManager createFileAtPath:imagePath contents:imageData attributes:nil])
         {
             //插入表库
-            NSArray *array = [NSArray arrayWithObjects:record_id,[appDelegate.appDefault objectForKey:@"Member_id_self"],[dic objectForKey:@"time"],[NSString stringWithFormat:@"%d",[nowComp year]],[NSString stringWithFormat:@"%d",[nowComp month]],[NSString stringWithFormat:@"%d",[nowComp day]],[dic objectForKey:@"width"],[dic objectForKey:@"height"],path,[dic objectForKey:@"is_vedio"],[dic objectForKey:@"record_data_path"],nil];
+            NSArray *array = [NSArray arrayWithObjects:record_id_save,[appDelegate.appDefault objectForKey:@"Member_id_self"],[dic objectForKey:@"time"],[NSString stringWithFormat:@"%d",[nowComp year]],[NSString stringWithFormat:@"%d",[nowComp month]],[NSString stringWithFormat:@"%d",[nowComp day]],[dic objectForKey:@"width"],[dic objectForKey:@"height"],path,[dic objectForKey:@"is_vedio"],[dic objectForKey:@"record_data_path"],nil];
             
             NSArray *keyArray = [NSArray arrayWithObjects:@"id_record", @"id_member", @"time_record",@"year_record",@"month_record",@"day_record",@"width_image",@"height_image",@"path",@"is_vedio",@"record_data_path", nil];
             NSDictionary *insertDic = [NSDictionary dictionaryWithObjects:array forKeys:keyArray];
@@ -480,6 +480,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             if([appDelegate.sqliteManager insertRecordInfo:insertDic])
             {
                 
+                NSLog(@"%@",@"插入到数据库");
                 [_imageArray addObject:insertDic];
                 
                 _photoCount += 1;
@@ -494,9 +495,11 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         [self makeAlert:@"保存图片错误!"];
     }
     
-    
-    screenshotsButton.enabled = YES;
-    [_collectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        screenshotsButton.enabled = YES;
+        [_collectionView reloadData];
+        
+    });
 
 }
 
@@ -532,7 +535,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
             indicator.mode = MBProgressHUDModeText;
             [window addSubview:indicator];
             [indicator showAnimated:YES whileExecutingBlock:^{
-                sleep(4);
+                sleep(1);
             } completionBlock:^{
                 [indicator removeFromSuperview];
                 [self.collectionView reloadData];
@@ -936,13 +939,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 - (void) H264Data: (Byte*) h264Frame length: (int) length type: (int) type timestamp: (NSInteger) timestamp
 {
     //ULog(@"H264Data is %d",length);
-    
-    
    // NSLog(@"视频数据、、、、、、、、、、、、、、、");
-    
-    
-    
-    
 
 }
 
@@ -1030,7 +1027,7 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
         NSLog(@"ShowCameraPlaying else");
     
         //选择的那个设备
-        _currentDeviceDic =[appDelegate.appDefault objectForKey:@"Device_selected"];
+        [_currentDeviceDic addEntriesFromDictionary:[appDelegate.appDefault objectForKey:@"Device_selected"]];
         //先校验是否在线
         int result = appDelegate.m_PPPPChannelMgt->CheckOnlineReturn((char *)[[_currentDeviceDic objectForKey:@"device_id"] UTF8String]);
     
@@ -1381,11 +1378,8 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
                     
                     //设置视频质量
                     appDelegate.m_PPPPChannelMgt->CameraControl( (char *)[_cameraID UTF8String],13, [[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"quality"] integerValue]);
-                    
                     //设置移动侦测
-                int  i =    appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[_cameraID UTF8String],[[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue], 1, 1, 0, 0, 1, 0, 0, 0, 0);
-
-                    NSLog(@"移动侦测的参数是%d",i);
+                    appDelegate.m_PPPPChannelMgt->SetAlarm((char *)[_cameraID UTF8String],[[[appDelegate.appDefault objectForKey:_cameraID] objectForKey:@"sense"] integerValue], 1, 1, 0, 0, 1, 0, 0, 0, 0);
                     //[self performSelectorOnMainThread:@selector(Finish:) withObject:@"1" waitUntilDone:NO];
                 }
             }
@@ -1937,6 +1931,9 @@ AVAudioPlayer *photoSound;           //播放拍照时候的声音
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
+    
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:REUSEABLE forIndexPath:indexPath];
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ITEM_WIDTH, ITEM_HEIGTH)];
     imageView.userInteractionEnabled = YES;

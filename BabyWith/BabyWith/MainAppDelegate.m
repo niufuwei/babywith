@@ -369,10 +369,6 @@ int HudIsBecome = 0;
     
     NSLog(@"移动侦测的返回参数是%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",motion_armed,motion_sensitivity,input_armed,ioin_level,alarmpresetsit,iolinkage,ioout_level,mail,snapshot,upload_interval,record);
     
-    
-    
-    
-    
 }
 
 -(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
